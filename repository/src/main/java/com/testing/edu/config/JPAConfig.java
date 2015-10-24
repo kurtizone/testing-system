@@ -53,6 +53,7 @@ public class JPAConfig {
         entityManagerFactoryBean.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setJpaPropertyMap(jpaProperties());
+        entityManagerFactoryBean.afterPropertiesSet();
         return entityManagerFactoryBean;
     }
 
