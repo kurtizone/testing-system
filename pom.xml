@@ -22,7 +22,7 @@
         <logger.version>1.6.1</logger.version>
     </properties>
 
-    <groupId>com.testing</groupId>
+    <groupId>com.testing.edu</groupId>
     <artifactId>testing-system</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
