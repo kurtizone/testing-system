@@ -1,10 +1,9 @@
 package com.testing.edu.service.impl;
 
 import com.testing.edu.service.QuestionsService;
+import org.springframework.stereotype.Service;
 
-/**
- * Created by Dmytro on 10/18/2015.
- */
+@Service
 public class QuestionsServiceImpl implements QuestionsService {
 
 }
