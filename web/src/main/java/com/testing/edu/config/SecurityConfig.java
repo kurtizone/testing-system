@@ -47,26 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.ignoringAntMatchers("/uploadFile/**")
 				.and()
 				.authorizeRequests()
-				.antMatchers("/resources/assets/**", "/resources/app/welcome/**",
-						"/application/**", "/calibrationTests/**" /*Some one has to move these tests out to verificator page!*/
-						, "/calibrationTestData/**").permitAll()
-
 				.antMatchers("/resources/app/admin/**", "/admin/**").hasAnyAuthority("ADMIN")
-
-				.antMatchers("/uploadFile/**").fullyAuthenticated()
-
-				.antMatchers("/resources/app/**").hasAnyAuthority("PROVIDER_EMPLOYEE", "PROVIDER_ADMIN", "CALIBRATOR_EMPLOYEE", "CALIBRATOR_ADMIN", "STATE_VERIFICATOR_EMPLOYEE", "STATE_VERIFICATOR_ADMIN")
-				.antMatchers("/employee/admin/**").hasAnyAuthority( "PROVIDER_ADMIN", "CALIBRATOR_ADMIN", "STATE_VERIFICATOR_ADMIN")
-
-				.antMatchers("/provider", "/provider/employee/**").hasAnyAuthority("PROVIDER_EMPLOYEE", "PROVIDER_ADMIN")
-				.antMatchers("/provider/admin/**").hasAuthority("STUDENT")
-
-				.antMatchers("/calibrator", "/calibrator/employee/**").hasAnyAuthority("CALIBRATOR_EMPLOYEE", "CALIBRATOR_ADMIN")
-				.antMatchers("/calibrator/admin/**").hasAuthority("CALIBRATOR_ADMIN")
-
-				.antMatchers("/verificator", "/verificator/employee/**").hasAnyAuthority("STATE_VERIFICATOR_EMPLOYEE", "STATE_VERIFICATOR_ADMIN")
-				.antMatchers("/verificator/admin/**").hasAuthority("LECTURER")
-
+				.antMatchers("/student/**").hasAuthority("STUDENT")
+				.antMatchers("/lecturer/**").hasAuthority("LECTURER")
 				.and()
 				.formLogin()
 				.defaultSuccessUrl("/")
