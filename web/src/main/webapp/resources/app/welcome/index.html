@@ -5,16 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-    <link id="bootstrap-style" href="/resources/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/resources/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link id="base-style" href="/resources/assets/css/style.css" rel="stylesheet">
-    <link id="base-style-responsive" href="/resources/assets/css/style-responsive.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext'
-          rel='stylesheet' type='text/css'>
+    <link href="/resources/assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/resources/assets/css/welcome.css" rel="stylesheet">
+    <link href="/resources/assets/css/application-form.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href="/resources/assets/bower_components/ng-table/ng-table.css" rel="stylesheet">
     <link href="/resources/assets/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/resources/assets/bower_components/semantic/dist/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/assets/bower_components/semantic/dist/semantic.min.css">
     <link href="/resources/assets/bower_components/ui-select/dist/select.min.css" rel="stylesheet">
     <link href="/resources/assets/bower_components/select2/select2.css" rel="stylesheet">
@@ -25,6 +21,7 @@
 
 
     <style>
+
         [ng\:cloak]
 		[ng-cloak],
         [data-ng-cloak],
@@ -39,7 +36,7 @@
 
 <body id="welcomeModule" ng-controller="NavigationController" class="skin-blue">
 <div id="content" class="ng-cloak">
-    <nav class="navbar navbar-inverse" role="navigation">
+    <nav class="navbar navbar-inverse navbar-top" role="navigation">
 
         <div class="container">
             <div class="navbar-header">
@@ -62,17 +59,14 @@
 
             <div class="container">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-class="{ active: isActive('/about')}"><a
-                            ui-sref="about">{{ 'ABOUT' | translate }}</a></li>
-
                     <li ng-class="{ active: isActive('/login')}"><a
                             ui-sref="login">{{ 'LOG_IN' | translate }}</a></li>
 
                     <li ng-class="{ active: isActive('/application-sending')}"><a
-                            ui-sref="application-sending">{{ 'APPLY_FOR_VERIFCIATION' |translate }}</a></li>
+                            ui-sref="application-sending">{{'SIGN_UP_STUDENT' |translate }}</a></li>
 
                     <li ng-class="{ active: isActive('/application-status')}"><a
-                            ui-sref="application-status">{{ 'APP_STATUS' | translate }}</a></li>
+                            ui-sref="application-status">{{ 'SIGN_UP_LECTURER' | translate }}</a></li>
                 </ul>
             </div>
         </div>
@@ -89,60 +83,8 @@
 <script type="text/javascript"
         data-main="/resources/app/welcome/runApp"
         src="/resources/assets/bower_components/requirejs/require.js"></script>
-<script src="/resources/assets/js/jquery-1.9.1.min.js"></script>
-<script src="/resources/assets/js/jquery-migrate-1.0.0.min.js"></script>
-
-<script src="/resources/assets/js/jquery-ui-1.10.0.custom.min.js"></script>
-
-<script src="/resources/assets/js/jquery.ui.touch-punch.js"></script>
-
-<script src="/resources/assets/js/modernizr.js"></script>
-
-<script src="/resources/assets/js/bootstrap.min.js"></script>
-
-<script src="/resources/assets/js/jquery.cookie.js"></script>
-
-<script src='/resources/assets/js/fullcalendar.min.js'></script>
-
-<script src='/resources/assets/js/jquery.dataTables.min.js'></script>
-
-<script src="/resources/assets/js/excanvas.js"></script>
-<script src="/resources/assets/js/jquery.flot.js"></script>
-<script src="/resources/assets/js/jquery.flot.pie.js"></script>
-<script src="/resources/assets/js/jquery.flot.stack.js"></script>
-<script src="/resources/assets/js/jquery.flot.resize.min.js"></script>
-
-<script src="/resources/assets/js/jquery.chosen.min.js"></script>
-
-<script src="/resources/assets/js/jquery.uniform.min.js"></script>
-
-<script src="/resources/assets/js/jquery.cleditor.min.js"></script>
-
-<script src="/resources/assets/js/jquery.noty.js"></script>
-
-<script src="/resources/assets/js/jquery.elfinder.min.js"></script>
-
-<script src="/resources/assets/js/jquery.raty.min.js"></script>
-
-<script src="/resources/assets/js/jquery.iphone.toggle.js"></script>
-
-<script src="/resources/assets/js/jquery.uploadify-3.1.min.js"></script>
-
-<script src="/resources/assets/js/jquery.gritter.min.js"></script>
-
-<script src="/resources/assets/js/jquery.imagesloaded.js"></script>
-
-<script src="/resources/assets/js/jquery.masonry.min.js"></script>
-
-<script src="/resources/assets/js/jquery.knob.modified.js"></script>
-
-<script src="/resources/assets/js/jquery.sparkline.min.js"></script>
-
-<script src="/resources/assets/js/counter.js"></script>
-
-<script src="/resources/assets/js/retina.js"></script>
-
-<script src="/resources/assets/js/custom.js"></script>
+<script src="/resources/assets/bower_components/jquery/dist/jquery.js"
+        type="text/javascript"></script>
 <script src="/resources/assets/js/loader-welcome.js"></script>
 
 
