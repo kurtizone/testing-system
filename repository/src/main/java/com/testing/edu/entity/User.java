@@ -2,6 +2,7 @@ package com.testing.edu.entity;
 
 // Generated Oct 24, 2015 11:34:14 PM by Hibernate Tools 4.3.1
 
+
 import com.testing.edu.entity.enumeration.UserRole;
 
 import java.util.HashSet;
@@ -78,7 +79,7 @@ public class User implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@Column(name = "is_enabled")
+	@Column(name = "enable")
 	public Boolean getIsEnabled() {
 		return this.isEnabled;
 	}

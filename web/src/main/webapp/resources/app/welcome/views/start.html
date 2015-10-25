@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/resources/assets/bower_components/bootstrap/dist/css/bootstrap.css"
+          rel="stylesheet">
+
+
+    <style>
+        /*styles for the carousel*/
+
+        /*arrows styling*/
+        .slick-prev:before, .slick-next:before {
+            color:black !important;
+            font-size: 25pt;
+        }
+
+        /*for image centering*/
+        .slick-slide img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body ng-controller="WelcomePageController">
+<br>
+<div class="row">
+    <h1>{{ 'HEAD_TITLE' | translate }}</h1>
+</div>
+<br>
+<div class="row">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <slick
+                        infinite="true"
+                        arrows="true"
+                        autoplay="true"
+                        autoplaySpeed="3200"
+                        speed="800"
+                        fade="true">
+                    <div ng-repeat="slide in slides">
+                        <img data-lazy="{{slide}}">
+                    </div>
+                </slick>
+            </div>
+            <div class="col-md-2"></div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+

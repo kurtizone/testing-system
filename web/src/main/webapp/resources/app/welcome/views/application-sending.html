@@ -1,0 +1,598 @@
+<section id=applicationSection>
+
+    <div class="col-md-12 text-center" ng-show="isShownForm">
+        <h1>{{ 'APP_SENDING_TITLE' | translate }}</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-12"></div>
+    </div>
+    <div class="col-md-10" id="createByPattern" ng-show="!isShownForm && codes[0]">
+        <button type="button" class="btn btn-info btn-lg" ng-click="createNew(codes[0])">
+            <span class="glyphicon glyphicon-duplicate"></span> {{'CREATE_BY_PATTERN'| translate}}
+        </button>
+    </div>
+    <div class="from-top form-group ">
+        <div id="clientFormBox" ng-show="isShownForm"
+             class="row col-md-8 centered">
+            <form id="clientForm" name="clientForm" role="form"
+                  class="form-horizontal form-group" ng-submit="sendApplicationData()"
+                  novalidate>
+                <div class="form-group" show-errors>
+                    <label for="lastName" class="col-md-2 control-label">
+                        {{'LAST_NAME' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="lastName" name="lastName" class="form-control"
+                               type="text" ng-model="formData.lastName"
+
+                               popover="{{'ALPHABETIC_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="FIRST_LAST_NAME_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="clientForm.lastName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="clientForm.lastName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DOUBLE_NAME_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="firstName" class="col-md-2 control-label">
+                        {{'FIRST_NAME' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="firstName" name="firstName" class="form-control"
+                               ng-model="formData.firstName"
+                               popover="{{'ALPHABETIC_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="FIRST_LAST_NAME_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="clientForm.firstName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="clientForm.firstName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DOUBLE_NAME_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="middleName" class="col-md-2 control-label">
+                        {{'MIDDLE_NAME' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="middleName" name="middleName" type="text"
+                               class="form-control" ng-model="formData.middleName"
+                               popover="{{'MIDDLE_NAME_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="MIDDLE_NAME_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block"
+                           ng-if="clientForm.middleName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="clientForm.middleName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DOUBLE_NAME_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="email" class="col-md-2 control-label">
+                        {{'EMAIL' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="email" name="email" type="email" class="form-control"
+                               ng-model="formData.email" placeholder="example@gmail.com"
+                               ng-pattern="EMAIL_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="clientForm.email.$error.email">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'EMAIL_ERROR' | translate}}<i>example@gmail.com</i>
+                        </p>
+
+                        <p class="help-block" ng-if="clientForm.email.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'EMAIL_ERROR' | translate}}<i>example@gmail.com</i>
+                        </p>
+
+                        <p class="help-block" ng-if="clientForm.email.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="phoneNumber" class="col-md-2 control-label">
+                        {{'PHONE_NUMBER' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <div>
+                            <div class="input-group">
+                                <span class="input-group-addon">+380</span>
+                                <input id="phoneNumber" name="phoneNumber" type="tel"
+                                       class="form-control col-md-8 " ng-model="formData.phone"
+                                       placeholder="XXXXXXXXX" ng-pattern="PHONE_REGEX" required>
+
+                                <div class="input-group-addon btn btn-default btn-circle"
+                                     ng-click="checkboxModel = !checkboxModel">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p class="help-block col-md-8 col-md-offset-2"
+                           ng-if="clientForm.phoneNumber.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'PHONE_NUMBER_ERROR' | translate}}</p>
+
+                        <p class="help-block col-md-8 col-md-offset-2"
+                           ng-if="clientForm.email.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors ng-show="checkboxModel">
+                    <label for="phoneNumberSecond" class="col-md-2 control-label">
+                        {{'SECOND_PHONE' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <div>
+                            <div class="input-group" ng-show="checkboxModel">
+                                <span class="input-group-addon" id="basic-addon-code">+380</span>
+                                <input id="phoneNumberSecond" name="phoneNumberSecond"
+                                       class="form-control" ng-model="formData.secondPhone"
+                                       placeholder="XXXXXXXXX" ng-pattern="PHONE_REGEX_SECOND"
+                                       popover="{{'PHONE_NUMBER_INFO' | translate}}"
+                                       popover-trigger="focus" popover-placement="right">
+                            </div>
+							<span class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign plusButtonCheck"
+                                  ng-show="checkboxModel"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p class="help-block col-md-8 col-md-offset-2"
+                           ng-if="clientForm.phoneNumberSecond.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'PHONE_NUMBER_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="region" class="col-md-2 control-label">
+                        {{'REGION' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <ui-select class="form-control" type="text" theme="select2"
+                                   ng-model="selectedValues.selectedRegion"
+                                   on-select="receiveDistricts(selectedValues.selectedRegion)"
+                                   name="region" required>
+                            <ui-select-match placeholder="{{'SELECT_REGION' | translate}}" allow-clear="true">
+                                {{$select.selected.designation}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="region in regions | filter: $select.search">
+                                <span ng-bind-html="region.designation"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <p class="help-block">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'TYPEAHEAD_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="district" class="col-md-2 control-label">
+                        {{'DISTRICT' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <ui-select class="form-control" type="text" theme="select2"
+                                   ng-model="selectedValues.selectedDistrict"
+                                   ng-disabled="!selectedValues.selectedRegion"
+                                   on-select="receiveLocalitiesAndProviders(selectedValues.selectedDistrict)"
+                                   name="district" required>
+                            <ui-select-match placeholder="{{'SELECT_DISTRICT' | translate}}" allow-clear="true">
+                                {{$select.selected.designation}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="district in districts | filter: $select.search">
+                                <span ng-bind-html="district.designation"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <p class="help-block">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'TYPEAHEAD_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="locality" class="col-md-2 control-label">
+                        {{'LOCALITY' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <ui-select class="form-control" type="text" theme="select2"
+                                   ng-model="selectedValues.selectedLocality"
+                                   ng-disabled="!selectedValues.selectedDistrict"
+                                   on-select="receiveStreets(selectedValues.selectedLocality,selectedValues.selectedDistrict)"
+                                   name="locality" required>
+                            <ui-select-match placeholder="{{'SELECT_LOCALITY' | translate}}" allow-clear="true">
+                                {{$select.selected.designation}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="locality in localities | filter: $select.search | unique:'designation' ">
+                                <span ng-bind-html="locality.designation"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                        <a ng-if="!isProvidersExist
+                        && selectedValues.selectedDistrict
+                        && selectedValues.selectedLocality
+                        "
+                           style="color: #b27e77"
+                           ng-click="feedbackModalNoProvider()"> <i class="fa fa-info-circle">
+                            <ins>{{'PROVIDER_NOT_FOUND' | translate }}</ins>
+                        </i>
+                        </a>
+
+                        <p class="help-block">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'TYPEAHEAD_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="index" class="col-md-2 control-label"> {{'INDEX' | translate}}</label>
+
+                    <div class="col-md-8">
+                        <ui-select class="form-control" type="text" theme="select2"
+                                   ng-model="selectedValues.selectedIndex"
+                                   ng-disabled="!selectedValues.selectedLocality"
+                                   on-select="receiveStreetsTypes()"
+                                   name="index" required>
+                            <ui-select-match placeholder="{{'SELECT_MAIL_INDEX' | translate}}" allow-clear="true">
+                                {{$select.selected}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="index in indexes | filter: $select.search">
+                                <span ng-bind-html="index"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="street" class="col-md-2 control-label">
+                        {{'STREET' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <div class="pull-left col-lg-3" id="typeStreet">
+                            <ui-select class="form-control" type="text" theme="select2"
+                                       ng-model="selectedValues.selectedStreetType"
+                                       ng-disabled="!selectedValues.selectedIndex"
+                                       search-enabled="false"
+                                       name="streetType" required>
+                                <ui-select-match placeholder="{{'TYPE_OF_STREET' | translate}}" allow-clear="true">
+                                    {{$select.selected.designation}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="streetsType in streetsTypes | filter: $select.search">
+                                    <span ng-bind-html="streetsType.designation"></span>
+                                </ui-select-choices>
+                            </ui-select>
+
+
+                        </div>
+                        <div class="col-md-9" id="streetBox"
+                             ng-class="{'has-success' : selectedValues.selectedStreet  && selectedValues.selectedIndex,
+                                        'has-error' : !selectedValues.selectedStreet &&  clientForm.street.$dirty && selectedValues.selectedIndex}">
+                            <input name="street" class="form-control"
+                                   type="text" id="street"
+                                   autocomplete="off"
+                                   ng-model="selectedValues.selectedStreet"
+                                   ng-disabled="!selectedValues.selectedIndex"
+                                   typeahead="street as street.designation for street in streets | filter: $viewValue | limitTo: 4"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="receiveBuildings(selectedValues.selectedStreet)" required>
+                            <span class="form-control-feedback street_ok_padding glyphicon form-horizontal glyphicon glyphicon-ok-sign"></span>
+                        </div>
+                        <p class="help-block" ng-if="clientForm.streetType.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'TYPEAHEAD_ERROR' | translate}}
+                        </p>
+
+                        <p class="help-block"
+                           ng-if="clientForm.street.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'STREET_ERROR' | translate}}
+                        </p>
+
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="building" class="col-md-2 control-label">
+                        {{'BUILDING' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <div class="input-group" style="width: 100%">
+                            <input id="building" name="building" class="form-control"
+                                   ng-model="selectedValues.selectedBuilding"
+                                   typehead="building as building.designation for building in buildings | filter: $viewValue | limitTo: 4"
+                                   ng-pattern="BUILDING_REGEX" required>
+                            <span
+                                    class="form-control-feedback glyphicon form-horizontal glyphicon glyphicon-ok-sign building-ok"></span>
+                            <span class="input-group-addon">
+                                <input type="checkbox" ng-model="defaultValue.privateHouse"
+                                       ng-change="changeFlat(clientForm)">
+                                {{'PRIVATE_HOUSE' | translate}}</span>
+                        </div>
+
+
+                        <p class="help-block" ng-if="clientForm.building.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block"
+                           ng-if="clientForm.building.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'BUILDING_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors ng-hide="defaultValue.privateHouse">
+                    <label for="flat" class="col-md-2 control-label">{{'FLAT' | translate}}</label>
+
+                    <div class="col-md-8">
+                        <input id="flat" name="flat" class="form-control"
+                               ng-model="formData.flat"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="FLAT_REGEX"
+                               ng-required="!defaultValue.privateHouse">
+                        <span class="form-control-feedback glyphicon form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="clientForm.flat.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block"
+                           ng-if="clientForm.flat.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'FLAT_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="device" class="col-md-2 control-label">
+                        {{'COUNTER_CATEGORY' | translate}} </label>
+
+                    <div class="col-md-8 ">
+                        <div class="pull-left col-md-2" id="counterNumber">
+                            <ui-select class="form-control" type="text" theme="select2"
+                                       ng-model="selectedValues.firstDeviceCount"
+                                       search-enabled="false"
+                                       name="firstDeviceCount"
+                                       id="counterNumber" required>
+                                <ui-select-match placeholder="{{'NUMBER_OF_COUNTERS' | translate}}">
+                                    {{$select.selected}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="value in values">
+                                    <span ng-bind-html="value"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-md-3" id="deviceBox">
+                            <ui-select class="form-control" type="text" theme="select2"
+                                       ng-model="selectedValues.firstSelectedDevice"
+                                       search-enabled="false"
+                                       on-select="getProvidersByLocalityAndDeviceType(selectedValues.selectedLocality,selectedValues.firstSelectedDevice,'firstDeviceGroup')"
+                                       id="firstSelectedDevice"
+                                       ng-required="test"
+                                       name="firstSelectedDevice" required>
+                                <ui-select-match placeholder="{{'CATEGORY_OF_COUNTER' | translate}}">
+                                    {{$select.selected.designation}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="device in devices | filter: $select.search">
+                                    <span ng-bind-html="device.designation"></span>
+                                </ui-select-choices>
+                            </ui-select>
+
+                        </div>
+                        <div class="col-md-7 input-group pull-right" id="deviceBox">
+                            <ui-select class="form-control" type="text" theme="select2"
+                                       ng-model="selectedValues.firstSelectedProvider"
+                                       search-enable="false"
+                                       name="firstDeviceProvider" required>
+                                <ui-select-match placeholder="{{'SELECT_PROVIDER' | translate}}">
+                                    {{ $select.selected.designation}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="provider in firstDeviceProviders">
+                                    <span ng-bind-html="provider.designation"></span>
+                                </ui-select-choices>
+
+                            </ui-select>
+                            <div class="input-group-addon btn btn-default btn-circle"
+                                 ng-click="isSecondDevice = !isSecondDevice">
+                                <i class="glyphicon glyphicon-plus input-block-level"></i>
+                            </div>
+                        </div>
+                        <p class="help-block"
+                           ng-if="clientForm.firstDeviceCount.$error.required || clientForm.firstDeviceCount.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'TYPEAHEAD_ERROR' | translate}}
+                        </p>
+
+                        <p class="help-block"
+                           ng-if="clientForm.firstSelectedDevice.$invalid">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DEVICE_TYPE_REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstDeviceComment" class="col-md-2 control-label">
+                        {{'APPLICATION_COMMENT' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <textarea id="firstDeviceComment" name="firstDeviceComment" class="form-control" rows="3"
+                                  popover="{{'APPLICATION_COMMENT_EXAMPLE' | translate}}"
+                                  popover-trigger="focus" popover-placement="right"
+                                  ng-model="firstDeviceComment" maxlength="254"></textarea>
+                    </div>
+                </div>
+                <div ng-show="isSecondDevice">
+                    <div class="form-group" show-errors>
+                        <label for="device2" class="col-md-2 control-label">
+                            {{'COUNTER_CATEGORY' | translate}} </label>
+
+                        <div class="col-md-8 ">
+                            <div class="pull-left col-md-2" id="counterNumber">
+                                <ui-select class="form-control" type="text" theme="select2"
+                                           ng-required="isSecondDevice"
+                                           ng-model="selectedValues.secondDeviceCount"
+                                           search-enabled="false"
+                                           name="secondDeviceCount"
+                                           id="counterNumber" required>
+                                    <ui-select-match placeholder="Кількість">
+                                        {{$select.selected}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="value in values ">
+                                        <span ng-bind-html="value"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-3" id="deviceBox">
+                                <ui-select class="form-control" type="text" theme="select2"
+                                           ng-model="selectedValues.secondSelectedDevice"
+                                           search-enabled="false"
+                                           on-select="getProvidersByLocalityAndDeviceType(selectedValues.selectedLocality,selectedValues.secondSelectedDevice,'secondDeviceGroup')"
+                                           id="secondSelectedDevice"
+                                           name="secondSelectedDevice">
+                                    <ui-select-match placeholder="Категорія лічильника">
+                                        {{$select.selected.designation}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            repeat="device in devices | filter: $select.search | hideSelected:selectedValues.firstSelectedDevice">
+                                        <span ng-bind-html="device.designation"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+
+                                <div class="input-group-addon  btn btn-default btn-circle"
+                                     ng-hide="true"
+                                     ng-click="isThirdDevice = !isThirdDevice">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7 input-group pull-right" id="deviceBox">
+                                <ui-select class="form-control" type="text" theme="select2"
+                                           ng-model="selectedValues.secondSelectedProvider"
+                                           search-enable="false"
+                                           name="secondDeviceProvider">
+                                    <ui-select-match placeholder="Провайдер">
+                                        {{ $select.selected.designation}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="provider in secondDeviceProviders">
+                                        <span ng-bind-html="provider.designation"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <p class="help-block"
+                               ng-if="clientForm.secondDeviceCount.$error.required || clientForm.secondDeviceCount.$invalid">
+                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                {{'TYPEAHEAD_ERROR' | translate}}
+                            </p>
+
+                            <p class="help-block"
+                               ng-if="clientForm.secondSelectedDevice.$invalid">
+                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                {{'DEVICE_TYPE_REQUIRED' | translate}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="secondDeviceComment" class="col-md-2 control-label">
+                            {{'APPLICATION_COMMENT' | translate}}
+
+                        </label>
+
+                        <div class="col-md-8">
+                        <textarea id="secondDeviceComment" name="secondDeviceComment" class="form-control" rows="3"
+                                  ng-model="secondDeviceComment" maxlength="254"
+                                  popover="{{'APPLICATION_COMMENT_EXAMPLE' | translate}}"
+                                  popover-trigger="focus" popover-placement="right"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success  pull-right text-uppercase">
+                            {{'SEND_BTN' | translate}}
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="reset" class="btn btn-warning text-uppercase"
+                                ng-click="resetApplicationForm()">
+                            {{'CLEAR_FORM'|translate}}
+                        </button>
+                    </div>
+                    <div class="col-md-offset-4 col-md-2">
+                        <button class="btn btn-danger pull-right text-uppercase" ng-click="closeAlert()">
+                            {{'CLOSE'|translate}}
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="progress col-md-8 col-md-offset-2" ng-show="appProgress"
+             style="padding-left:0px;padding-right:0px;height: 30px">
+
+            <div class="progress-bar progress-bar-striped active"
+                 role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                 aria-valuemax="100" style="width:100%; height: 30px">{{'DATA_PROCESSING' | translate}}...
+            </div>
+        </div>
+        <div ng-hide="isShownForm && !appProgress">
+            <div ng-repeat="code in codes"
+                 ng-show="!appProgress"
+                 class="row col-md-10 alert alert-success alert-dismissible centered" role="alert"
+                 style="text-align: center">
+                <!-- <button ng-click="closeAlert()" type="button"
+                         class="close btn-close-alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>-->
+                <br>
+
+                <div class="text-center" ng-show="!appProgress">
+                    {{'APP_SENT' | translate}}<a href="/#/application-status/{{code}}">
+                    <b>{{code}} </b> </a>><br>
+                    {{'APP_SENT_INFO' | translate}}
+
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+
+</section>

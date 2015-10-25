@@ -1,10 +1,9 @@
 package com.testing.edu.config;
 
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+
 
 import javax.servlet.Filter;
 
@@ -15,7 +14,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{ SecurityConfig.class, JPAConfig.class, ServletContextConfig.class,
+        return new Class<?>[]{ SecurityConfig.class , JPAConfig.class, ServletContextConfig.class,
                 MailConfig.class};
     }
 
