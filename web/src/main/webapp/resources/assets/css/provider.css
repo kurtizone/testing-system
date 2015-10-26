@@ -134,8 +134,8 @@ body {
 
 #page-wrapper {
     padding: 0 15px;
-    background-color: #fff;
-    min-height: 800px;
+    background: url("../images/mountains.png") center center repeat scroll;
+    min-height: 900px;
 }
 
 @media (min-width: 768px) {
@@ -805,8 +805,14 @@ button:focus {
     margin-bottom: 0 !important;
 }
 
+ul#sidemenu a {
+    color: #52445B;
+}
+
 #sidemenu{
     border-radius: 0;
+    background: url("../images/sidebar.png") center center repeat scroll;
+
 }
 
 /*for hideable sidebar*/
@@ -816,10 +822,10 @@ button:focus {
     position: absolute;
     left: 315px;
     width: 320px;
-    height: 100%;
+    height: 900px;
     margin-left: -315px;
     overflow-y: auto;
-    /*background: #000;*/
+    background: url("../images/subtle-textures.png") center center repeat scroll;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -852,7 +858,7 @@ button:focus {
 
 .navbar-btn{
 color: rgba(250, 250, 250, 1);
-    background-color: #333333;
+    background-color: #000;
     border: 0;
 }
 
@@ -861,6 +867,10 @@ color: rgba(250, 250, 250, 1);
 {
     color: rgb(218, 218, 218);
     background-color: #333333;
+}
+
+users {
+
 }
 
 #menubuttonelem {
@@ -876,12 +886,11 @@ color: rgba(250, 250, 250, 1);
 }
 #dark.navbar-default {
     font-size: 16px;
-    background-color: rgba(51, 51, 51, 1);
+    background-color: rgba(0, 0, 0, 1);
     border: 0;
 }
 #dark.navbar-default .navbar-nav>li>a {
     color: rgba(250, 250, 250, 1);
-    background-color: rgba(51, 51, 51, 1);
 }
 #dark.navbar-default .navbar-nav>li>a:hover,
 #dark.navbar-default .navbar-nav>li>a:focus {
