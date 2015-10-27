@@ -1,5 +1,7 @@
 package com.testing.edu.entity;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -14,11 +16,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
+@EqualsAndHashCode
 @Entity
 @Table(name = "groups", catalog = "testing_system")
 public class Groups implements java.io.Serializable {
 
-	private Integer idGroup;
+	private Integer id;
 	private String title;
 	private Integer grade;
 	private String degree;
@@ -42,12 +46,12 @@ public class Groups implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id_group", unique = true, nullable = false)
-	public Integer getIdGroup() {
-		return this.idGroup;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setIdGroup(Integer idGroup) {
-		this.idGroup = idGroup;
+	public void setId(Integer id) {
+		this.id= id;
 	}
 
 	@Column(name = "title", length = 45)

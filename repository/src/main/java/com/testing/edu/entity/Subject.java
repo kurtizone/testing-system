@@ -29,6 +29,12 @@ public class Subject implements java.io.Serializable {
 	public Subject() {
 	}
 
+	public Subject(String title, Integer multiplier, Integer hours) {
+		this.title = title;
+		this.multiplier = multiplier;
+		this.hours = hours;
+	}
+
 	public Subject(String title, Integer multiplier, Integer hours, Set<Lecturers> lecturerses, Set<Tests> testses,
 			Set<Groups> groupses) {
 		this.title = title;

@@ -14,7 +14,8 @@ angular
         }
     })
     .controller(
-    'OrganizationAddModalController',
+    '' +
+    'SubjectAddModalController',
     [
         '$rootScope',
         '$scope',
