@@ -45,7 +45,7 @@ angular
                 .state(
                 'subjects',
                 {
-                    url: '/lecturers',
+                    url: '/subjects',
                     templateUrl: '/resources/app/admin/views/subjects-panel.html'
                 })
                 .state(
@@ -113,7 +113,7 @@ angular.module('adminModule').run(function (paginationConfig) {
 
 define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'controllers/SubjectsPanelController',
-    'controllers/OrganizationAddModalController',
+    'controllers/SubjectAddModalController',
     'controllers/OrganizationEditModalController',
     'controllers/OrganizationEditHistoryModalController',
     'controllers/DeviceController',
@@ -133,6 +133,7 @@ define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'services/OrganizationService', 'services/StatisticService',
     'services/UserService', 'services/AddressService',
     'services/DeviceService', 'services/DevicesService',
+    'services/SubjectsService',
     'services/CounterTypeService',
     'services/AgreementService',
     'services/SettingsService',

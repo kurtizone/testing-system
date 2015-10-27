@@ -1,25 +1,24 @@
 angular
     .module('adminModule')
     .controller(
-    'SubjectsPanelController',
+    'SubjectPanelController',
     [
         '$rootScope',
         '$scope',
         '$modal',
-        'OrganizationService',
-        'AddressService',
+        '$http',
+        'SubjectsService',
         'ngTableParams',
-        '$filter',
-        'toaster',
-        function ($rootScope, $scope, $modal, organizationService,
-                  addressService, ngTableParams, $filter, toaster) {
-
+        '$translate',
+        '$timeout',
+        function ($rootScope, $scope, $modal, $http, subjectsService, ngTableParams, $translate, $timeout) {
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
             $scope.pageContent = [];
 
             $scope.clearAll = function () {
+                $scope.selectedDeviceType.name = null;
                 $scope.tableParams.filter({});
             };
 
@@ -35,14 +34,13 @@ angular
                 }
             }, {
                 total: 0,
-                filterDelay: 1500,
+                filterDelay: 10000,
                 getData: function ($defer, params) {
 
                     var sortCriteria = Object.keys(params.sorting())[0];
                     var sortOrder = params.sorting()[sortCriteria];
 
-
-                    organizationService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
+                    subjectsService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
                         .success(function (result) {
                             $scope.resultsCount = result.totalItems;
                             $defer.resolve(result.content);
@@ -52,105 +50,67 @@ angular
                         });
                 }
             });
-
-
+            /**
+             * Updates the table with device.
+             */
             $rootScope.onTableHandling = function () {
                 $scope.tableParams.reload();
-                //organizationService
-                //		.getPage($scope.currentPage,
-                //				$scope.itemsPerPage,
-                //				$scope.searchData
-                //              )
-                //		.then(
-                //				function(data) {
-                //					$scope.pageContent = data.content;
-                //					$scope.totalItems = data.totalItems;
-                //				});
             };
+
             $rootScope.onTableHandling();
 
-            /**
-             * Opens modal window for adding new organization.
-             */
-            $scope.openAddOrganizationModal = function () {
-                var addOrganizationModal = $modal.open({
-                    animation: true,
-                    controller: 'OrganizationAddModalController',
-                    templateUrl: '/resources/app/admin/views/modals/organization-add-modal.html',
-                    size: 'lg',
-                    resolve: {
-                        regions: function () {
-                            return addressService.findAllRegions();
-                        }
+            $scope.isFilter = function () {
+                var obj = $scope.tableParams.filter();
+                for (var i in obj) {
+                    if (obj.hasOwnProperty(i) && obj[i]) {
+                        return true;
                     }
-                });
-
-                /**
-                 * executes when modal closing
-                 */
-                addOrganizationModal.result.then(function () {
-                    $scope.popNotification($filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_CREATED_ORGANIZATION'));
-                });
+                }
+                return false;
             };
             /**
-             * Opens modal window for editing organization.
+             * Opens modal window for adding new category of counters.
              */
-            $scope.openEditOrganizationModal = function (organizationId) {
-                $rootScope.organizationId = organizationId;
-                organizationService.getOrganizationWithId(
-                    $rootScope.organizationId).then(
-                    function (data) {
-                        $rootScope.organization = data;
-                        console.log($rootScope.organization);
-
-                        var organizationDTOModal = $modal
-                            .open({
-                                animation: true,
-                                controller: 'OrganizationEditModalController',
-                                templateUrl: '/resources/app/admin/views/modals/organization-edit-modal.html',
-                                size: 'lg',
-                                resolve: {
-                                    regions: function () {
-                                        return addressService.findAllRegions();
-                                    }
-                                }
-                            });
-
-                        /**
-                         * executes when modal closing
-                         */
-                        organizationDTOModal.result.then(function () {
-                            $scope.popNotification($filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_ORGANIZATION'));
-                        });
-                    });
-
+            $scope.openAddSubjectModal = function() {
+                var addSubject = $modal.open({
+                    animation : true,
+                    controller : 'SubjectAddModalController',
+                    templateUrl : '/resources/app/admin/views/modals/subject-add-modal.html',
+                    size: 'md'
+                });
             };
 
             /**
-             * Opens modal window for show history editing organization.
+             * Opens modal window for editing category of counter.
              */
-            $scope.openOrganizationEditHistoryModal = function (organizationId) {
-                $rootScope.organizationId = organizationId;
-                organizationService.getHistoryOrganizationWithId(
-                    organizationId).then(
-                    function (data) {
-                        $rootScope.organization = data.content;
-                        console.log($rootScope.organization);
+            $scope.openEditSubjectModal = function(
+                subjectId) {
+                $rootScope.subjectId = subjectId;
+                subjectsService.getSubjectById(
+                    $rootScope.subjectId).then(
+                    function(data) {
+                        $rootScope.subject = data;
+                        console.log($rootScope.subject);
 
-                        var organizationDTOModal = $modal
+                        var subjectDTOModal = $modal
                             .open({
-                                animation: true,
-                                controller: 'OrganizationEditHistoryModalController',
-                                templateUrl: '/resources/app/admin/views/modals/organization-edit-history-modal.html',
-                                size: 'lg'
+                                animation : true,
+                                controller : 'CategoryDeviceEditModalController',
+                                templateUrl : '/resources/app/admin/views/modals/device-category-edit-modal.html',
+                                size: 'md'
                             });
                     });
 
             };
 
-            $scope.popNotification = function (title, text) {
-                toaster.pop('success', title, text);
+            $scope.deleteSubject = function (id) {
+                $rootScope.subjectId = id;
+                console.log($rootScope.subjectId);
+                subjectsService.deleteSubject(id);
+                $timeout(function() {
+                    console.log('delete with timeout');
+                    $rootScope.onTableHandling();
+                }, 700);
             };
-
 
         }]);

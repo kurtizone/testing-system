@@ -10,5 +10,10 @@
   "GROUPS":"Groups",
   "STUDENTS":"Students",
   "RESULTS":"Results",
-  "MORE":"More"
+  "MORE":"More",
+  "ADD_SUBJECT":"Add Subject",
+  "TITLE_SUBJECT":"Title of subject",
+  "MULTIPLIER":"Multiplier",
+  "HOURS":"Amount hours",
+  "ACTIONS":"Actions"
 }

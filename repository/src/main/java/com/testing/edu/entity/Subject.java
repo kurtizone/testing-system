@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "subject", catalog = "testing_system")
 public class Subject implements java.io.Serializable {
 
-	private Integer idSubject;
+	private Integer id;
 	private String title;
 	private Integer multiplier;
 	private Integer hours;
@@ -48,12 +48,12 @@ public class Subject implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id_subject", unique = true, nullable = false)
-	public Integer getIdSubject() {
-		return this.idSubject;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setIdSubject(Integer idSubject) {
-		this.idSubject = idSubject;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Column(name = "title")
