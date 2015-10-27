@@ -456,23 +456,96 @@ table.dataTable thead .sorting:after {
     font-size: 40px;
 }
 
+.panel-light-brown {
+    border-color: #EBE2D9;
+}
+
+.panel-light-brown .panel-heading {
+    border-color: #EBE2D9;
+    color: #fff;
+    background-color: #B7A488;
+}
+
+.panel-light-brown a {
+    color: #B7A488;
+}
+
+.panel-light-brown a:hover {
+    color: #EBE2D9;
+}
+
+.panel-blue {
+    border-color: #A6DBE3;
+}
+
+.panel-blue .panel-heading {
+    border-color: #A6DBE3;
+    color: #fff;
+    background-color: #5DA1A7;
+}
+
+.panel-blue a {
+    color: #5DA1A7;
+}
+
+.panel-blue a:hover {
+    color: #A6DBE3;
+}
+
 .panel-green {
-    border-color: #5cb85c;
+    border-color: #AFD0BF;
 }
 
 .panel-green .panel-heading {
-    border-color: #5cb85c;
+    border-color: #AFD0BF;
     color: #fff;
-    background-color: #5cb85c;
+    background-color: #62927A;
 }
 
 .panel-green a {
-    color: #5cb85c;
+    color: #62927A;
 }
 
 .panel-green a:hover {
-    color: #3d8b3d;
+    color: #AFD0BF;
 }
+
+.panel-light {
+    border-color: #CEBFB0;
+}
+
+.panel-light .panel-heading {
+    border-color: #CEBFB0;
+    color: #fff;
+    background-color: #FFAE5F;
+}
+
+.panel-light a {
+    color: #FFAE5FHWH
+;
+}
+
+.panel-light a:hover {
+    color: #CEBFB0;
+}
+.panel-purple {
+    border-color: #B19EBD;
+}
+
+.panel-purple .panel-heading {
+    border-color: #B19EBD;
+    color: #fff;
+    background-color: #51435A;
+}
+
+.panel-purple a {
+    color: #51435A;
+}
+
+.panel-purple a:hover {
+    color: #B19EBD;
+}
+
 
 .panel-red {
     border-color: #d9534f;

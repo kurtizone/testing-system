@@ -1,7 +1,7 @@
 angular
     .module('adminModule')
     .controller(
-    'OrganizationPanelController',
+    'SubjectsPanelController',
     [
         '$rootScope',
         '$scope',

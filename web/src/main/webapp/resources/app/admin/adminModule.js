@@ -43,53 +43,36 @@ angular
                     templateUrl: '/resources/app/admin/views/main-panel.html'
                 })
                 .state(
-                'organizations',
+                'subjects',
                 {
-                    url: '/organizations',
-                    templateUrl: '/resources/app/admin/views/organizations-panel.html'
+                    url: '/lecturers',
+                    templateUrl: '/resources/app/admin/views/subjects-panel.html'
                 })
                 .state(
-                'agreements',
+                'lecturers',
                 {
-                    url: '/agreements',
-                    templateUrl: '/resources/app/admin/views/agreement-panel.html'
+                    url: '/lecturers',
+                    templateUrl: '/resources/app/admin/views/lecturers-panel.html'
                 })
                 .state(
-                'users',
+                'groups',
                 {
-                    url: '/users',
-                    templateUrl: '/resources/app/admin/views/users-panel.html'
+                    url: '/groups',
+                    templateUrl: '/resources/app/admin/views/groups-panel.html'
                 })
                 .state(
-                'sys-admins',
+                'students',
                 {
-                    url: '/sys-admins',
-                    templateUrl: '/resources/app/admin/views/sys-admins-panel.html'
+                    url: '/students',
+                    templateUrl: '/resources/app/admin/views/students-panel.html'
                 })
                 .state(
-                'address',
+                'results',
                 {
-                    url: '/address',
-                    templateUrl: '/resources/app/admin/views/address-panel.html'
+                    url: '/results',
+                    templateUrl: '/resources/app/admin/views/results-panel.html'
                 })
-                .state(
-                'device-category',
-                {
-                    url: '/device-category',
-                    templateUrl: '/resources/app/admin/views/devices-panel.html'
-                })
-                .state(
-                'counters-type',
-                {
-                    url: '/counters-type',
-                    templateUrl: '/resources/app/admin/views/counters-type-panel.html'
-                })
-                .state(
-                'settings',
-                {
-                    url: '/settings',
-                    templateUrl: '/resources/app/admin/views/settings-panel.html'
-                })
+
             /*
              Extended ui-select-choices: added watch for ng-translate event called translateChangeEnd
              When translation of page will end, items of select (on the scope) will be changed too.
@@ -129,7 +112,7 @@ angular.module('adminModule').run(function (paginationConfig) {
 });
 
 define(['controllers/TopNavBarController', 'controllers/MainPanelController',
-    'controllers/OrganizationPanelController',
+    'controllers/SubjectsPanelController',
     'controllers/OrganizationAddModalController',
     'controllers/OrganizationEditModalController',
     'controllers/OrganizationEditHistoryModalController',
