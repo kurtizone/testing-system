@@ -18,11 +18,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "user", catalog = "testing_system")
 public class User implements java.io.Serializable {
 
-	private Integer id;
+	private Long id;
 	private String username;
 	private String email;
 	private String password;
-	private Boolean isEnabled;
+	private Boolean enable;
 	private UserRole userRole;
 	private Set<Lecturers> lecturerses = new HashSet<Lecturers>(0);
 	private Set<Students> studentses = new HashSet<Students>(0);
@@ -30,12 +30,12 @@ public class User implements java.io.Serializable {
 	public User() {
 	}
 
-	public User(String username, String email, String password, Boolean isEnabled, UserRole userRole,
+	public User(String username, String email, String password, Boolean enable, UserRole userRole,
 			Set<Lecturers> lecturerses, Set<Students> studentses) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.isEnabled = isEnabled;
+		this.enable = enable;
 		this.userRole = userRole;
 		this.lecturerses = lecturerses;
 		this.studentses = studentses;
@@ -44,11 +44,11 @@ public class User implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -81,11 +81,11 @@ public class User implements java.io.Serializable {
 
 	@Column(name = "enable")
 	public Boolean getIsEnabled() {
-		return this.isEnabled;
+		return this.enable;
 	}
 
-	public void setIsEnabled(Boolean isEnabled) {
-		this.isEnabled = isEnabled;
+	public void setIsEnabled(Boolean enable) {
+		this.enable = enable;
 	}
 
 	@Column(name = "user_role")

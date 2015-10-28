@@ -7,15 +7,15 @@ import lombok.Setter;
 @Setter
 public class SubjectDTO {
 
-    private Integer id;
+    private Long id;
     private String title;
-    private Integer multiplier;
+    private Float multiplier;
     private Integer hours;
 
     public SubjectDTO() {
     }
 
-    public SubjectDTO(Integer id, String title, Integer multiplier, Integer hours) {
+    public SubjectDTO(Long id, String title, Float multiplier, Integer hours) {
         this.id = id;
         this.title = title;
         this.multiplier = multiplier;

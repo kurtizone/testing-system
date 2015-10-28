@@ -11,7 +11,7 @@ public interface SubjectService {
      * @param multiplier
      * @param hours
      */
-    void addSubject(String title, Integer multiplier, Integer hours);
+    void addSubject(String title, Float multiplier, Integer hours);
 
     /**
      * Edit subject with params
@@ -20,7 +20,7 @@ public interface SubjectService {
      * @param multiplier
      * @param hours
      */
-    void editSubject(Long id, String title, Integer multiplier, Integer hours);
+    void editSubject(Long id, String title, Float multiplier, Integer hours);
 
     /**
      * Delete subject by his id
@@ -47,7 +47,7 @@ public interface SubjectService {
      * @return
      */
     ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage, String title,
-                                                                       Integer multiplier, Integer hours,
-                                                                       String sortCriteria, String sortOrder);
+                                                                   Float multiplier, Integer hours,
+                                                                   String sortCriteria, String sortOrder);
 
 }

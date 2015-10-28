@@ -22,11 +22,12 @@ import javax.persistence.Table;
 @Table(name = "students", catalog = "testing_system")
 public class Students implements java.io.Serializable {
 
-	private Integer idStudent;
+	private Long idStudent;
 	private Groups groups;
 	private User user;
 	private String lastName;
 	private String firstName;
+	private String middleName;
 	private String numberGradebook;
 	private Set<Result> results = new HashSet<Result>(0);
 
@@ -38,12 +39,13 @@ public class Students implements java.io.Serializable {
 		this.user = user;
 	}
 
-	public Students(Groups groups, User user, String lastName, String firstName, String numberGradebook,
+	public Students(Groups groups, User user, String lastName, String firstName, String middleName, String numberGradebook,
 			Set<Result> results) {
 		this.groups = groups;
 		this.user = user;
 		this.lastName = lastName;
 		this.firstName = firstName;
+		this.middleName = middleName;
 		this.numberGradebook = numberGradebook;
 		this.results = results;
 	}
@@ -51,11 +53,11 @@ public class Students implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id_student", unique = true, nullable = false)
-	public Integer getIdStudent() {
+	public Long getIdStudent() {
 		return this.idStudent;
 	}
 
-	public void setIdStudent(Integer idStudent) {
+	public void setIdStudent(Long idStudent) {
 		this.idStudent = idStudent;
 	}
 
@@ -79,7 +81,7 @@ public class Students implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@Column(name = "last_name", length = 45)
+	@Column(name = "last_name", length = 255)
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -88,13 +90,22 @@ public class Students implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	@Column(name = "first_name", length = 45)
+	@Column(name = "first_name", length = 255)
 	public String getFirstName() {
 		return this.firstName;
 	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	@Column(name = "middle_name", length = 255)
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 
 	@Column(name = "number_gradebook", length = 45)

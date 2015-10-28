@@ -2,25 +2,17 @@ package com.testing.edu.entity;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
+
 import static javax.persistence.GenerationType.IDENTITY;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "subject", catalog = "testing_system")
 public class Subject implements java.io.Serializable {
 
-	private Integer id;
+	private Long id;
 	private String title;
-	private Integer multiplier;
+	private Float multiplier;
 	private Integer hours;
 	private Set<Lecturers> lecturerses = new HashSet<Lecturers>(0);
 	private Set<Tests> testses = new HashSet<Tests>(0);
@@ -29,13 +21,13 @@ public class Subject implements java.io.Serializable {
 	public Subject() {
 	}
 
-	public Subject(String title, Integer multiplier, Integer hours) {
+	public Subject(String title, Float multiplier, Integer hours) {
 		this.title = title;
 		this.multiplier = multiplier;
 		this.hours = hours;
 	}
 
-	public Subject(String title, Integer multiplier, Integer hours, Set<Lecturers> lecturerses, Set<Tests> testses,
+	public Subject(String title, Float multiplier, Integer hours, Set<Lecturers> lecturerses, Set<Tests> testses,
 			Set<Groups> groupses) {
 		this.title = title;
 		this.multiplier = multiplier;
@@ -46,13 +38,13 @@ public class Subject implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_subject", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -66,11 +58,11 @@ public class Subject implements java.io.Serializable {
 	}
 
 	@Column(name = "multiplier")
-	public Integer getMultiplier() {
+	public Float getMultiplier() {
 		return this.multiplier;
 	}
 
-	public void setMultiplier(Integer multiplier) {
+	public void setMultiplier(Float multiplier) {
 		this.multiplier = multiplier;
 	}
 

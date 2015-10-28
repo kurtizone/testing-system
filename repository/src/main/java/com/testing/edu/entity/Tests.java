@@ -17,12 +17,12 @@ import javax.persistence.Table;
 @Table(name = "tests", catalog = "testing_system")
 public class Tests implements java.io.Serializable {
 
-	private Integer id;
+	private Long id;
 	private Subject subject;
 	private String title;
 	private String type;
 	private Integer maxGrade;
-	private Boolean isAvaible;
+	private Boolean avaible;
 	private Set<Result> results = new HashSet<Result>(0);
 	private Set<Questions> questionses = new HashSet<Questions>(0);
 
@@ -33,13 +33,13 @@ public class Tests implements java.io.Serializable {
 		this.subject = subject;
 	}
 
-	public Tests(Subject subject, String title, String type, Integer maxGrade, Boolean isAvaible, Set<Result> results,
+	public Tests(Subject subject, String title, String type, Integer maxGrade, Boolean avaible, Set<Result> results,
 			Set<Questions> questionses) {
 		this.subject = subject;
 		this.title = title;
 		this.type = type;
 		this.maxGrade = maxGrade;
-		this.isAvaible = isAvaible;
+		this.avaible = avaible;
 		this.results = results;
 		this.questionses = questionses;
 	}
@@ -47,11 +47,11 @@ public class Tests implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -92,13 +92,13 @@ public class Tests implements java.io.Serializable {
 		this.maxGrade = maxGrade;
 	}
 
-	@Column(name = "is_avaible")
-	public Boolean getIsAvaible() {
-		return this.isAvaible;
+	@Column(name = "avaible")
+	public Boolean getAvaible() {
+		return this.avaible;
 	}
 
-	public void setIsAvaible(Boolean isAvaible) {
-		this.isAvaible = isAvaible;
+	public void setAvaible(Boolean avaible) {
+		this.avaible = avaible;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests")

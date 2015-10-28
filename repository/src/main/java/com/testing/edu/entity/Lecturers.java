@@ -23,10 +23,11 @@ import javax.persistence.Table;
 @Table(name = "lecturers", catalog = "testing_system")
 public class Lecturers implements java.io.Serializable {
 
-	private Integer idLecturers;
+	private Long idLecturers;
 	private User user;
 	private String lastName;
 	private String firstName;
+	private String middleName;
 	private String academicStatus;
 	private String degree;
 	private Set<Subject> subjects = new HashSet<Subject>(0);
@@ -38,11 +39,12 @@ public class Lecturers implements java.io.Serializable {
 		this.user = user;
 	}
 
-	public Lecturers(User user, String lastName, String firstName, String academicStatus, String degree,
+	public Lecturers(User user, String lastName, String firstName, String middleName, String academicStatus, String degree,
 			Set<Subject> subjects) {
 		this.user = user;
 		this.lastName = lastName;
 		this.firstName = firstName;
+		this.middleName = middleName;
 		this.academicStatus = academicStatus;
 		this.degree = degree;
 		this.subjects = subjects;
@@ -51,11 +53,11 @@ public class Lecturers implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id_lecturers", unique = true, nullable = false)
-	public Integer getIdLecturers() {
+	public Long getIdLecturers() {
 		return this.idLecturers;
 	}
 
-	public void setIdLecturers(Integer idLecturers) {
+	public void setIdLecturers(Long idLecturers) {
 		this.idLecturers = idLecturers;
 	}
 
@@ -85,6 +87,15 @@ public class Lecturers implements java.io.Serializable {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	@Column(name = "middle_name")
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 
 	@Column(name = "academic status")

@@ -31,6 +31,11 @@ public class SubjectsController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ResponseEntity addSubject(@RequestBody SubjectDTO subjectDTO) {
         HttpStatus httpStatus = HttpStatus.CREATED;
+
+        logger.info("-----SubjectDTO");
+        logger.info(subjectDTO.getTitle());
+        logger.info(subjectDTO.getMultiplier());
+        logger.info(subjectDTO.getHours());
         try {
             subjectService.addSubject(
                     subjectDTO.getTitle(),
@@ -52,11 +57,11 @@ public class SubjectsController {
      */
     @RequestMapping(value = "edit/{subjectId}", method = RequestMethod.POST)
     public ResponseEntity editSubject(@RequestBody SubjectDTO subjectDTO,
-                                          @PathVariable Integer subjectId) {
+                                          @PathVariable Long subjectId) {
         HttpStatus httpStatus = HttpStatus.OK;
         try {
             subjectService.editSubject(
-                    new Long(subjectId),
+                    subjectId,
                     subjectDTO.getTitle(),
                     subjectDTO.getMultiplier(),
                     subjectDTO.getHours()
@@ -75,10 +80,10 @@ public class SubjectsController {
      * successfully edited or else http status {@literal CONFLICT}
      */
     @RequestMapping(value = "delete/{subjectId}", method = RequestMethod.DELETE)
-    public ResponseEntity removeSubject(@PathVariable Integer subjectId) {
+    public ResponseEntity removeSubject(@PathVariable Long subjectId) {
         HttpStatus httpStatus = HttpStatus.OK;
         try {
-            subjectService.removeSubject(new Long(subjectId));
+            subjectService.removeSubject(subjectId);
         } catch (Exception e) {
             logger.error("Got exeption while remove subject ",e);
             httpStatus = HttpStatus.CONFLICT;
@@ -92,13 +97,13 @@ public class SubjectsController {
      * @return subjectDTO
      */
     @RequestMapping(value = "get/{id}")
-    public SubjectDTO getSubject(@PathVariable("id") Integer id) {
-        Subject subject = subjectService.findById(new Long(id));
+    public SubjectDTO getSubject(@PathVariable("id") Long id) {
+        Subject subject = subjectService.findById(id);
         SubjectDTO subjectDTO = new SubjectDTO(
                 subject.getId(),
                 subject.getTitle(),
                 subject.getMultiplier(),
-                subject.getMultiplier()
+                subject.getHours()
         );
         return subjectDTO;
     }

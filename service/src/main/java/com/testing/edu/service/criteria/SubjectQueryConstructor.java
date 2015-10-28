@@ -15,7 +15,7 @@ public class SubjectQueryConstructor {
 
     static Logger logger = Logger.getLogger(SubjectQueryConstructor.class);
 
-    public static CriteriaQuery<Subject> buildSearchQuery(String title, Integer multiplier, Integer hours,
+    public static CriteriaQuery<Subject> buildSearchQuery(String title, Float multiplier, Integer hours,
                                                               String sortCriteria, String sortOrder, EntityManager em) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Subject> criteriaQuery = cb.createQuery(Subject.class);
@@ -32,7 +32,7 @@ public class SubjectQueryConstructor {
         return criteriaQuery;
     }
 
-    public static CriteriaQuery<Long> buildCountQuery (String title, Integer multiplier, Integer hours, EntityManager em) {
+    public static CriteriaQuery<Long> buildCountQuery (String title, Float multiplier, Integer hours, EntityManager em) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         Root<Subject> root = countQuery.from(Subject.class);
@@ -43,7 +43,7 @@ public class SubjectQueryConstructor {
 
         return countQuery;
     }
-    private static Predicate buildPredicate(String title, Integer multiplier, Integer hours,
+    private static Predicate buildPredicate(String title, Float multiplier, Integer hours,
                                             Root<Subject> root, CriteriaBuilder cb) {
         Predicate queryPredicate = cb.conjunction();
         if ((title != null)&&(title.length()>0)) {
@@ -52,7 +52,7 @@ public class SubjectQueryConstructor {
                     queryPredicate);
         }
         if (multiplier != null) {
-            queryPredicate = cb.and(cb.like(new FilteringNumbersDataLikeStringData<Long>(cb, root.get("multiplier")),
+            queryPredicate = cb.and(cb.like(new FilteringNumbersDataLikeStringData<Float>(cb, root.get("multiplier")),
                     "%" + multiplier.toString() + "%"), queryPredicate);
         }
         if (hours != null) {

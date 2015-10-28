@@ -14,11 +14,12 @@ import javax.persistence.Table;
 @Table(name = "result", catalog = "testing_system")
 public class Result implements java.io.Serializable {
 
-	private Integer id;
+	private Long id;
 	private Students students;
 	private Tests tests;
 	private String testTitle;
 	private Integer mark;
+	private Integer maxGrade;
 
 	public Result() {
 	}
@@ -28,21 +29,22 @@ public class Result implements java.io.Serializable {
 		this.tests = tests;
 	}
 
-	public Result(Students students, Tests tests, String testTitle, Integer mark) {
+	public Result(Students students, Tests tests, String testTitle, Integer mark, Integer maxGrade) {
 		this.students = students;
 		this.tests = tests;
 		this.testTitle = testTitle;
 		this.mark = mark;
+		this.maxGrade = maxGrade;
 	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -84,4 +86,12 @@ public class Result implements java.io.Serializable {
 		this.mark = mark;
 	}
 
+	@Column(name = "max_grade")
+	public Integer getMaxGrade() {
+		return maxGrade;
+	}
+
+	public void setMaxGrade(Integer maxGrade) {
+		this.maxGrade = maxGrade;
+	}
 }

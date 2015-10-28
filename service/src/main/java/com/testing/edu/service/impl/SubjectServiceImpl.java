@@ -33,7 +33,7 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     @Transactional
-    public void addSubject(String title, Integer multiplier, Integer hours) {
+    public void addSubject(String title, Float multiplier, Integer hours) {
         Subject subject = new Subject(title, multiplier, hours);
         subjectRepository.save(subject);
     }
@@ -48,7 +48,7 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     @Transactional
-    public void editSubject(Long id, String title, Integer multiplier, Integer hours) {
+    public void editSubject(Long id, String title, Float multiplier, Integer hours) {
         Subject subject = subjectRepository.findOne(id);
         subject.setTitle(title);
         subject.setMultiplier(multiplier);
@@ -95,7 +95,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     @Transactional
     public ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage, String title,
-                                                                          Integer multiplier, Integer hours,
+                                                                          Float multiplier, Integer hours,
                                                                           String sortCriteria, String sortOrder) {
         CriteriaQuery<Subject> criteriaQuery = SubjectQueryConstructor
                 .buildSearchQuery(title, multiplier, hours, sortCriteria, sortOrder, entityManager);
