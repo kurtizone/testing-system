@@ -1,25 +1,23 @@
 package com.testing.edu.entity;
 
+import com.testing.edu.entity.enumeration.QuestionType;
+import lombok.EqualsAndHashCode;
+
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
+
 import static javax.persistence.GenerationType.IDENTITY;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
+@EqualsAndHashCode(of = "id")
 @Table(name = "questions", catalog = "testing_system")
 public class Questions implements java.io.Serializable {
 
 	private Long id;
 	private Tests tests;
 	private String text;
+	private QuestionType questionType;
 	private Set<Answers> answerses = new HashSet<Answers>(0);
 
 	public Questions() {
@@ -36,7 +34,7 @@ public class Questions implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
@@ -61,8 +59,19 @@ public class Questions implements java.io.Serializable {
 		return this.text;
 	}
 
+
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	@Column(name = "question_type")
+	@Enumerated(EnumType.STRING)
+	public QuestionType getQuestionType() {
+		return questionType;
+	}
+
+	public void setQuestionType(QuestionType questionType) {
+		this.questionType = questionType;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questions")

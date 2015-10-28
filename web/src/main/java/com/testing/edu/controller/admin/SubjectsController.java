@@ -39,7 +39,7 @@ public class SubjectsController {
         try {
             subjectService.addSubject(
                     subjectDTO.getTitle(),
-                    subjectDTO.getMultiplier(),
+                    Float.parseFloat(subjectDTO.getMultiplier()),
                     subjectDTO.getHours()
             );
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class SubjectsController {
             subjectService.editSubject(
                     subjectId,
                     subjectDTO.getTitle(),
-                    subjectDTO.getMultiplier(),
+                    Float.parseFloat(subjectDTO.getMultiplier()),
                     subjectDTO.getHours()
             );
         } catch (Exception e) {
@@ -102,7 +102,7 @@ public class SubjectsController {
         SubjectDTO subjectDTO = new SubjectDTO(
                 subject.getId(),
                 subject.getTitle(),
-                subject.getMultiplier(),
+                subject.getMultiplier().toString(),
                 subject.getHours()
         );
         return subjectDTO;
@@ -156,7 +156,7 @@ public class SubjectsController {
             resultList.add(new SubjectDTO(
                     subject.getId(),
                     subject.getTitle(),
-                    subject.getMultiplier(),
+                    subject.getMultiplier().toString(),
                     subject.getHours()
             ));
         }

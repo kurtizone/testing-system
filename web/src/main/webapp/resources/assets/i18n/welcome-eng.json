@@ -12,8 +12,21 @@
   "RESULTS":"Results",
   "MORE":"More",
   "ADD_SUBJECT":"Add Subject",
+  "ADD_LECTURER":"Add Lecturer",
   "TITLE_SUBJECT":"Title of subject",
   "MULTIPLIER":"Multiplier",
   "HOURS":"Amount hours",
-  "ACTIONS":"Actions"
+  "ACTIONS":"Actions",
+  "ADD":"Add",
+  "CLEAR_FORM":"Reset",
+  "EDIT":"Edit",
+  "CLOSE":"Close",
+  "REQUIRED":"This field is required",
+  "FIRST_NAME":"First name",
+  "LAST_NAME":"Last name",
+  "MIDDLE_NAME":"Middle name",
+  "ACADEMIC_STATUS":"Academic status",
+  "DEGREE":"Degree",
+  "STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS":"Select status",
+  "STATUS_SELECT_PLACEHOLDER_DEGREE":"Select degree"
 }

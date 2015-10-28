@@ -1,5 +1,7 @@
 package com.testing.edu.entity;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -7,6 +9,7 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
+@EqualsAndHashCode(of = "id")
 @Table(name = "subject", catalog = "testing_system")
 public class Subject implements java.io.Serializable {
 

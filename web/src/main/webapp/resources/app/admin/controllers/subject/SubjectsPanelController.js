@@ -18,7 +18,6 @@ angular
             $scope.pageContent = [];
 
             $scope.clearAll = function () {
-                $scope.selectedDeviceType.name = null;
                 $scope.tableParams.filter({});
             };
 
@@ -75,7 +74,7 @@ angular
                 var addSubject = $modal.open({
                     animation : true,
                     controller : 'SubjectAddModalController',
-                    templateUrl : '/resources/app/admin/views/modals/subject-add-modal.html',
+                    templateUrl : '/resources/app/admin/views/modals/subject/subject-add-modal.html',
                     size: 'md'
                 });
             };
@@ -95,8 +94,8 @@ angular
                         var subjectDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'CategoryDeviceEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/device-category-edit-modal.html',
+                                controller : 'SubjectEditModalController',
+                                templateUrl : '/resources/app/admin/views/modals/subject/subject-edit-modal.html',
                                 size: 'md'
                             });
                     });
@@ -111,6 +110,47 @@ angular
                     console.log('delete with timeout');
                     $rootScope.onTableHandling();
                 }, 700);
+            };
+
+
+            $scope.openListOfGroups = function(
+                subjectId) {
+                $rootScope.subjectId = subjectId;
+                subjectsService.getSubjectById(
+                    $rootScope.subjectId).then(
+                    function(data) {
+                        $rootScope.subject = data;
+                        console.log($rootScope.subject);
+
+                        var subjectDTOModal = $modal
+                            .open({
+                                animation : true,
+                                controller : 'SubjectEditModalController',
+                                templateUrl : '/resources/app/admin/views/modals/subject/subject-edit-modal.html',
+                                size: 'md'
+                            });
+                    });
+
+            };
+
+            $scope.openListOfLecturers = function(
+                subjectId) {
+                $rootScope.subjectId = subjectId;
+                subjectsService.getSubjectById(
+                    $rootScope.subjectId).then(
+                    function(data) {
+                        $rootScope.subject = data;
+                        console.log($rootScope.subject);
+
+                        var subjectDTOModal = $modal
+                            .open({
+                                animation : true,
+                                controller : 'SubjectEditModalController',
+                                templateUrl : '/resources/app/admin/views/modals/subject/subject-edit-modal.html',
+                                size: 'md'
+                            });
+                    });
+
             };
 
         }]);

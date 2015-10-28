@@ -95,7 +95,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     @Transactional
     public ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage, String title,
-                                                                          Float multiplier, Integer hours,
+                                                                          String multiplier, Integer hours,
                                                                           String sortCriteria, String sortOrder) {
         CriteriaQuery<Subject> criteriaQuery = SubjectQueryConstructor
                 .buildSearchQuery(title, multiplier, hours, sortCriteria, sortOrder, entityManager);

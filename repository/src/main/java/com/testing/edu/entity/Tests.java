@@ -1,26 +1,23 @@
 package com.testing.edu.entity;
 
+import com.testing.edu.entity.enumeration.TestType;
+import lombok.EqualsAndHashCode;
+
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
+
 import static javax.persistence.GenerationType.IDENTITY;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
+@EqualsAndHashCode(of = "id")
 @Table(name = "tests", catalog = "testing_system")
 public class Tests implements java.io.Serializable {
 
 	private Long id;
 	private Subject subject;
 	private String title;
-	private String type;
+	private TestType type;
 	private Integer maxGrade;
 	private Boolean avaible;
 	private Set<Result> results = new HashSet<Result>(0);
@@ -33,7 +30,7 @@ public class Tests implements java.io.Serializable {
 		this.subject = subject;
 	}
 
-	public Tests(Subject subject, String title, String type, Integer maxGrade, Boolean avaible, Set<Result> results,
+	public Tests(Subject subject, String title, TestType type, Integer maxGrade, Boolean avaible, Set<Result> results,
 			Set<Questions> questionses) {
 		this.subject = subject;
 		this.title = title;
@@ -45,7 +42,7 @@ public class Tests implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
@@ -74,12 +71,13 @@ public class Tests implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@Column(name = "type", length = 45)
-	public String getType() {
+	@Column(name = "type")
+	@Enumerated(EnumType.STRING)
+	public TestType getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(TestType type) {
 		this.type = type;
 	}
 

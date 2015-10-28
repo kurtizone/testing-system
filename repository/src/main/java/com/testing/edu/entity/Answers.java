@@ -1,9 +1,12 @@
 package com.testing.edu.entity;
 
+import lombok.EqualsAndHashCode;
+
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.*;
 
 @Entity
+@EqualsAndHashCode(of = "id")
 @Table(name = "answers", catalog = "testing_system")
 public class Answers implements java.io.Serializable {
 
@@ -26,7 +29,7 @@ public class Answers implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;

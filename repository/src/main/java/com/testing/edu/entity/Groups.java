@@ -1,39 +1,32 @@
 package com.testing.edu.entity;
 
+import com.testing.edu.entity.enumeration.Degree;
+import com.testing.edu.entity.enumeration.StudyForm;
 import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
+
 import static javax.persistence.GenerationType.IDENTITY;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-
-@EqualsAndHashCode
 @Entity
+@EqualsAndHashCode(of = "id")
 @Table(name = "groups", catalog = "testing_system")
 public class Groups implements java.io.Serializable {
 
 	private Long id;
 	private String title;
 	private Integer grade;
-	private String degree;
-	private String studyForm;
+	private Degree degree;
+	private StudyForm studyForm;
 	private Set<Students> studentses = new HashSet<Students>(0);
 	private Set<Subject> subjects = new HashSet<Subject>(0);
 
 	public Groups() {
 	}
 
-	public Groups(String title, Integer grade, String degree, String studyForm, Set<Students> studentses,
+	public Groups(String title, Integer grade, Degree degree, StudyForm studyForm, Set<Students> studentses,
 			Set<Subject> subjects) {
 		this.title = title;
 		this.grade = grade;
@@ -44,7 +37,7 @@ public class Groups implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_group", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
@@ -72,21 +65,23 @@ public class Groups implements java.io.Serializable {
 		this.grade = grade;
 	}
 
-	@Column(name = "degree", length = 45)
-	public String getDegree() {
+	@Column(name = "degree")
+	@Enumerated(EnumType.STRING)
+	public Degree getDegree() {
 		return this.degree;
 	}
 
-	public void setDegree(String degree) {
+	public void setDegree(Degree degree) {
 		this.degree = degree;
 	}
 
 	@Column(name = "study_form", length = 45)
-	public String getStudyForm() {
+	@Enumerated(EnumType.STRING)
+	public StudyForm getStudyForm() {
 		return this.studyForm;
 	}
 
-	public void setStudyForm(String studyForm) {
+	public void setStudyForm(StudyForm studyForm) {
 		this.studyForm = studyForm;
 	}
 
