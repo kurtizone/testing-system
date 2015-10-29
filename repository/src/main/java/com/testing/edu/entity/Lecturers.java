@@ -20,7 +20,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "lecturers", catalog = "testing_system")
 public class Lecturers implements java.io.Serializable {
 
-	private Long idLecturers;
+	private Long id;
 	private User user;
 	private String lastName;
 	private String firstName;
@@ -36,30 +36,34 @@ public class Lecturers implements java.io.Serializable {
 		this.user = user;
 	}
 
-	public Lecturers(User user, String lastName, String firstName, String middleName, AcademicStatus academicStatus, Degree degree,
-			Set<Subject> subjects) {
-		this.user = user;
+	public Lecturers(String lastName, String firstName, String middleName, AcademicStatus academicStatus, Degree degree) {
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.academicStatus = academicStatus;
 		this.degree = degree;
+	}
+
+	public Lecturers(User user, String lastName, String firstName, String middleName, AcademicStatus academicStatus, Degree degree,
+			Set<Subject> subjects) {
+		this(lastName, firstName, middleName, academicStatus, degree);
+		this.user = user;
 		this.subjects = subjects;
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_lecturers", unique = true, nullable = false)
-	public Long getIdLecturers() {
-		return this.idLecturers;
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setIdLecturers(Long idLecturers) {
-		this.idLecturers = idLecturers;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return this.user;
 	}

@@ -18,7 +18,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "students", catalog = "testing_system")
 public class Students implements java.io.Serializable {
 
-	private Long idStudent;
+	private Long id;
 	private Groups groups;
 	private User user;
 	private String lastName;
@@ -49,12 +49,12 @@ public class Students implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_student", unique = true, nullable = false)
-	public Long getIdStudent() {
-		return this.idStudent;
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setIdStudent(Long idStudent) {
-		this.idStudent = idStudent;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -68,7 +68,7 @@ public class Students implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return this.user;
 	}

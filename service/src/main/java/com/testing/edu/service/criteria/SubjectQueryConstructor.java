@@ -25,7 +25,7 @@ public class SubjectQueryConstructor {
         if((sortCriteria != null)&&(sortOrder != null)) {
             criteriaQuery.orderBy(SortCriteriaSubject.valueOf(sortCriteria.toUpperCase()).getSortOrder(root, cb, sortOrder));
         } else {
-            criteriaQuery.orderBy(cb.desc(root.get("title")));
+            criteriaQuery.orderBy(cb.desc(root.get("id")));
         }
         criteriaQuery.select(root);
         criteriaQuery.where(predicate);

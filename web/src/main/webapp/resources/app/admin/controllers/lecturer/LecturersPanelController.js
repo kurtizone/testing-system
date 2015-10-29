@@ -183,9 +183,9 @@ angular
             };
 
             $scope.deleteLecturer = function (id) {
-                $rootScope.deviceCategoryId = id;
-                console.log($rootScope.deviceCategoryId);
-                devicesService.deleteDeviceCategory(id);
+                $rootScope.id = id;
+                console.log($rootScope.id);
+                lecturersService.deleteLecturer(id);
                 $timeout(function() {
                     console.log('delete with timeout');
                     $rootScope.onTableHandling();
