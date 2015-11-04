@@ -6,14 +6,18 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
-            <button type="submit" class="btn btn-primary"
-                    ng-click="openAddSubjectModal()">{{'ADD_SUBJECT'
-                | translate}}</button>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <button type="submit" class="btn btn-primary col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-click="openAddSubjectModal()">
+                <span class="glyphicon glyphicon-plus"></span>
+                {{'ADD_SUBJECT' | translate}}
+            </button>
         </div>
-        <div class="col-xs-6 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <p></p>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
             <button ng-click="clearAll()" ng-show="isFilter()"
-                    class="btn btn-danger pull-right">
+                    class="btn btn-danger pull-right col-xs-12 col-sm-12 col-md-10 col-lg-10">
                 {{'CLEAR_ALL' | translate }}
             </button>
         </div>
@@ -34,7 +38,7 @@
                             filter="{ 'multiplier': 'text' }">{{ subject.multiplier }}
                         </td>
                         <td data-title="'HOURS' | translate" sortable="'hours'"
-                            filter="{ 'hours': 'text' }">{{ subject.hours}}
+                            filter="{ 'hours': 'text' }">{{ subject.hours }}
                         </td>
                         <td data-title="'ACTIONS' | translate" class="text-center">
                             <div class="btn-group-vertical">

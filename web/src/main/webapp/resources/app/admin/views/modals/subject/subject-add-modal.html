@@ -3,10 +3,10 @@
         | translate}}</h3>
 </div>
 
-<div class="modal-body">
+<div class="modal-body modal-padding">
     <form name="addSubjectForm" id="addSubjectForm" role="form" ng-submit="onAddSubjectFormSubmit()"
           class="form-group" novalidate>
-        <div class="form-group row" show-errors>
+        <div class="form-group row row-fields" show-errors>
             <label class="control-label col-md-4" for="title">
                 {{'TITLE_SUBJECT' |translate }}
             </label>
@@ -32,7 +32,7 @@
             </div>
         </div>
         
-        <div class="form-group row" show-errors>
+        <div class="form-group row row-fields" show-errors>
             <label class="control-label col-md-4" for="multiplier">
                 {{'MULTIPLIER' | translate }}
             </label>
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <div class="form-group row" show-errors>
+        <div class="form-group row row-fields" show-errors>
             <label class="control-label col-md-4" for="hours">
                 {{'HOURS' | translate }}
             </label>
@@ -81,22 +81,18 @@
                 </p>
             </div>
         </div>
-
-
-        <div class="form-group row">
-            <div class="col-md-10">
-                <button type="submit" class="btn btn-success">
-                    {{'ADD' | translate}}
-                </button>
-                <button type="reset" class="btn btn-warning" ng-click="resetAddSubjectForm()">
-                    {{'CLEAR_FORM' | translate }}
-                </button>
+        <hr>
+        <div class="form-group row row-buttons">
+            <button type="submit" class="btn btn-success col-md-2 col-sm-12 col-xs-12 col-lg-2">
+                {{'ADD' | translate}}
+            </button>
+            <input type="reset" class="btn btn-warning col-md-2 col-sm-12 col-xs-12 col-lg-2" value="{{'CLEAR_FORM' | translate }}" ng-click="resetAddSubjectForm()">
+            <div class="col-md-6 col-sm-0 col-xs-0 col-lg-6">
+                <p></p>
             </div>
-            <div class="col-md-2">
-                <button class="btn btn-danger pull-right" ng-click="closeModal()">
-                    {{'CLOSE' | translate}}
-                </button>
-            </div>
+
+            <input type="button" class="btn btn-danger col-md-2 col-sm-12 col-xs-12 col-lg-2 pull-right"
+                   value="{{'CLOSE' | translate}}" ng-click="closeModal()">
         </div>
     </form>
 </div>

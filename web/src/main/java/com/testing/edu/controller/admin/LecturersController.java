@@ -6,6 +6,7 @@ import com.testing.edu.dto.admin.LecturerDTO;
 import com.testing.edu.entity.Lecturers;
 import com.testing.edu.service.LecturersService;
 import com.testing.edu.service.utils.ListToPageTransformer;
+import com.testing.edu.service.utils.TypeConverter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/admin/lecturers/")
@@ -125,14 +127,11 @@ public class LecturersController {
     public PageDTO<LecturerDTO> pageLecturerWithSearch(@PathVariable Integer pageNumber, @PathVariable Integer itemsPerPage,
                                                      @PathVariable String sortCriteria, @PathVariable String sortOrder,
                                                        LecturerDTO  searchData) {
+        Map<String, String> searchDataMap = TypeConverter.ObjectToMap(searchData);
         ListToPageTransformer<Lecturers> queryResult = lecturersService.getLecturerBySearchAndPagination(
                 pageNumber,
                 itemsPerPage,
-                searchData.getLastName(),
-                searchData.getFirstName(),
-                searchData.getMiddleName(),
-                searchData.getAcademicStatus(),
-                searchData.getDegree(),
+                searchDataMap,
                 sortCriteria,
                 sortOrder
         );

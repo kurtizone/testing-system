@@ -5,6 +5,7 @@ import com.testing.edu.dto.admin.SubjectDTO;
 import com.testing.edu.entity.Subject;
 import com.testing.edu.service.SubjectService;
 import com.testing.edu.service.utils.ListToPageTransformer;
+import com.testing.edu.service.utils.TypeConverter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/admin/subjects/")
@@ -39,7 +41,7 @@ public class SubjectsController {
         try {
             subjectService.addSubject(
                     subjectDTO.getTitle(),
-                    Float.parseFloat(subjectDTO.getMultiplier()),
+                    Double.valueOf(subjectDTO.getMultiplier()),
                     subjectDTO.getHours()
             );
         } catch (Exception e) {
@@ -63,7 +65,7 @@ public class SubjectsController {
             subjectService.editSubject(
                     subjectId,
                     subjectDTO.getTitle(),
-                    Float.parseFloat(subjectDTO.getMultiplier()),
+                    Double.valueOf(subjectDTO.getMultiplier()),
                     subjectDTO.getHours()
             );
         } catch (Exception e) {
@@ -121,12 +123,10 @@ public class SubjectsController {
     public PageDTO<SubjectDTO> pageSubjectWithSearch(@PathVariable Integer pageNumber, @PathVariable Integer itemsPerPage,
                                                              @PathVariable String sortCriteria, @PathVariable String sortOrder,
                                                              SubjectDTO searchData) {
+        Map<String, String> searchDataMap = TypeConverter.ObjectToMap(searchData);
         ListToPageTransformer<Subject> queryResult = subjectService.getSubjectBySearchAndPagination(
                 pageNumber,
-                itemsPerPage,
-                searchData.getTitle(),
-                searchData.getMultiplier(),
-                searchData.getHours(),
+                itemsPerPage,searchDataMap,
                 sortCriteria,
                 sortOrder
         );

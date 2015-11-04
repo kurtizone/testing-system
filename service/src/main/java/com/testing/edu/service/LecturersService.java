@@ -4,6 +4,8 @@ package com.testing.edu.service;
 import com.testing.edu.entity.Lecturers;
 import com.testing.edu.service.utils.ListToPageTransformer;
 
+import java.util.Map;
+
 public interface LecturersService {
 
     /**
@@ -46,18 +48,12 @@ public interface LecturersService {
      * Service for building page by SortCriteria, SortOrder and Searching data
      * @param pageNumber
      * @param itemsPerPage
-     * @param lastname
-     * @param firstname
-     * @param middleName
-     * @param academicStatus
-     * @param degree
+     * @param
      * @param sortCriteria
      * @param sortOrder
      * @return
      */
-    ListToPageTransformer<Lecturers> getLecturerBySearchAndPagination(int pageNumber, int itemsPerPage, String lastname,
-                                                                      String firstname, String middleName,
-                                                                      String academicStatus, String degree,
+    ListToPageTransformer<Lecturers> getLecturerBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String, String> searchDataMap,
                                                                       String sortCriteria, String sortOrder);
 
 }

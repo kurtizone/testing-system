@@ -1,0 +1,122 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{'FILL_IN_INFORMATION_ABOUT_GROUP'
+        | translate}}</h3>
+</div>
+
+<div class="modal-body modal-pediting">
+    <form name="editGroupForm" id="editGroupForm" role="form" ng-submit="onEditGroupFormSubmit()"
+          class="form-group" novalidate>
+
+        <div class="form-group row row-fields" show-errors>
+            <label class="control-label col-md-4" for="title">
+                {{'TITLE' |translate }}
+            </label>
+
+            <div class="col-md-8">
+                <input id="title" name="title" class="form-control"
+                       type="number" ng-model="$root.group.title"
+                       min="1" max="6" required>
+							<span class="form-control-feedback glyphicon
+						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                <p class="help-block" ng-if="editGroupForm.title.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'REQUIRED' | translate}}
+                </p>
+
+                <p class="help-block" ng-if="editGroupForm.title.$error.pattern">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row row-fields" show-errors>
+            <label class="control-label col-md-4" for="grade">
+                {{'GRADE' |translate }}
+            </label>
+
+            <div class="col-md-8">
+                <input id="grade" name="grade" class="form-control"
+                       type="number" ng-model="$root.group.grade"
+                       min="1" max="6" required>
+							<span class="form-control-feedback glyphicon
+						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                <p class="help-block" ng-if="editGroupForm.grade.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'REQUIRED' | translate}}
+                </p>
+
+                <p class="help-block" ng-if="editGroupForm.grade.$error.min || editGroupForm.grade.$error.max">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row row-fields" show-errors>
+            <label for="degree" class="control-label col-md-4">
+                {{'DEGREE' | translate}}
+            </label>
+
+            <div class="col-md-8">
+                <ui-select name="degree" id="degree" class="form-control"
+                           type="text" ng-model="defaultData.degree" theme="select2"
+                           search-enabled="false" required>
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_DEGREE' | translate}}"
+                                     allow-clear="true">
+                        {{$select.selected.label}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="degree in degreeData">
+                        <span ng-bind-html="degree.label"></span>
+                    </ui-select-choices>
+                </ui-select>
+
+                <p class="help-block" ng-if="editGroupForm.degree.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'REQUIRED' | translate}}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row row-fields" show-errors>
+            <label for="studyForm" class="control-label col-md-4">
+                {{'STUDY_FORM' | translate}}
+            </label>
+
+            <div class="col-md-8">
+                <ui-select class="form-control" type="text" ng-model="defaultData.studyForm" theme="select2"
+                           search-enabled="false" name="studyForm" id="studyForm" required>
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_STUDY_FORM' | translate}}"
+                                     allow-clear="true">
+                        {{$select.selected.label}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="studyForm in studyFormData">
+                        <span ng-bind-html="studyForm.label"></span>
+                    </ui-select-choices>
+                </ui-select>
+
+                <p class="help-block" ng-if="editGroupForm.studyForm.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'REQUIRED' | translate}}
+                </p>
+            </div>
+        </div>
+
+        <hr>
+        <div class="form-group row row-buttons">
+            <button type="submit" class="btn btn-success col-md-2 col-sm-12 col-xs-12 col-lg-2">
+                {{'ADD' | translate}}
+            </button>
+            <div class="col-md-8 col-sm-0 col-xs-0 col-lg-8">
+                <p></p>
+            </div>
+
+            <input type="button" class="btn btn-danger col-md-2 col-sm-12 col-xs-12 col-lg-2 pull-right"
+                   value="{{'CLOSE' | translate}}" ng-click="closeModal()">
+        </div>
+    </form>
+</div>

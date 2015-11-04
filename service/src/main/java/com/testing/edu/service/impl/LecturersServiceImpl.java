@@ -1,14 +1,20 @@
 package com.testing.edu.service.impl;
 
 import com.testing.edu.entity.Lecturers;
+import com.testing.edu.entity.Subject;
 import com.testing.edu.entity.enumeration.AcademicStatus;
 import com.testing.edu.entity.enumeration.Degree;
 import com.testing.edu.repository.LecturersRepository;
 import com.testing.edu.service.LecturersService;
 import com.testing.edu.service.criteria.LecturersQueryConstructor;
+import com.testing.edu.service.specification.builder.LecturersSpecificationBuilder;
+import com.testing.edu.service.specification.builder.SubjectSpecificationBuilder;
 import com.testing.edu.service.utils.ListToPageTransformer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +23,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LecturersServiceImpl implements LecturersService {
@@ -103,34 +110,25 @@ public class LecturersServiceImpl implements LecturersService {
      *
      * @param pageNumber
      * @param itemsPerPage
-     * @param lastName
-     * @param firstName
-     * @param middleName
-     * @param academicStatus
-     * @param degree
+     * @param searchKeys
      * @param sortCriteria
      * @param sortOrder
      * @return
      */
     @Override
     @Transactional
-    public ListToPageTransformer<Lecturers> getLecturerBySearchAndPagination(int pageNumber, int itemsPerPage, String lastName,
-                                                                             String firstName, String middleName, String academicStatus,
-                                                                             String degree, String sortCriteria, String sortOrder) {
-        CriteriaQuery<Lecturers> criteriaQuery = LecturersQueryConstructor
-                .buildSearchQuery(lastName, firstName, middleName, academicStatus, degree, sortCriteria, sortOrder, entityManager);
+    public ListToPageTransformer<Lecturers> getLecturerBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String, String> searchKeys,
+                                                                             String sortCriteria, String sortOrder) {
+        LecturersSpecificationBuilder specificationBuilder = new LecturersSpecificationBuilder(searchKeys);
+        Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
+        Specification<Lecturers> searchSpec = specificationBuilder.buildPredicate();
 
-        Long count = entityManager.createQuery(LecturersQueryConstructor
-                .buildCountQuery(lastName, firstName, middleName, academicStatus, degree, entityManager)).getSingleResult();
+        Page<Lecturers> lecturersPage = lecturersRepository.findAll(searchSpec, pageSpec);
+        List<Lecturers> lecturers = lecturersPage.getContent();
 
-        TypedQuery<Lecturers> typedQuery = entityManager.createQuery(criteriaQuery);
-        typedQuery.setFirstResult((pageNumber - 1) * itemsPerPage);
-        typedQuery.setMaxResults(itemsPerPage);
-        List<Lecturers> lecturersList = typedQuery.getResultList();
-
-        ListToPageTransformer<Lecturers> result = new ListToPageTransformer<Lecturers>();
-        result.setContent(lecturersList);
-        result.setTotalItems(count);
+        ListToPageTransformer<Lecturers> result = new ListToPageTransformer<>();
+        result.setContent(lecturers);
+        result.setTotalItems((long) lecturers.size());
         return result;
     }
 }

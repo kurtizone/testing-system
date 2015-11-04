@@ -4,8 +4,12 @@ import com.testing.edu.entity.Subject;
 import com.testing.edu.repository.SubjectRepository;
 import com.testing.edu.service.SubjectService;
 import com.testing.edu.service.criteria.SubjectQueryConstructor;
+import com.testing.edu.service.specification.builder.SubjectSpecificationBuilder;
 import com.testing.edu.service.utils.ListToPageTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +18,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -33,7 +38,7 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     @Transactional
-    public void addSubject(String title, Float multiplier, Integer hours) {
+    public void addSubject(String title, Double multiplier, Integer hours) {
         Subject subject = new Subject(title, multiplier, hours);
         subjectRepository.save(subject);
     }
@@ -48,7 +53,7 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     @Transactional
-    public void editSubject(Long id, String title, Float multiplier, Integer hours) {
+    public void editSubject(Long id, String title, Double multiplier, Integer hours) {
         Subject subject = subjectRepository.findOne(id);
         subject.setTitle(title);
         subject.setMultiplier(multiplier);
@@ -85,32 +90,26 @@ public class SubjectServiceImpl implements SubjectService {
      *
      * @param pageNumber
      * @param itemsPerPage
-     * @param title
-     * @param multiplier
-     * @param hours
+     * @param searchKeys
      * @param sortCriteria
      * @param sortOrder
      * @return
      */
     @Override
     @Transactional
-    public ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage, String title,
-                                                                          String multiplier, Integer hours,
+    public ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage,
+                                                                          Map<String, String> searchKeys,
                                                                           String sortCriteria, String sortOrder) {
-        CriteriaQuery<Subject> criteriaQuery = SubjectQueryConstructor
-                .buildSearchQuery(title, multiplier, hours, sortCriteria, sortOrder, entityManager);
+        SubjectSpecificationBuilder specificationBuilder = new SubjectSpecificationBuilder(searchKeys);
+        Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
+        Specification<Subject> searchSpec = specificationBuilder.buildPredicate();
 
-        Long count = entityManager.createQuery(SubjectQueryConstructor
-                .buildCountQuery(title, multiplier, hours, entityManager)).getSingleResult();
-
-        TypedQuery<Subject> typedQuery = entityManager.createQuery(criteriaQuery);
-        typedQuery.setFirstResult((pageNumber - 1) * itemsPerPage);
-        typedQuery.setMaxResults(itemsPerPage);
-        List<Subject> subjectsList = typedQuery.getResultList();
+        Page<Subject> subjectPage = subjectRepository.findAll(searchSpec, pageSpec);
+        List<Subject> subjects = subjectPage.getContent();
 
         ListToPageTransformer<Subject> result = new ListToPageTransformer<>();
-        result.setContent(subjectsList);
-        result.setTotalItems(count);
+        result.setContent(subjects);
+        result.setTotalItems((long) subjects.size());
         return result;
     }
 }

@@ -15,7 +15,7 @@ public class Subject implements java.io.Serializable {
 
 	private Long id;
 	private String title;
-	private Float multiplier;
+	private Double multiplier;
 	private Integer hours;
 	private Set<Lecturers> lecturerses = new HashSet<Lecturers>(0);
 	private Set<Tests> testses = new HashSet<Tests>(0);
@@ -24,13 +24,13 @@ public class Subject implements java.io.Serializable {
 	public Subject() {
 	}
 
-	public Subject(String title, Float multiplier, Integer hours) {
+	public Subject(String title, Double multiplier, Integer hours) {
 		this.title = title;
 		this.multiplier = multiplier;
 		this.hours = hours;
 	}
 
-	public Subject(String title, Float multiplier, Integer hours, Set<Lecturers> lecturerses, Set<Tests> testses,
+	public Subject(String title, Double multiplier, Integer hours, Set<Lecturers> lecturerses, Set<Tests> testses,
 			Set<Groups> groupses) {
 		this.title = title;
 		this.multiplier = multiplier;
@@ -61,11 +61,11 @@ public class Subject implements java.io.Serializable {
 	}
 
 	@Column(name = "multiplier")
-	public Float getMultiplier() {
+	public Double getMultiplier() {
 		return this.multiplier;
 	}
 
-	public void setMultiplier(Float multiplier) {
+	public void setMultiplier(Double multiplier) {
 		this.multiplier = multiplier;
 	}
 

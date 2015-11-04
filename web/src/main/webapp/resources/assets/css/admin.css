@@ -2,6 +2,38 @@ body {
     background-color: #f8f8f8;
 }
 
+.modal-padding {
+    padding: 10px;
+}
+
+hr {
+    margin:10px 0px;
+}
+
+.row-buttons {
+    margin: 5px 2px;
+}
+.acord-align{
+    text-align: left !important;
+}
+
+.row-buttons .btn {
+    margin-right: 2px;
+
+}
+.row-fields {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.modal-padding label {
+    text-align: right;
+    margin-top: 5px;
+}
+
+
 .nav,
 .pagination,
 .carousel,
