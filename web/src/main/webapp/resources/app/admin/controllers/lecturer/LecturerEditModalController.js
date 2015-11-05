@@ -8,144 +8,55 @@ angular
         '$translate',
         '$modalInstance',
         'LecturersService',
+        '$filter',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  lecturersService) {
+                  lecturersService, $filter) {
 
     
             $scope.defaultData = {};
             $scope.defaultData.academicStatus = {
                 id: $rootScope.lecturer.academicStatus,
-                label: null
+                label: $filter('translate')($rootScope.lecturer.academicStatus)
             };
             $scope.defaultData.degree = {
                 id: $rootScope.lecturer.degree,
-                label: null
+                label: $filter('translate')($rootScope.lecturer.degree)
             };
 
             $scope.academicStatusData = [
                 {
                     id: 'PROFESSOR',
-                    label: null
+                    label: $filter('translate')('PROFESSOR')
                 },
                 {
                     id: 'DOCENT',
-                    label: null
+                    label: $filter('translate')('DOCENT')
                 },
                 {
                     id: 'SENIOR_LECTURER',
-                    label: null
+                    label: $filter('translate')('SENIOR_LECTURER')
                 }
             ];
 
             $scope.degreeData = [
                 {
                     id: 'CANDIDATE',
-                    label: null
+                    label: $filter('translate')('CANDIDATE')
                 },
                 {
                     id: 'DOCTOR',
-                    label: null
+                    label: $filter('translate')('DOCTOR')
                 },
                 {
                     id: 'POSTGRADUATE',
-                    label: null
+                    label: $filter('translate')('POSTGRADUATE')
                 }
             ];
-            console.log($scope.academicStatusData);
-            console.log($scope.degreeData);
-            /**
-             * Localization of multiselect for type of organization
-             */
+
+
             $scope.setTypeDataLanguage = function () {
-                var lang = $translate.use();
-                if (lang === 'ukr') {
-                    $scope.academicStatusData[0].label = 'Професор';
-                    $scope.academicStatusData[1].label = 'Доцент';
-                    $scope.academicStatusData[2].label = 'Старший викладач';
-                    $scope.degreeData[0].label = 'Кандидат наук';
-                    $scope.degreeData[1].label = 'Доктор наук';
-                    $scope.degreeData[2].label = 'Аспірант';
-                } else if (lang === 'eng') {
-                    $scope.academicStatusData[0].label = 'Professor';
-                    $scope.academicStatusData[1].label = 'Docent';
-                    $scope.academicStatusData[2].label = 'Senior Lecturer';
-                    $scope.degreeData[0].label = 'PhD';
-                    $scope.degreeData[1].label = 'Doctorate';
-                    $scope.degreeData[2].label = 'Postgraduate';
-                }
             };
-
-
-            var setCurrentTypeDataLanguage = function () {
-                var lang = $translate.use();
-                if (lang === 'ukr') {
-                    switch ($scope.defaultData.academicStatus.id) {
-                        case "PROFESSOR":
-                            console.log($scope.defaultData.academicStatus);
-                            $scope.defaultData.academicStatus.label = 'Професор';
-                            break;
-                        case "DOCENT":
-                            console.log($scope.defaultData.academicStatus);
-                            $scope.defaultData.academicStatus.label = 'Доцент';
-                            break;
-                        case "SENIOR_LECTURER":
-                            console.log($scope.defaultData.academicStatus);
-                            $scope.defaultData.academicStatus.label = 'Старший викладач';
-                            break;
-                        default:
-                            console.log($scope.defaultData.academicStatus.id + " not lecturer");
-                    }
-                    switch ($scope.defaultData.degree.id) {
-                        case "CANDIDATE":
-                            console.log($scope.defaultData.degree);
-                            $scope.defaultData.degree.label = 'Кандидат наук';
-                            break;
-                        case "DOCTOR":
-                            console.log($scope.defaultData.degree);
-                            $scope.defaultData.degree.label = 'Доктор наук';
-                            break;
-                        case "POSTGRADUATE":
-                            console.log($scope.defaultData.degree);
-                            $scope.defaultData.degree.label = 'Аспірант';
-                            break;
-                        default:
-                            console.log($scope.defaultData.degree.id + " not lecturer");
-                    }
-
-                } else if (lang === 'eng') {
-                    switch ($scope.defaultData.academicStatus.id) {
-                        case "PROFESSOR":
-                            $scope.defaultData.academicStatus.label = 'Professor';
-                            break;
-                        case "THERMAL":
-                            $scope.defaultData.academicStatus.label = 'Docent';
-                            break;
-                        case "SENIOR_LECTURER":
-                            console.log($scope.defaultData.academicStatus);
-                            $scope.defaultData.academicStatus.label = 'Senior Lecturer';
-                            break;
-                        default:
-                            console.log($scope.defaultData.academicStatus.id + " not lecturer");
-                    }
-                    switch ($scope.defaultData.degree.id) {
-                        case "CANDIDATE":
-                            $scope.defaultData.degree.label = 'PhD';
-                            break;
-                        case "DOCTOR":
-                            $scope.defaultData.degree.label = 'Doctorate';
-                            break;
-                        case "POSTGRADUATE":
-                            console.log($scope.defaultData.degree);
-                            $scope.defaultData.degree.label = 'Postgraduate';
-                            break;
-                        default:
-                            console.log($scope.defaultData.degree.id + " not lecturer");
-                    }
-                }
-            };
-
             $scope.setTypeDataLanguage();
-            setTimeout(setCurrentTypeDataLanguage(), 2000);
 
             /**
              * Closes modal window on browser's back/forward button click.
@@ -158,8 +69,11 @@ angular
              * Closes the modal window for adding new
              * lecturer.
              */
-            $rootScope.closeModal = function () {
-                $modalInstance.close();
+            $rootScope.closeModal = function (close) {
+                if(close === true) {
+                    $modalInstance.close();
+                }
+                $modalInstance.dismiss();
             };
 
             /**
@@ -204,7 +118,7 @@ angular
                     $rootScope.lecturer.id).then(
                     function (data) {
                         if (data == 200) {
-                            $scope.closeModal();
+                            $scope.closeModal(true);
                             console.log(data);
                             $rootScope.onTableHandling();
                         }

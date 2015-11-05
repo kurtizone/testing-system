@@ -11,7 +11,9 @@ angular
         'ngTableParams',
         '$translate',
         '$timeout',
-        function ($rootScope, $scope, $modal, $http, subjectsService, ngTableParams, $translate, $timeout) {
+        'toaster',
+        '$filter',
+        function ($rootScope, $scope, $modal, $http, subjectsService, ngTableParams, $translate, $timeout, toaster, $filter) {
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
@@ -77,6 +79,9 @@ angular
                     templateUrl : '/resources/app/admin/views/modals/subject/subject-add-modal.html',
                     size: 'md'
                 });
+                addSubject.result.then(function () {
+                    toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_SUBJECT'));
+                });
             };
 
             /**
@@ -98,6 +103,9 @@ angular
                                 templateUrl : '/resources/app/admin/views/modals/subject/subject-edit-modal.html',
                                 size: 'md'
                             });
+                        subjectDTOModal.result.then(function () {
+                            toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_SUBJECT'));
+                        });
                     });
 
             };
@@ -105,7 +113,9 @@ angular
             $scope.deleteSubject = function (id) {
                 $rootScope.subjectId = id;
                 console.log($rootScope.subjectId);
-                subjectsService.deleteSubject(id);
+                subjectsService.deleteSubject(id).then(function () {
+                    toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_SUBJECT'));
+                });
                 $timeout(function() {
                     console.log('delete with timeout');
                     $rootScope.onTableHandling();

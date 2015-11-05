@@ -22,8 +22,11 @@ angular
              * Closes the modal window for adding new
              * organization.
              */
-            $rootScope.closeModal = function () {
-                $modalInstance.close();
+            $rootScope.closeModal = function (close) {
+                if(close === true) {
+                    $modalInstance.close();
+                }
+                $modalInstance.dismiss();
             };
 
             /**
@@ -56,8 +59,7 @@ angular
                     $rootScope.subject.id).then(
                     function (data) {
                         if (data == 200) {
-                            $scope.closeModal();
-                            console.log(data);
+                            $scope.closeModal(true);
                             $rootScope.onTableHandling();
                         }
                     });

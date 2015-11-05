@@ -1,4 +1,4 @@
-<div id="page-wrapper" ng-controller="GroupPanelController">
+<div id="page-wrapper" ng-controller="GroupsPanelController">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">{{ 'GROUPS' | translate }}</h1>
@@ -30,7 +30,7 @@
                        class="table table-bordered table-hover users_table">
                     <tbody>
                     <tr ng-repeat="group in $data">
-                        <td data-title="'TITLE' | translate" sortable="'title'"
+                        <td data-title="'TITLE_GROUP' | translate" sortable="'title'"
                             filter="{ 'title': 'text' }" >
                             {{ group.title }}
                         </td>
@@ -39,10 +39,10 @@
                             {{ group.grade }}
                         </td>
                         <td data-title="'DEGREE' | translate " sortable="'degree'"
-                            filter="{ 'degree': 'degree' }">{{ group.degree }}
+                            filter="{ 'degree': 'degree' }">{{ group.degree | translate }}
                         </td>
                         <td data-title="'STUDYFORM' | translate" sortable="'studyForm'"
-                            filter="{ 'studyForm': 'studyForm' }">{{ group.studyForm }}
+                            filter="{ 'studyForm': 'studyForm' }">{{ group.studyForm | translate }}
                         </td>
                         <td data-title="'ACTIONS' | translate" class="text-center">
                             <div class="btn-group-vertical">

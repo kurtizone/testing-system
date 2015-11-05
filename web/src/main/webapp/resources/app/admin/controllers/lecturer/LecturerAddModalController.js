@@ -8,8 +8,9 @@ angular
         '$translate',
         '$modalInstance',
         'LecturersService',
+        '$filter',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  lecturersService) {
+                  lecturersService, $filter) {
 
             $scope.addLecturerFormData = {};
             $scope.addLecturerFormData.academicStatus = undefined;
@@ -18,57 +19,36 @@ angular
             $scope.academicStatusData = [
                 {
                     id: 'PROFESSOR',
-                    label: null
+                    label: $filter('translate')('PROFESSOR')
                 },
                 {
                     id: 'DOCENT',
-                    label: null
+                    label: $filter('translate')('DOCENT')
                 },
                 {
                     id: 'SENIOR_LECTURER',
-                    label: null
+                    label: $filter('translate')('SENIOR_LECTURER')
                 }
             ];
 
             $scope.degreeData = [
                 {
                     id: 'CANDIDATE',
-                    label: null
+                    label: $filter('translate')('CANDIDATE')
                 },
                 {
                     id: 'DOCTOR',
-                    label: null
+                    label: $filter('translate')('DOCTOR')
                 },
                 {
                     id: 'POSTGRADUATE',
-                    label: null
+                    label: $filter('translate')('POSTGRADUATE')
                 }
             ];
 
-            /**
-             * Localization of multiselect for type of organization
-             */
             $scope.setTypeDataLanguage = function () {
-                var lang = $translate.use();
-                if (lang === 'ukr') {
-                    $scope.academicStatusData[0].label = 'Професор';
-                    $scope.academicStatusData[1].label = 'Доцент';
-                    $scope.academicStatusData[2].label = 'Старший викладач';
-                    $scope.degreeData[0].label = 'Кандидат наук';
-                    $scope.degreeData[1].label = 'Доктор наук';
-                    $scope.degreeData[2].label = 'Аспірант';
-                } else if (lang === 'eng') {
-                    $scope.academicStatusData[0].label = 'Professor';
-                    $scope.academicStatusData[1].label = 'Docent';
-                    $scope.academicStatusData[2].label = 'Senior Lecturer';
-                    $scope.degreeData[0].label = 'PhD';
-                    $scope.degreeData[1].label = 'Doctorate';
-                    $scope.degreeData[2].label = 'Postgraduate';
-                }
             };
-
             $scope.setTypeDataLanguage();
-
             /**
              * Closes modal window on browser's back/forward button click.
              */
@@ -90,9 +70,12 @@ angular
              * Closes the modal window for adding new
              * organization.
              */
-            $rootScope.closeModal = function () {
+            $rootScope.closeModal = function (close) {
                 $scope.resetAddLecturerForm();
-                $modalInstance.close();
+                if(close === true) {
+                    $modalInstance.close();
+                }
+                $modalInstance.dismiss();
             };
 
             /**
@@ -103,7 +86,6 @@ angular
                 if ($scope.addLecturerForm.$valid) {
                     $scope.addLecturerFormData.academicStatus = $scope.addLecturerFormData.academicStatus.id;
                     $scope.addLecturerFormData.degree = $scope.addLecturerFormData.degree.id;
-                    console.log($scope.addLecturerForm);
                     saveLecturer();
                 }
             };
@@ -118,8 +100,7 @@ angular
                 lecturersService.saveLecturer($scope.addLecturerFormData)
                     .then(function (data) {
                         if (data == 201) {
-                            $scope.closeModal();
-                            $scope.resetAddLecturerForm();
+                            $scope.closeModal(true);
                             $rootScope.onTableHandling();
                         }
                     });

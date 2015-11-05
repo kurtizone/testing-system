@@ -11,7 +11,9 @@ angular
         'ngTableParams',
         '$translate',
         '$timeout',
-        function ($rootScope, $scope, $modal, $http, lecturersService, ngTableParams, $translate, $timeout) {
+        'toaster',
+        '$filter',
+        function ($rootScope, $scope, $modal, $http, lecturersService, ngTableParams, $translate, $timeout, toaster, $filter) {
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
@@ -30,55 +32,36 @@ angular
             $scope.academicStatusData = [
                 {
                     id: 'PROFESSOR',
-                    label: null
+                    label: $filter('translate')('PROFESSOR')
                 },
                 {
                     id: 'DOCENT',
-                    label: null
+                    label: $filter('translate')('DOCENT')
                 },
                 {
                     id: 'SENIOR_LECTURER',
-                    label: null
+                    label: $filter('translate')('SENIOR_LECTURER')
                 }
             ];
 
             $scope.degreeData = [
                 {
                     id: 'CANDIDATE',
-                    label: null
+                    label: $filter('translate')('CANDIDATE')
                 },
                 {
                     id: 'DOCTOR',
-                    label: null
+                    label: $filter('translate')('DOCTOR')
                 },
                 {
                     id: 'POSTGRADUATE',
-                    label: null
+                    label: $filter('translate')('POSTGRADUATE')
                 }
             ];
 
-            /**
-             * Localization of multiselect for type of organization
-             */
             $scope.setTypeDataLanguage = function () {
-                var lang = $translate.use();
-                if (lang === 'ukr') {
-                    $scope.academicStatusData[0].label = 'Професор';
-                    $scope.academicStatusData[1].label = 'Доцент';
-                    $scope.academicStatusData[2].label = 'Старший викладач';
-                    $scope.degreeData[0].label = 'Кандидат наук';
-                    $scope.degreeData[1].label = 'Доктор наук';
-                    $scope.degreeData[2].label = 'Аспірант';
-                } else if (lang === 'eng') {
-                    $scope.academicStatusData[0].label = 'Professor';
-                    $scope.academicStatusData[1].label = 'Docent';
-                    $scope.academicStatusData[2].label = 'Senior Lecturer';
-                    $scope.degreeData[0].label = 'PhD';
-                    $scope.degreeData[1].label = 'Doctorate';
-                    $scope.degreeData[2].label = 'Postgraduate';
-                }
-            };
 
+            };
             $scope.setTypeDataLanguage();
 
             $scope.clearAll = function () {
@@ -157,6 +140,9 @@ angular
                     templateUrl : '/resources/app/admin/views/modals/lecturers/lecturer-add-modal.html',
                     size: 'md'
                 });
+                addLecturer.result.then(function () {
+                    toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_LECTURER'));
+                });
             };
 
             /**
@@ -178,6 +164,9 @@ angular
                                 templateUrl : '/resources/app/admin/views/modals/lecturers/lecturer-edit-modal.html',
                                 size: 'md'
                             });
+                        lecturerDTOModal.result.then(function () {
+                            toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_LECTURER'));
+                        });
                     });
 
             };
@@ -185,7 +174,9 @@ angular
             $scope.deleteLecturer = function (id) {
                 $rootScope.id = id;
                 console.log($rootScope.id);
-                lecturersService.deleteLecturer(id);
+                lecturersService.deleteLecturer(id).then(function () {
+                    toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_LECTURER'));
+                });
                 $timeout(function() {
                     console.log('delete with timeout');
                     $rootScope.onTableHandling();

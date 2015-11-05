@@ -46,6 +46,14 @@ public class Students implements java.io.Serializable {
 		this.results = results;
 	}
 
+	public Students(String lastname, String firstname, String middleName,
+				   String numberGradebook) {
+		this.lastName = lastname;
+		this.firstName = firstname;
+		this.middleName = middleName;
+		this.numberGradebook = numberGradebook;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_student", unique = true, nullable = false)
@@ -58,7 +66,7 @@ public class Students implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "groups_id_group", nullable = false)
+	@JoinColumn(name = "groups_id_group", nullable = true)
 	public Groups getGroups() {
 		return this.groups;
 	}

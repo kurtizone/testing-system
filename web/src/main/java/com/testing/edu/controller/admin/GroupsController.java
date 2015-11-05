@@ -10,15 +10,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@RestController
+@RequestMapping(value = "/admin/groups/")
 public class GroupsController {
 
     private final Logger logger = Logger.getLogger(GroupsController.class);
@@ -38,11 +37,10 @@ public class GroupsController {
 
         try {
             groupsService.addGroup(
-                    groupDTO.getLastName(),
-                    groupDTO.getFirstName(),
-                    groupDTO.getMiddleName(),
-                    groupDTO.getAcademicStatus(),
-                    groupDTO.getDegree()
+                    groupDTO.getTitle(),
+                    groupDTO.getGrade(),
+                    groupDTO.getDegree(),
+                    groupDTO.getStudyForm()
             );
         } catch (Exception e) {
             logger.error("Got exeption while add group ",e);
@@ -64,11 +62,10 @@ public class GroupsController {
         try {
             groupsService.editGroup(
                     id,
-                    groupDTO.getLastName(),
-                    groupDTO.getFirstName(),
-                    groupDTO.getMiddleName(),
-                    groupDTO.getAcademicStatus(),
-                    groupDTO.getDegree()
+                    groupDTO.getTitle(),
+                    groupDTO.getGrade(),
+                    groupDTO.getDegree(),
+                    groupDTO.getStudyForm()
             );
         } catch (Exception e) {
             logger.error("Got exeption while editing group ",e);
@@ -105,11 +102,10 @@ public class GroupsController {
         Groups groups = groupsService.findById(id);
         GroupDTO groupDTO = new GroupDTO(
                 groups.getId(),
-                groups.getLastName(),
-                groups.getFirstName(),
-                groups.getMiddleName(),
-                groups.getAcademicStatus().name(),
-                groups.getDegree().name()
+                groups.getTitle(),
+                groups.getGrade(),
+                groups.getDegree().name(),
+                groups.getStudyForm().name()
         );
         return groupDTO;
     }
@@ -160,8 +156,10 @@ public class GroupsController {
         for (Groups group : list) {
             resultList.add(new GroupDTO(
                     group.getId(),
-                    group.ge
-                    group.getDegree().name()
+                    group.getTitle(),
+                    group.getGrade(),
+                    group.getDegree().name(),
+                    group.getStudyForm().name()
             ));
         }
         return resultList;

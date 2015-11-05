@@ -27,6 +27,24 @@
   "MIDDLE_NAME":"Middle name",
   "ACADEMIC_STATUS":"Academic status",
   "DEGREE":"Degree",
+  "PROFESSOR":"Professor",
+  "DOCENT":"Docent",
+  "SENIOR_LECTURER":"Senior Lecturer",
+  "CANDIDATE":"PhD",
+  "DOCTOR":"Doctorate",
+  "POSTGRADUATE":"Postgraduate",
+  "MASTER":"Master",
+  "BACHELOR":"Bachelor",
+  "EXTERNAL":"Extrenal",
+  "DAILY":"Daily",
+  "TITLE_GROUP":"Group title",
+  "GRADE":"Grade",
+  "STUDYFORM":"Study form",
+  "ADD_GROUP":"Add Group",
+  "CLEAR_ALL":"Clear all",
+  "NONRESIDENCE":"Non-residence",
+
   "STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS":"Select status",
-  "STATUS_SELECT_PLACEHOLDER_DEGREE":"Select degree"
+  "STATUS_SELECT_PLACEHOLDER_DEGREE":"Select degree",
+  "STATUS_SELECT_PLACEHOLDER_STUDY_FORM":"Select study form"
 }

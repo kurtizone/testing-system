@@ -9,15 +9,17 @@ public class GroupDTO {
 
     private Long id;
     private String title;
-    private String grade;
+    private Integer grade;
     private String degree;
     private String studyForm;
 
-    GroupDTO() {
+    public GroupDTO() {
 
     }
 
-    GroupDTO(String grade, String degree, String studyForm) {
+    public GroupDTO(Long id, String title, Integer grade, String degree, String studyForm) {
+        this.id = id;
+        this.title = title;
         this.grade = grade;
         this.degree = degree;
         this.studyForm = studyForm;

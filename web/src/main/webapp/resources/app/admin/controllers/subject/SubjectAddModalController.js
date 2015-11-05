@@ -34,9 +34,12 @@ angular
              * Closes the modal window for adding new
              * organization.
              */
-            $rootScope.closeModal = function () {
+            $rootScope.closeModal = function (close) {
                 $scope.resetAddSubjectForm();
-                $modalInstance.close();
+                if(close === true) {
+                    $modalInstance.close();
+                }
+                $modalInstance.dismiss();
             };
 
             /**
@@ -60,8 +63,7 @@ angular
                 subjectsService.saveSubject($scope.addSubjectFormData)
                     .then(function (data) {
                         if (data == 201) {
-                            $scope.closeModal();
-                            $scope.resetAddSubjectForm();
+                            $scope.closeModal(true);
                             $rootScope.onTableHandling();
                         }
                     });

@@ -8,8 +8,9 @@ angular
         '$translate',
         '$modalInstance',
         'GroupsService',
+        '$filter',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  groupsService) {
+                  groupsService, $filter) {
 
             $scope.addGroupFormData = {};
             $scope.addGroupFormData.studyForm = undefined;
@@ -18,26 +19,26 @@ angular
             $scope.degreeData = [
                 {
                     id: 'MASTER',
-                    label: null
+                    label: $filter('translate')('MASTER')
                 },
                 {
                     id: 'BACHELOR',
-                    label: null
+                    label: $filter('translate')('BACHELOR')
                 }
             ];
 
             $scope.studyFormData = [
                 {
                     id: 'EXTERNAL',
-                    label: null
+                    label: $filter('translate')('EXTERNAL')
                 },
                 {
                     id: 'DAILY',
-                    label: null
+                    label: $filter('translate')('DAILY')
                 },
                 {
                     id: 'NONRESIDENCE',
-                    label: null
+                    label: $filter('translate')('NONRESIDENCE')
                 }
             ];
 
@@ -45,26 +46,8 @@ angular
             /**
              * Localization of multiselect for type of organization
              */
-            /**
-             * Localization of multiselect for type of organization
-             */
             $scope.setTypeDataLanguage = function () {
-                var lang = $translate.use();
-                if (lang === 'ukr') {
-                    $scope.studyFormData[0].label = 'Екстернат';
-                    $scope.studyFormData[1].label = 'Денна';
-                    $scope.studyFormData[2].label = 'Заочна';
-                    $scope.degreeData[0].label = 'Магістри';
-                    $scope.degreeData[1].label = 'Бакалаври';
-                } else if (lang === 'eng') {
-                    $scope.studyFormData[0].label = 'External';
-                    $scope.studyFormData[1].label = 'Daily';
-                    $scope.studyFormData[2].label = 'Non-residence';
-                    $scope.degreeData[0].label = 'Master';
-                    $scope.degreeData[1].label = 'Bachelor';
-                }
             };
-
             $scope.setTypeDataLanguage();
 
             /**
@@ -88,9 +71,12 @@ angular
              * Closes the modal window for adding new
              * organization.
              */
-            $rootScope.closeModal = function () {
+            $rootScope.closeModal = function (close) {
                 $scope.resetAddGroupForm();
-                $modalInstance.close();
+                if(close === true) {
+                    $modalInstance.close();
+                }
+                $modalInstance.dismiss();
             };
 
             /**
@@ -116,8 +102,7 @@ angular
                 groupsService.saveGroup($scope.addGroupFormData)
                     .then(function (data) {
                         if (data == 201) {
-                            $scope.closeModal();
-                            $scope.resetAddGroupForm();
+                            $scope.closeModal(true);
                             $rootScope.onTableHandling();
                         }
                     });

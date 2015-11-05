@@ -38,7 +38,7 @@ public class StudentsSpecificationBuilder extends SpecificationBuilder<Students>
         searchCriteria.add(new SearchCriterion<>(LASTNAME, "lastName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(FIRSTNAME, "firstName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(MIDDLENAME, "middleName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
-        searchCriteria.add(new SearchCriterion<>(NUMBERGRADEBOOK, "numberGradebook", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.INTEGER));
+        searchCriteria.add(new SearchCriterion<>(NUMBERGRADEBOOK, "numberGradebook", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         for (SearchCriterion searchCriterion : searchCriteria) {
             logger.info("-----searchCriteria------ "  + searchCriterion);
         }

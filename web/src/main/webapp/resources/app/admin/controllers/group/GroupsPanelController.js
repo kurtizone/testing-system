@@ -11,7 +11,9 @@ angular
         'ngTableParams',
         '$translate',
         '$timeout',
-        function ($rootScope, $scope, $modal, $http, groupsService, ngTableParams, $translate, $timeout) {
+        '$filter',
+        'toaster',
+        function ($rootScope, $scope, $modal, $http, groupsService, ngTableParams, $translate, $timeout, $filter, toaster) {
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
@@ -30,26 +32,26 @@ angular
             $scope.degreeData = [
                 {
                     id: 'MASTER',
-                    label: null
+                    label: $filter('translate')('MASTER')
                 },
                 {
                     id: 'BACHELOR',
-                    label: null
+                    label: $filter('translate')('BACHELOR')
                 }
             ];
 
             $scope.studyFormData = [
                 {
                     id: 'EXTERNAL',
-                    label: null
+                    label: $filter('translate')('EXTERNAL')
                 },
                 {
                     id: 'DAILY',
-                    label: null
+                    label: $filter('translate')('DAILY')
                 },
                 {
                     id: 'NONRESIDENCE',
-                    label: null
+                    label: $filter('translate')('NONRESIDENCE')
                 }
             ];
 
@@ -57,22 +59,7 @@ angular
              * Localization of multiselect for type of organization
              */
             $scope.setTypeDataLanguage = function () {
-                var lang = $translate.use();
-                if (lang === 'ukr') {
-                    $scope.studyFormData[0].label = 'Екстернат';
-                    $scope.studyFormData[1].label = 'Денна';
-                    $scope.studyFormData[2].label = 'Заочна';
-                    $scope.degreeData[0].label = 'Магістри';
-                    $scope.degreeData[1].label = 'Бакалаври';
-                } else if (lang === 'eng') {
-                    $scope.studyFormData[0].label = 'External';
-                    $scope.studyFormData[1].label = 'Daily';
-                    $scope.studyFormData[2].label = 'Non-residence';
-                    $scope.degreeData[0].label = 'Master';
-                    $scope.degreeData[1].label = 'Bachelor';
-                }
             };
-
             $scope.setTypeDataLanguage();
 
             $scope.clearAll = function () {
@@ -151,6 +138,9 @@ angular
                     templateUrl : '/resources/app/admin/views/modals/groups/group-add-modal.html',
                     size: 'md'
                 });
+                addGroup.result.then(function () {
+                    toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_GROUP'));
+                });
             };
 
             /**
@@ -172,6 +162,9 @@ angular
                                 templateUrl : '/resources/app/admin/views/modals/groups/group-edit-modal.html',
                                 size: 'md'
                             });
+                        groupDTOModal.result.then(function () {
+                            toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_GROUP'));
+                        });
                     });
 
             };
@@ -179,7 +172,9 @@ angular
             $scope.deleteGroup = function (id) {
                 $rootScope.id = id;
                 console.log($rootScope.id);
-                groupsService.deleteGroup(id);
+                groupsService.deleteGroup(id).then(function () {
+                    toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_GROUP'));
+                });
                 $timeout(function() {
                     console.log('delete with timeout');
                     $rootScope.onTableHandling();

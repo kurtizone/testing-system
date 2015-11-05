@@ -9,13 +9,12 @@
 
         <div class="form-group row row-fields" show-errors>
             <label class="control-label col-md-4" for="title">
-                {{'TITLE' |translate }}
+                {{'TITLE_GROUP' |translate }}
             </label>
 
             <div class="col-md-8">
                 <input id="title" name="title" class="form-control"
-                       type="number" ng-model="addGroupFormData.title"
-                       min="1" max="6" required>
+                       type="text" ng-model="addGroupFormData.title" required>
 							<span class="form-control-feedback glyphicon
 						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
 
@@ -83,7 +82,7 @@
 
         <div class="form-group row row-fields" show-errors>
             <label for="studyForm" class="control-label col-md-4">
-                {{'STUDY_FORM' | translate}}
+                {{'STUDYFORM' | translate}}
             </label>
 
             <div class="col-md-8">

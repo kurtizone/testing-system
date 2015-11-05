@@ -1,61 +1,21 @@
 angular
     .module('adminModule')
     .controller(
-    'GroupEditModalController',
+    'StudentAddModalController',
     [
         '$rootScope',
         '$scope',
         '$translate',
         '$modalInstance',
-        'GroupsService',
-        '$filter',
+        'StudentsService',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  groupsService, $filter) {
+                  studentsService) {
 
-    
-            $scope.defaultData = {};
-            $scope.defaultData.studyForm = {
-                id: $rootScope.group.studyForm,
-                label: $filter('translate')($rootScope.group.studyForm)
-            };
-            $scope.defaultData.degree = {
-                id: $rootScope.group.degree,
-                label: $filter('translate')($rootScope.group.degree)
-            };
+            $scope.addStudentFormData = {};
 
-            $scope.degreeData = [
-                {
-                    id: 'MASTER',
-                    label: $filter('translate')('MASTER')
-                },
-                {
-                    id: 'BACHELOR',
-                    label: $filter('translate')('BACHELOR')
-                }
-            ];
-
-            $scope.studyFormData = [
-                {
-                    id: 'EXTERNAL',
-                    label: $filter('translate')('EXTERNAL')
-                },
-                {
-                    id: 'DAILY',
-                    label: $filter('translate')('DAILY')
-                },
-                {
-                    id: 'NONRESIDENCE',
-                    label: $filter('translate')('NONRESIDENCE')
-                }
-            ];
-
-            /**
-             * Localization of multiselect for type of organization
-             */
             $scope.setTypeDataLanguage = function () {
             };
             $scope.setTypeDataLanguage();
-
             /**
              * Closes modal window on browser's back/forward button click.
              */
@@ -64,10 +24,21 @@ angular
             });
 
             /**
+             * Resets organization form
+             */
+            $scope.resetAddStudentForm = function () {
+                $scope.$broadcast('show-errors-reset');
+                $scope.addStudentForm.$setPristine();
+                $scope.addStudentForm.$setUntouched();
+                $scope.addStudentFormData = {};
+            };
+
+            /**
              * Closes the modal window for adding new
-             * group.
+             * organization.
              */
             $rootScope.closeModal = function (close) {
+                $scope.resetAddStudentForm();
                 if(close === true) {
                     $modalInstance.close();
                 }
@@ -75,41 +46,26 @@ angular
             };
 
             /**
-             * Validates group form before saving
+             * Validates organization form before saving
              */
-            $scope.onEditGroupFormSubmit = function () {
+            $scope.onAddStudentFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
-                if ($scope.editGroupForm.$valid) {
-                    var groupForm = {
-                        title: $rootScope.group.title,
-                        grade: $rootScope.group.grade,
-                        degree: $scope.defaultData.degree.id,
-                        studyForm: $scope.defaultData.studyForm.id,
-                    };
-                    saveGroup(groupForm);
+                if ($scope.addStudentForm.$valid) {
+                    saveStudent();
                 }
             };
 
-            $scope.OnSelectDegree = function () {
-                console.log($scope.defaultData.studyForm);
-                console.log($scope.defaultData.degree);
-            };
-
             /**
-             * Saves new group from the form in database.
+             * Saves new organization from the form in database.
              * If everything is ok then resets the organization
              * form and updates table with organizations.
              */
-            function saveGroup(groupForm) {
-                console.log(groupForm);
-                console.log($rootScope.group.id);
-                groupsService.editGroup(
-                    groupForm,
-                    $rootScope.group.id).then(
-                    function (data) {
-                        if (data == 200) {
+            function saveStudent() {
+                console.log($scope.addStudentFormData);
+                studentsService.saveStudent($scope.addStudentFormData)
+                    .then(function (data) {
+                        if (data == 201) {
                             $scope.closeModal(true);
-                            console.log(data);
                             $rootScope.onTableHandling();
                         }
                     });

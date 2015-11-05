@@ -20,7 +20,7 @@ public class Groups implements java.io.Serializable {
 	private Integer grade;
 	private Degree degree;
 	private StudyForm studyForm;
-	private Set<Students> studentses = new HashSet<Students>(0);
+	private Set<Students>studentses = new HashSet<Students>(0);
 	private Set<Subject> subjects = new HashSet<Subject>(0);
 
 	public Groups() {
@@ -34,6 +34,13 @@ public class Groups implements java.io.Serializable {
 		this.studyForm = studyForm;
 		this.studentses = studentses;
 		this.subjects = subjects;
+	}
+
+	public Groups (String title, Integer grade, Degree degree, StudyForm studyForm) {
+		this.title = title;
+		this.grade = grade;
+		this.degree = degree;
+		this.studyForm = studyForm;
 	}
 
 	@Id
