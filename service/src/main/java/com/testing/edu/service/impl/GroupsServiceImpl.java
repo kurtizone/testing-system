@@ -105,12 +105,13 @@ public class GroupsServiceImpl implements GroupsService {
         Pageable pageSpec = groupsSpecificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
         Specification<Groups> searchSpec = groupsSpecificationBuilder.buildPredicate();
 
+        int totalItems = groupsRepository.findAll(searchSpec).size();
         Page<Groups> groupsPage = groupsRepository.findAll(searchSpec, pageSpec);
         List<Groups> groupses = groupsPage.getContent();
 
         ListToPageTransformer<Groups> result = new ListToPageTransformer<>();
         result.setContent(groupses);
-        result.setTotalItems((long) groupses.size());
+        result.setTotalItems((long) totalItems);
         return result;
     }
 }

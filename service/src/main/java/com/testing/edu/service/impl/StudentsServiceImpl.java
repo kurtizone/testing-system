@@ -113,12 +113,13 @@ public class StudentsServiceImpl implements StudentsService {
         Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
         Specification<Students> searchSpec = specificationBuilder.buildPredicate();
 
+        int totalItems = studentsRepository.findAll(searchSpec).size();
         Page<Students> studentsPage = studentsRepository.findAll(searchSpec, pageSpec);
         List<Students> students = studentsPage.getContent();
 
         ListToPageTransformer<Students> result = new ListToPageTransformer<>();
         result.setContent(students);
-        result.setTotalItems((long) students.size());
+        result.setTotalItems((long) totalItems);
         return result;
     }
 

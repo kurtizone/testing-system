@@ -13,7 +13,7 @@ public class Answers implements java.io.Serializable {
 	private Long id;
 	private Questions questions;
 	private String text;
-	private Integer grade;
+	private Double grade;
 
 	public Answers() {
 	}
@@ -22,7 +22,7 @@ public class Answers implements java.io.Serializable {
 		this.questions = questions;
 	}
 
-	public Answers(Questions questions, String text, Integer grade) {
+	public Answers(Questions questions, String text, Double grade) {
 		this.questions = questions;
 		this.text = text;
 		this.grade = grade;
@@ -59,11 +59,11 @@ public class Answers implements java.io.Serializable {
 	}
 
 	@Column(name = "grade")
-	public Integer getGrade() {
+	public Double getGrade() {
 		return this.grade;
 	}
 
-	public void setGrade(Integer grade) {
+	public void setGrade(Double grade) {
 		this.grade = grade;
 	}
 

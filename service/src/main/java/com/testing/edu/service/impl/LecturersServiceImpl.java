@@ -124,12 +124,13 @@ public class LecturersServiceImpl implements LecturersService {
         Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
         Specification<Lecturers> searchSpec = specificationBuilder.buildPredicate();
 
+        int totalItems = lecturersRepository.findAll(searchSpec).size();
         Page<Lecturers> lecturersPage = lecturersRepository.findAll(searchSpec, pageSpec);
         List<Lecturers> lecturers = lecturersPage.getContent();
 
         ListToPageTransformer<Lecturers> result = new ListToPageTransformer<>();
         result.setContent(lecturers);
-        result.setTotalItems((long) lecturers.size());
+        result.setTotalItems((long) totalItems);
         return result;
     }
 
