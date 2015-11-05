@@ -46,7 +46,7 @@ angular
                     path = '/admin';
                 else if (role == 'STUDENT')
                     path = '/student';
-                else if (role == 'STUDENT')
+                else if (role == 'LECTURER')
                     path = '/lecturer';
                   return path;
             }

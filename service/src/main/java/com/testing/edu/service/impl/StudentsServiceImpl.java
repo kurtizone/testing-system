@@ -1,6 +1,7 @@
 package com.testing.edu.service.impl;
 
 import com.testing.edu.entity.Students;
+import com.testing.edu.entity.User;
 import com.testing.edu.repository.StudentsRepository;
 import com.testing.edu.service.StudentsService;
 import com.testing.edu.service.specification.builder.StudentsSpecificationBuilder;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +39,7 @@ public class StudentsServiceImpl implements StudentsService {
      * @param numberGradebook
      */
     @Override
+    @Transactional
     public void addStudent(String lastname, String firstname, String middleName, String numberGradebook) {
         Students students = new Students(
                 lastname,
@@ -58,6 +61,7 @@ public class StudentsServiceImpl implements StudentsService {
      * @param numberGradebook
      */
     @Override
+    @Transactional
     public void editStudent(Long id, String lastname, String firstname, String middleName, String numberGradebook) {
         Students students = studentsRepository.findOne(id);
 
@@ -75,6 +79,7 @@ public class StudentsServiceImpl implements StudentsService {
      * @param id
      */
     @Override
+    @Transactional
     public void removeStudent(Long id) {
         studentsRepository.delete(id);
     }
@@ -86,6 +91,7 @@ public class StudentsServiceImpl implements StudentsService {
      * @return
      */
     @Override
+    @Transactional
     public Students findById(Long id) {
         return studentsRepository.findOne(id);
     }
@@ -101,6 +107,7 @@ public class StudentsServiceImpl implements StudentsService {
      * @return
      */
     @Override
+    @Transactional
     public ListToPageTransformer<Students> getStudentBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String, String> searchKeys, String sortCriteria, String sortOrder) {
         StudentsSpecificationBuilder specificationBuilder = new StudentsSpecificationBuilder(searchKeys);
         Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
@@ -113,5 +120,17 @@ public class StudentsServiceImpl implements StudentsService {
         result.setContent(students);
         result.setTotalItems((long) students.size());
         return result;
+    }
+
+    /**
+     * find Student by User
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    @Transactional
+    public Students findByUser(User user) {
+        return studentsRepository.findByUserId(user.getId());
     }
 }

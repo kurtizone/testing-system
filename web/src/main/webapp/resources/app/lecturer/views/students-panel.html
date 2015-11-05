@@ -1,0 +1,132 @@
+<div id="page-wrapper" ng-controller="StudentsPanelController">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">{{ 'STUDENTS' | translate }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <button type="submit" class="btn btn-primary col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-click="openAddStudentModal()">
+                <span class="glyphicon glyphicon-plus"></span>
+                {{'ADD_STUDENT' | translate}}
+            </button>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <p></p>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            <button ng-click="clearAll()" ng-show="isFilter()"
+                    class="btn btn-danger pull-right col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                {{'CLEAR_ALL' | translate }}
+            </button>
+        </div>
+    </div>
+    <p></p>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table show-filter="true" ng-table="tableParams" template-pagination="custom/pager"
+                       class="table table-bordered table-hover">
+                    <tbody>
+                    <tr ng-repeat="student in $data">
+                        <td data-title="'LAST_NAME' | translate" sortable="'lastName'"
+                            filter="{ 'lastName': 'text' }" >
+                            {{ student.lastName }}
+                        </td>
+                        <td data-title="'FIRST_NAME' | translate " sortable="'firstName'"
+                            filter="{ 'firstName': 'text' }">{{ student.firstName }}
+                        </td>
+                        <td data-title="'MIDDLE_NAME' | translate" sortable="'middleName'"
+                            filter="{ 'middleName': 'text' }">{{ student.middleName}}
+                        </td>
+                        <td data-title="'NUMBER_GRADEBOOK' | translate" sortable="'numberGradebook'"
+                            filter="{ 'numberGradebook': 'text' }">{{ student.numberGradebook}}
+                        </td>
+                        <td data-title="'ACTIONS' | translate" class="text-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning"
+                                        ng-click="openEditStudentModal(student.id)">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button type="button" class="btn btn-danger"
+                                        ng-click="deleteStudent(student.id)">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                                <button type="button" class="btn btn-warning"
+                                        ng-click="openAddSubject(student.id)">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                                <button type="button" class="btn btn-success"
+                                        ng-click="openListOfSubjects(student.id)">
+                                    <span class="glyphicon glyphicon-book"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <script type="text/ng-template" id="custom/pager">
+                <div>
+                    <ul class="pager ng-cloak">
+                        <li ng-repeat="page in pages"
+                            ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
+                            ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
+                            <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo;
+                                Previous</a>
+                            <a ng-switch-when="next" ng-click="params.page(page.number)"
+                               href="">Next &raquo;</a>
+                        </li>
+                        <li>
+                            <div class="btn-group">
+                                <button type="button" ng-class="{'active':params.count() == 5}"
+                                        ng-click="params.count(5)" class="btn btn-default">5
+                                </button>
+                                <button type="button" ng-class="{'active':params.count() == 10}"
+                                        ng-click="params.count(10)" class="btn btn-default">10
+                                </button>
+                                <button type="button" ng-class="{'active':params.count() == 25}"
+                                        ng-click="params.count(25)" class="btn btn-default">25
+                                </button>
+                                <button type="button" ng-class="{'active':params.count() == 50}"
+                                        ng-click="params.count(50)" class="btn btn-default">50
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </script>
+            <script type="text/ng-template" id="ng-table/filters/academicStatus.html">
+                <ui-select ng-model="selectedAcademicStatus.name" theme="select2" on-select='doSearch()'
+                           search-enabled="false"
+                           name="filter-academicStatus">
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                                     allow-clear="true">
+                        {{$select.selected.label}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="academicStatus in academicStatusData">
+                        <span ng-bind-html="academicStatus.label"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </script>
+            <script type="text/ng-template" id="ng-table/filters/degree.html">
+                <ui-select ng-model="selectedDegree.name" theme="select2" on-select='doSearch()'
+                           search-enabled="false"
+                           name="filter-degree">
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_DEGREE' | translate}}"
+                                     allow-clear="true">
+                        {{$select.selected.label}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="degree in degreeData">
+                        <span ng-bind-html="degree.label"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </script>
+        </div>
+    </div>
+</div>
+</div>
+<!-- /#page-wrapper -->

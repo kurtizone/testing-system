@@ -2,6 +2,7 @@ package com.testing.edu.service;
 
 
 import com.testing.edu.entity.Lecturers;
+import com.testing.edu.entity.User;
 import com.testing.edu.service.utils.ListToPageTransformer;
 
 import java.util.Map;
@@ -56,4 +57,10 @@ public interface LecturersService {
     ListToPageTransformer<Lecturers> getLecturerBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String, String> searchDataMap,
                                                                       String sortCriteria, String sortOrder);
 
+    /**
+     * find Lecturer by User
+     * @param user
+     * @return
+     */
+    Lecturers findByUser(User user);
 }

@@ -453,6 +453,8 @@ table.dataTable thead .sorting:after {
 }
 
 .huge {
+    margin-bottom: 5px;
+    margin-top: 5px;
     font-size: 40px;
 }
 

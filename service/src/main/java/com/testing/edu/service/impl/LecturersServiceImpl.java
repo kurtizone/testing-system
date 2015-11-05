@@ -2,6 +2,7 @@ package com.testing.edu.service.impl;
 
 import com.testing.edu.entity.Lecturers;
 import com.testing.edu.entity.Subject;
+import com.testing.edu.entity.User;
 import com.testing.edu.entity.enumeration.AcademicStatus;
 import com.testing.edu.entity.enumeration.Degree;
 import com.testing.edu.repository.LecturersRepository;
@@ -130,5 +131,16 @@ public class LecturersServiceImpl implements LecturersService {
         result.setContent(lecturers);
         result.setTotalItems((long) lecturers.size());
         return result;
+    }
+
+    /**
+     * find Lecturer by User
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public Lecturers findByUser(User user) {
+        return lecturersRepository.findByUserId(user.getId());
     }
 }

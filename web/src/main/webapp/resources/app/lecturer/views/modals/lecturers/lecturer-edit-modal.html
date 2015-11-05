@@ -1,0 +1,171 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{'FILL_IN_INFORMATION_ABOUT_SUBJECT'
+        | translate}}</h3>
+</div>
+
+<div class="modal-body modal-padding">
+    <form name="editLecturerForm" id="editLecturerForm" role="form" ng-submit="onEditLecturerFormSubmit()"
+          class="form-group" novalidate>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{'GENERAL_INFORMATION' | translate}}
+            </div>
+            <div class="panel-body">
+
+                <div class="form-group row row-fields" show-errors>
+                    <label class="control-label col-md-4" for="lastName">
+                        {{'LAST_NAME' |translate }}
+                    </label>
+
+                    <div class="col-md-8">
+                        <input id="lastName" name="lastName" class="form-control"
+                               type="text" ng-model="$root.lecturer.lastName"
+                               ng-pattern="FIRST_LAST_NAME_REGEX"
+                               popover="{{'ALPHABETIC_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="top" required>
+							<span class="form-control-feedback glyphicon
+						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="editLecturerForm.lastName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="editLecturerForm.lastName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group row row-fields" show-errors>
+                    <label class="control-label col-md-4" for="firstName">
+                        {{'FIRST_NAME' |translate }}
+                    </label>
+
+                    <div class="col-md-8">
+                        <input id="firstName" name="firstName" class="form-control"
+                               type="text" ng-model="$root.lecturer.firstName"
+                               ng-pattern="FIRST_LAST_NAME_REGEX"
+                               popover="{{'ALPHABETIC_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="top" required>
+							<span class="form-control-feedback glyphicon
+						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="editLecturerForm.firstName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="editLecturerForm.firstName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group row row-fields" show-errors>
+                    <label class="control-label col-md-4" for="middleName">
+                        {{'MIDDLE_NAME' |translate }}
+                    </label>
+
+                    <div class="col-md-8">
+                        <input id="middleName" name="middleName" class="form-control"
+                               type="text" ng-model="$root.lecturer.middleName"
+                               ng-pattern="MIDDLE_NAME_REGEX"
+                               popover="{{'ALPHABETIC_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="top" required>
+							<span class="form-control-feedback glyphicon
+						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="editLecturerForm.middleName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="editLecturerForm.middleName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group row row-fields" show-errors>
+                    <label for="academicStatus" class="control-label col-md-4">
+                        {{'ACADEMIC_STATUS' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <ui-select class="form-control" type="text" ng-model="defaultData.academicStatus" theme="select2"
+                                   search-enabled="false"  name="academicStatus" id="academicStatus" required>
+                            <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                                             allow-clear="true">
+                                {{$select.selected.label}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="academicStatus in academicStatusData">
+                                <span ng-bind-html="academicStatus.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <p class="help-block" ng-if="editLecturerForm.academicStatus.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group row row-fields" show-errors>
+                    <label for="degree" class="control-label col-md-4">
+                        {{'DEGREE' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <ui-select class="form-control" type="text" ng-model="defaultData.degree" theme="select2"
+                                   search-enabled="false" on-select="OnSelectDegree()"
+                                    name="degree" id="degree" required>
+                            <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_DEGREE' | translate}}"
+                                             allow-clear="true">
+                                {{$select.selected.label}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="degree in degreeData">
+                                <span ng-bind-html="degree.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <p class="help-block" ng-if="editLecturerForm.degree.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{'USER_INFORMATION' | translate}}
+            </div>
+            <div class="panel-body">
+
+
+            </div>
+        </div>
+
+        <hr>
+        <div class="form-group row row-buttons">
+            <button type="submit" class="btn btn-success col-md-2 col-sm-12 col-xs-12 col-lg-2">
+                {{'EDIT' | translate}}
+            </button>
+            <div class="col-md-8 col-sm-0 col-xs-0 col-lg-8">
+                <p>
+                </p>
+            </div>
+
+            <input type="button" class="btn btn-danger col-md-2 col-sm-12 col-xs-12 col-lg-2 pull-right"
+                   value="{{'CLOSE' | translate}}" ng-click="closeModal()">
+        </div>
+
+    </form>
+</div>

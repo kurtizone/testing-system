@@ -31,13 +31,23 @@ public class Router {
     }
 
     /**
-     * Displays provider page
+     * Displays student page
      *
-     * @return provider page
+     * @return student page
      */
-    @RequestMapping(value = "/employee", method = RequestMethod.GET)
-    public String provider() {
-        return "/resources/app/index.jsp";
+    @RequestMapping(value = "/student", method = RequestMethod.GET)
+    public String student() {
+        return "/resources/app/student/index.html";
+    }
+
+    /**
+     * Displays student page
+     *
+     * @return student page
+     */
+    @RequestMapping(value = "/lecturer", method = RequestMethod.GET)
+    public String lecturer() {
+        return "/resources/app/lecturer/index.html";
     }
 
 }
