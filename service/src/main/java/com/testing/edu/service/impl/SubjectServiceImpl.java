@@ -1,11 +1,12 @@
 package com.testing.edu.service.impl;
 
-import com.testing.edu.entity.Subject;
+import com.testing.edu.entity.*;
 import com.testing.edu.repository.SubjectRepository;
 import com.testing.edu.service.SubjectService;
 import com.testing.edu.service.criteria.SubjectQueryConstructor;
 import com.testing.edu.service.specification.builder.SubjectSpecificationBuilder;
 import com.testing.edu.service.utils.ListToPageTransformer;
+import javafx.beans.binding.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -112,5 +114,88 @@ public class SubjectServiceImpl implements SubjectService {
         result.setContent(subjects);
         result.setTotalItems((long) totalItems);
         return result;
+    }
+
+    /**
+     * Service for building page by SortCriteria, SortOrder and Searching data
+     *
+     * @param pageNumber
+     * @param itemsPerPage
+     * @param searchKeys
+     * @param sortCriteria
+     * @param sortOrder
+     * @param lecturer
+     * @return
+     */
+    @Override
+    @Transactional
+    public ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String,
+            String> searchKeys, String sortCriteria, String sortOrder, Lecturers lecturer) {
+        searchKeys.put("lecturer", lecturer.getId().toString());
+        SubjectSpecificationBuilder specificationBuilder = new SubjectSpecificationBuilder(searchKeys);
+        Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
+        Specification<Subject> searchSpec = specificationBuilder.buildPredicate();
+
+        int totalItems = lecturer.getSubjects().size();
+        Page<Subject> subjectPage = subjectRepository.findAll(searchSpec, pageSpec);
+        List<Subject> subjects = subjectPage.getContent();
+
+        ListToPageTransformer<Subject> result = new ListToPageTransformer<>();
+        result.setContent(subjects);
+        result.setTotalItems((long) subjects.size());
+        return result;
+    }
+
+    /**
+     * Service for building page by SortCriteria, SortOrder and Searching data
+     *
+     * @param pageNumber
+     * @param itemsPerPage
+     * @param searchKeys
+     * @param sortCriteria
+     * @param sortOrder
+     * @param group
+     * @return
+     */
+    @Override
+    @Transactional
+    public ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String,
+            String> searchKeys, String sortCriteria, String sortOrder, Groups group) {
+        searchKeys.put("group", group.getId().toString());
+        SubjectSpecificationBuilder specificationBuilder = new SubjectSpecificationBuilder(searchKeys);
+        Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
+        Specification<Subject> searchSpec = specificationBuilder.buildPredicate();
+
+        Page<Subject> subjectPage = subjectRepository.findAll(searchSpec, pageSpec);
+        List<Subject> subjects = subjectPage.getContent();
+
+        ListToPageTransformer<Subject> result = new ListToPageTransformer<>();
+        result.setContent(subjects);
+        result.setTotalItems((long) subjects.size());
+        return result;
+    }
+
+    /**
+     * Count number of groups
+     *
+     * @param subjectId
+     * @return
+     */
+    @Override
+    public Long countOfGroups(Long subjectId) {
+        Subject subject = subjectRepository.findOne(subjectId);
+        return (long) subject.getGroupses().size();
+    }
+
+    /**
+     * Count number of tests
+     *
+     * @param subjectId
+     * @return
+     */
+    @Override
+    public Long countOfTests(Long subjectId) {
+        Subject subject = subjectRepository.findOne(subjectId);
+        return (long) subject.getTestses().size();
     }
 }

@@ -69,39 +69,24 @@ angular
                 }
                 return false;
             };
-            /**
-             * Opens modal window for adding new category of counters.
-             */
-            $scope.openAddSubjectModal = function() {
-                var addSubject = $modal.open({
-                    animation : true,
-                    controller : 'SubjectAddModalController',
-                    templateUrl : '/resources/app/lecturer/views/modals/subject/subject-add-modal.html',
-                    size: 'md'
-                });
-                addSubject.result.then(function () {
-                    toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_SUBJECT'));
-                });
-            };
 
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openEditSubjectModal = function(
+            $scope.openListOfGroups = function(
                 subjectId) {
-                $rootScope.subjectId = subjectId;
-                subjectsService.getSubjectById(
-                    $rootScope.subjectId).then(
+                subjectsService.getGroupsBySubjectId(
+                    subjectId).then(
                     function(data) {
-                        $rootScope.subject = data;
-                        console.log($rootScope.subject);
-
+                        console.log(data);
+                        $rootScope.groups = data;
+                        console.log($rootScope.groups);
                         var subjectDTOModal = $modal
                             .open({
                                 animation : true,
                                 controller : 'SubjectEditModalController',
                                 templateUrl : '/resources/app/lecturer/views/modals/subject/subject-edit-modal.html',
-                                size: 'md'
+                                size: 'lg'
                             });
                         subjectDTOModal.result.then(function () {
                             toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_SUBJECT'));
@@ -110,55 +95,27 @@ angular
 
             };
 
-            $scope.deleteSubject = function (id) {
-                $rootScope.subjectId = id;
-                console.log($rootScope.subjectId);
-                subjectsService.deleteSubject(id).then(function () {
-                    toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_SUBJECT'));
-                });
-                $timeout(function() {
-                    console.log('delete with timeout');
-                    $rootScope.onTableHandling();
-                }, 700);
-            };
-
-
-            $scope.openListOfGroups = function(
+            /**
+             * Opens modal window for editing category of counter.
+             */
+            $scope.openListOfTests = function(
                 subjectId) {
-                $rootScope.subjectId = subjectId;
-                subjectsService.getSubjectById(
-                    $rootScope.subjectId).then(
+                console.log(subjectId);
+                subjectsService.getTestsBySubjectId(
+                    subjectId).then(
                     function(data) {
-                        $rootScope.subject = data;
-                        console.log($rootScope.subject);
-
+                        console.log(data);
+                        $rootScope.tests = data;
                         var subjectDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'SubjectEditModalController',
-                                templateUrl : '/resources/app/lecturer/views/modals/subject/subject-edit-modal.html',
-                                size: 'md'
+                                controller : 'SubjectAddModalController',
+                                templateUrl : '/resources/app/lecturer/views/modals/subject/subject-add-modal.html',
+                                size: 'lg'
                             });
-                    });
-
-            };
-
-            $scope.openListOfLecturers = function(
-                subjectId) {
-                $rootScope.subjectId = subjectId;
-                subjectsService.getSubjectById(
-                    $rootScope.subjectId).then(
-                    function(data) {
-                        $rootScope.subject = data;
-                        console.log($rootScope.subject);
-
-                        var subjectDTOModal = $modal
-                            .open({
-                                animation : true,
-                                controller : 'SubjectEditModalController',
-                                templateUrl : '/resources/app/lecturer/views/modals/subject/subject-edit-modal.html',
-                                size: 'md'
-                            });
+                        subjectDTOModal.result.then(function () {
+                            toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_SUBJECT'));
+                        });
                     });
 
             };

@@ -1,6 +1,6 @@
 package com.testing.edu.service;
 
-import com.testing.edu.entity.Subject;
+import com.testing.edu.entity.*;
 import com.testing.edu.service.utils.ListToPageTransformer;
 
 import java.util.Map;
@@ -49,5 +49,44 @@ public interface SubjectService {
     ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage,
                                                                    Map<String, String> searchKeys,
                                                                    String sortCriteria, String sortOrder);
+    /**
+     * Service for building page by SortCriteria, SortOrder and Searching data
+     * @param pageNumber
+     * @param itemsPerPage
+     * @param searchKeys
+     * @param sortCriteria
+     * @param sortOrder
+     * @return
+     */
+    ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage,
+                                                                   Map<String, String> searchKeys,
+                                                                   String sortCriteria, String sortOrder, Lecturers lecturer);
 
+
+    /**
+     * Service for building page by SortCriteria, SortOrder and Searching data
+     * @param pageNumber
+     * @param itemsPerPage
+     * @param searchKeys
+     * @param sortCriteria
+     * @param sortOrder
+     * @return
+     */
+    ListToPageTransformer<Subject> getSubjectBySearchAndPagination(int pageNumber, int itemsPerPage,
+                                                                   Map<String, String> searchKeys,
+                                                                   String sortCriteria, String sortOrder, Groups group);
+
+    /**
+     * Count number of groups
+     * @param subjectId
+     * @return
+     */
+    Long countOfGroups(Long subjectId);
+
+    /**
+     * Count number of tests
+     * @param subjectId
+     * @return
+     */
+    Long countOfTests(Long subjectId);
 }

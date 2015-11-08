@@ -11,31 +11,19 @@ angular
         function ($rootScope, $scope, $translate, $modalInstance,
                   subjectsService) {
 
-            $scope.addSubjectFormData = {};
-            
             /**
              * Closes modal window on browser's back/forward button click.
              */
+            console.log($rootScope.tests);
             $rootScope.$on('$locationChangeStart', function () {
                 $modalInstance.close();
             });
-
-            /**
-             * Resets organization form
-             */
-            $scope.resetAddSubjectForm = function () {
-                $scope.$broadcast('show-errors-reset');
-                $scope.addSubjectForm.$setPristine();
-                $scope.addSubjectForm.$setUntouched();
-                $scope.addSubjectFormData = {};
-            };
 
             /**
              * Closes the modal window for adding new
              * organization.
              */
             $rootScope.closeModal = function (close) {
-                $scope.resetAddSubjectForm();
                 if(close === true) {
                     $modalInstance.close();
                 }
@@ -45,11 +33,17 @@ angular
             /**
              * Validates organization form before saving
              */
-            $scope.onAddSubjectFormSubmit = function () {
+            $scope.onEditSubjectFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
-                if ($scope.addSubjectForm.$valid) {
-                    console.log($scope.addSubjectForm);
-                    saveSubject();
+                console.log($scope.editSubjectForm);
+                if ($scope.editSubjectForm.$valid) {
+                    var subjectForm = {
+                        title: $rootScope.subject.title,
+                        multiplier: $rootScope.subject.multiplier,
+                        hours: $rootScope.subject.hours,
+                    };
+                    console.log(subjectForm);
+                    saveSubject(subjectForm);
                 }
             };
 
@@ -58,11 +52,14 @@ angular
              * If everything is ok then resets the organization
              * form and updates table with organizations.
              */
-            function saveSubject() {
-                console.log($scope.addSubjectFormData);
-                subjectsService.saveSubject($scope.addSubjectFormData)
-                    .then(function (data) {
-                        if (data == 201) {
+            function saveSubject(subjectForm) {
+                console.log(subjectForm);
+                console.log($rootScope.subject.id);
+                subjectsService.editSubject(
+                    subjectForm,
+                    $rootScope.subject.id).then(
+                    function (data) {
+                        if (data == 200) {
                             $scope.closeModal(true);
                             $rootScope.onTableHandling();
                         }

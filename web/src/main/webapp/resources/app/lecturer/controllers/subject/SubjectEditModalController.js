@@ -14,6 +14,7 @@ angular
             /**
              * Closes modal window on browser's back/forward button click.
              */
+            console.log($rootScope.groups);
             $rootScope.$on('$locationChangeStart', function () {
                 $modalInstance.close();
             });

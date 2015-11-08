@@ -31,6 +31,19 @@ angular
                     .then(function (result) {
                         return result.status;
                     });
+            },
+            getGroupsBySubjectId: function (id) {
+                var url = '/lecturer/subjects/get-list-groups/' + id;
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
+            getTestsBySubjectId: function (id) {
+                var url = '/lecturer/subjects/get-list-tests/' + id;
+                return $http.get(url).then(function (result) {
+                    console.log(result);
+                    return result.data;
+                });
             }
         };
 

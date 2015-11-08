@@ -3,100 +3,27 @@
         | translate}}</h3>
 </div>
 
-<div class="modal-body modal-padding">
-    <form name="editSubjectForm" id="editSubjectForm" role="form" ng-submit="onEditSubjectFormSubmit()"
-          class="form-group" novalidate>
+<div class="modal-body">
 
-        <div class="form-group row row-fields" show-errors>
-            <label for="title" class="control-label col-md-4">
-                {{'TITLE_SUBJECT' | translate}}
-            </label>
+    <div class="row">
+        <table class="table table-bordered col-lg-12">
+        <thead>
+        <tr>
+            <th>{{'TITLE_GROUP' | translate}}</th>
+            <th>{{'GRADE' | translate}}</th>
+            <th>{{'DEGREE' | translate}}</th>
+            <th>{{'STUDYFORM' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody>
 
-            <div class="col-md-8">
-                <input id="title" name="title" class="form-control"
-                       type="text" ng-model="$root.subject.title"
-                       ng-pattern=""
-                       popover="{{'ALPHABETIC_INFO' | translate}}"
-                       popover-trigger="focus" popover-placement="top" required>
-							<span class="form-control-feedback glyphicon
-						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+        <tr ng-repeat="group in $root.groups">
+            <td>{{ group.title }}</td>
+            <td>{{ group.grade }}</td>
+            <td>{{ group.degree | translate }}</td>
+            <td>{{ group.studyForm | translate }}</td>
+        </tr>
+        </tbody>
+    </table></div>
 
-                <p class="help-block" ng-if="editSubjectForm.title.$error.required">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'REQUIRED' | translate}}
-                </p>
-
-                <p class="help-block" ng-if="editSubjectForm.title.$error.pattern">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group row row-fields" show-errors>
-            <label for="multiplier" class="control-label col-md-4">
-                {{'MULTIPLIER' | translate}}
-            </label>
-
-            <div class="col-md-8">
-                <input id="multiplier" name="multiplier" class="form-control"
-                       type="text" ng-model="$root.subject.multiplier"
-                       ng-pattern=""
-                       popover="{{'ALPHABETIC_INFO' | translate}}"
-                       popover-trigger="focus" popover-placement="top" required>
-							<span class="form-control-feedback glyphicon
-						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
-
-                <p class="help-block" ng-if="editSubjectForm.multiplier.$error.required">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'REQUIRED' | translate}}
-                </p>
-
-                <p class="help-block" ng-if="editSubjectForm.multiplier.$error.pattern">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group row row-fields" show-errors>
-            <label for="hours" class="control-label col-md-4">
-                {{'HOURS' | translate}}
-            </label>
-
-            <div class="col-md-8">
-                <input id="hours" name="hours" class="form-control"
-                       type="number" ng-model="$root.subject.hours"
-                       ng-pattern=""
-                       popover="{{'ALPHABETIC_INFO' | translate}}"
-                       popover-trigger="focus" popover-placement="top" required>
-							<span class="form-control-feedback glyphicon
-						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
-
-                <p class="help-block" ng-if="editSubjectForm.hours.$error.required">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'REQUIRED' | translate}}
-                </p>
-
-                <p class="help-block" ng-if="editSubjectForm.hours.$error.pattern">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
-                </p>
-            </div>
-        </div>
-
-        <hr>
-        <div class="form-group row row-buttons">
-            <button type="submit" class="btn btn-success col-md-2 col-sm-12 col-xs-12 col-lg-2">
-                {{'EDIT' | translate}}
-            </button>
-            <div class="col-md-8 col-sm-0 col-xs-0 col-lg-8">
-                <p>
-                </p>
-            </div>
-
-            <input type="button" class="btn btn-danger col-md-2 col-sm-12 col-xs-12 col-lg-2 pull-right"
-                   value="{{'CLOSE' | translate}}" ng-click="closeModal()">
-        </div>
-    </form>
 </div>
