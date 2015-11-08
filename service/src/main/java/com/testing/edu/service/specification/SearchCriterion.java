@@ -15,6 +15,7 @@ public class SearchCriterion<T extends Enum<T>> {
     private Operator operation;
     private ValueType valueType;
     private String joinEntityField;
+    private String secondJoinEntityField;
     private Class<T> enumKeyType;
 
     /**
@@ -36,6 +37,16 @@ public class SearchCriterion<T extends Enum<T>> {
         this.valueType = valueType;
         this.joinEntityField = joinEntityField;
     }
+
+    public SearchCriterion(String key, String entityField, Operator operation, ValueType valueType, String joinEntityField, String secondJoinEntityField) {
+        this.key = key;
+        this.entityField = entityField;
+        this.operation = operation;
+        this.valueType = valueType;
+        this.joinEntityField = joinEntityField;
+        this.secondJoinEntityField = secondJoinEntityField;
+    }
+
 
     /**
      *
@@ -71,6 +82,7 @@ public class SearchCriterion<T extends Enum<T>> {
         this(key, entityField, operation, null, null, valueType, joinEntityField);
     }
 
+
     /**
      *
      * @param key key to filter
@@ -95,7 +107,7 @@ public class SearchCriterion<T extends Enum<T>> {
      *
      */
     public enum Operator {
-        EQUAL, EQUAL_BY_ENUM, BETWEEN_DATE,  LIKE
+        EQUAL, EQUAL_BY_ENUM, BETWEEN_DATE,  LIKE, DOUBLE_JOIN
     }
 
     public enum ValueType {

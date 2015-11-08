@@ -1,7 +1,7 @@
 angular
     .module('lecturerModule')
     .controller(
-    'LecturersPanelController',
+    'TestsPanelController',
     [
         '$rootScope',
         '$scope',
@@ -13,51 +13,51 @@ angular
         '$timeout',
         'toaster',
         '$filter',
-        function ($rootScope, $scope, $modal, $http, lecturersService, ngTableParams, $translate, $timeout, toaster, $filter) {
+        function ($rootScope, $scope, $modal, $http, testsService, ngTableParams, $translate, $timeout, toaster, $filter) {
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
             $scope.pageContent = [];
 
-            //for measurement academicStatus
-            $scope.selectedAcademicStatus = {
+            //for measurement testType
+            $scope.selectedType = {
+                name: null
+            }
+            $scope.selectedAvaible = {
                 name: null
             }
 
-            //for measurement degree
-            $scope.selectedDegree = {
-                name: null
-            }
-
-            $scope.academicStatusData = [
+            $scope.typeData = [
                 {
-                    id: 'PROFESSOR',
-                    label: $filter('translate')('PROFESSOR')
+                    id: 'MODUL',
+                    label: $filter('translate')('MODUL')
                 },
                 {
-                    id: 'DOCENT',
-                    label: $filter('translate')('DOCENT')
+                    id: 'LABARATORY',
+                    label: $filter('translate')('LABARATORY')
                 },
                 {
-                    id: 'SENIOR_LECTURER',
-                    label: $filter('translate')('SENIOR_LECTURER')
+                    id: 'FINAL',
+                    label: $filter('translate')('FINAL')
                 }
             ];
 
-            $scope.degreeData = [
+            console.log($scope.typeData);
+
+            $scope.avaibleData = [
                 {
-                    id: 'CANDIDATE',
-                    label: $filter('translate')('CANDIDATE')
+                    id: 'true',
+                    label: $filter('translate')('TRUE_AVAIBLE')
                 },
                 {
-                    id: 'DOCTOR',
-                    label: $filter('translate')('DOCTOR')
+                    id: 'false',
+                    label: $filter('translate')('FALSE_AVAIBLE')
                 },
-                {
-                    id: 'POSTGRADUATE',
-                    label: $filter('translate')('POSTGRADUATE')
-                }
+
             ];
+
+
+
 
             $scope.setTypeDataLanguage = function () {
 
@@ -65,8 +65,8 @@ angular
             $scope.setTypeDataLanguage();
 
             $scope.clearAll = function () {
-                $scope.selectedAcademicStatus.name = null;
-                $scope.selectedDegree.name = null;
+                $scope.selectedType.name = null;
+                $scope.selectedAvaible.name = null;
                 $scope.tableParams.filter({});
             };
 
@@ -88,21 +88,23 @@ angular
                     var sortCriteria = Object.keys(params.sorting())[0];
                     var sortOrder = params.sorting()[sortCriteria];
 
-                    if ($scope.selectedAcademicStatus.name != null) {
-                        params.filter().academicStatus = $scope.selectedAcademicStatus.name.id;
+                    if ($scope.selectedType.name != null) {
+                        console.log($scope.selectedType.name);
+                        params.filter().type = $scope.selectedType.name.id;
                     }
                     else {
-                        params.filter().academicStatus = null; //case when the filter is cleared with a button on the select
+                        params.filter().type = null; //case when the filter is cleared with a button on the select
                     }
 
-                    if ($scope.selectedDegree.name != null) {
-                        params.filter().degree = $scope.selectedDegree.name.id;
+                    if ($scope.selectedAvaible.name != null) {
+                        params.filter().avaible = $scope.selectedAvaible.name.id;
                     }
                     else {
-                        params.filter().degree = null; //case when the filter is cleared with a button on the select
+                        params.filter().avaible = null; //case when the filter is cleared with a button on the select
                     }
 
-                    lecturersService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
+
+                    testsService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
                         .success(function (result) {
                             $scope.resultsCount = result.totalItems;
                             $defer.resolve(result.content);
@@ -149,22 +151,22 @@ angular
              * Opens modal window for editing category of counter.
              */
             $scope.openEditLecturerModal = function(
-                lecturerId) {
-                $rootScope.lecturerId = lecturerId;
-                lecturersService.getLecturerById(
-                    $rootScope.lecturerId).then(
+                testId) {
+                $rootScope.testId = testId;
+                testsService.getLecturerById(
+                    $rootScope.testId).then(
                     function(data) {
-                        $rootScope.lecturer = data;
-                        console.log($rootScope.lecturer);
+                        $rootScope.test = data;
+                        console.log($rootScope.test);
 
-                        var lecturerDTOModal = $modal
+                        var testDTOModal = $modal
                             .open({
                                 animation : true,
                                 controller : 'LecturerEditModalController',
                                 templateUrl : '/resources/app/lecturer/views/modals/lecturers/lecturer-edit-modal.html',
                                 size: 'md'
                             });
-                        lecturerDTOModal.result.then(function () {
+                        testDTOModal.result.then(function () {
                             toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_LECTURER'));
                         });
                     });
@@ -174,7 +176,7 @@ angular
             $scope.deleteLecturer = function (id) {
                 $rootScope.id = id;
                 console.log($rootScope.id);
-                lecturersService.deleteLecturer(id).then(function () {
+                testsService.deleteLecturer(id).then(function () {
                     toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_LECTURER'));
                 });
                 $timeout(function() {
@@ -183,50 +185,6 @@ angular
                 }, 700);
             };
 
-            /**
-             * Opens modal window for editing category of counter.
-             */
-            $scope.openAddSubject = function(
-                lecturerId) {
-                $rootScope.lecturerId = lecturerId;
-                lecturersService.getLecturerById(
-                    $rootScope.lecturerId).then(
-                    function(data) {
-                        $rootScope.lecturer = data;
-                        console.log($rootScope.lecturer);
 
-                        var lecturerDTOModal = $modal
-                            .open({
-                                animation : true,
-                                controller : 'LecturerEditModalController',
-                                templateUrl : '/resources/app/lecturer/views/modals/lecturers/lecturer-edit-modal.html',
-                                size: 'md'
-                            });
-                    });
-
-            };
-
-            /**
-             * Opens modal window for editing category of counter.
-             */
-            $scope.openListOfSubjects = function(
-                lecturerId) {
-                $rootScope.lecturerId = lecturerId;
-                lecturersService.getLecturerById(
-                    $rootScope.lecturerId).then(
-                    function(data) {
-                        $rootScope.lecturer = data;
-                        console.log($rootScope.lecturer);
-
-                        var lecturerDTOModal = $modal
-                            .open({
-                                animation : true,
-                                controller : 'LecturerEditModalController',
-                                templateUrl : '/resources/app/lecturer/views/modals/lecturers/lecturer-edit-modal.html',
-                                size: 'md'
-                            });
-                    });
-
-            };
 
         }]);

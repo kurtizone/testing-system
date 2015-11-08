@@ -1,15 +1,15 @@
-<div id="page-wrapper" ng-controller="LecturersPanelController">
+<div id="page-wrapper" ng-controller="TestsPanelController">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">{{ 'LECTURERS' | translate }}</h1>
+            <h1 class="page-header">{{ 'TESTS' | translate }}</h1>
         </div>
     </div>
 
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <button type="submit" class="btn btn-primary col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-click="openAddLecturerModal()">
+            <button type="submit" class="btn btn-primary col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-click="openAddTestModal()">
                 <span class="glyphicon glyphicon-plus"></span>
-                {{'ADD_LECTURER' | translate}}
+                {{'ADD_TESTS' | translate}}
             </button>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -29,39 +29,40 @@
                 <table show-filter="true" ng-table="tableParams" template-pagination="custom/pager"
                        class="table table-bordered table-hover">
                     <tbody>
-                    <tr ng-repeat="lecturer in $data">
-                        <td data-title="'LAST_NAME' | translate" sortable="'lastName'"
-                            filter="{ 'lastName': 'text' }" >
-                            {{ lecturer.lastName }}
+                    <tr ng-repeat="test in $data">
+                        <td data-title="'TITLE' | translate" sortable="'title'"
+                            filter="{ 'title': 'text' }" >
+                            {{ test.title }}
                         </td>
-                        <td data-title="'FIRST_NAME' | translate " sortable="'firstName'"
-                            filter="{ 'firstName': 'text' }">{{ lecturer.firstName }}
+                        <td data-title="'SUBJECT' | translate" sortable="'subject'"
+                            filter="{ 'subject': 'text' }" >
+                            {{ test.subject }}
                         </td>
-                        <td data-title="'MIDDLE_NAME' | translate" sortable="'middleName'"
-                            filter="{ 'middleName': 'text' }">{{ lecturer.middleName}}
+                        <td data-title="'TEST_TYPE' | translate" sortable="'type'"
+                            filter="{ 'type': 'type' }">{{ test.type | translate}}
                         </td>
-                        <td data-title="'ACADEMIC_STATUS' | translate" sortable="'academicStatus'"
-                            filter="{ 'academicStatus': 'academicStatus' }">{{ lecturer.academicStatus | translate}}
+                        <td data-title="'MAX_GRADE' | translate" sortable="'maxGrade'"
+                            filter="{ 'maxGrade': 'text' }">{{ test.maxGrade}}
                         </td>
-                        <td data-title="'DEGREE' | translate" sortable="'degree'"
-                            filter="{ 'degree': 'degree' }">{{ lecturer.degree | translate}}
+                        <td data-title="'AVAIBLE' | translate" sortable="'avaible'"
+                            filter="{ 'avaible': 'avaible' }">{{ test.avaible | translate}}
                         </td>
                         <td data-title="'ACTIONS' | translate" class="text-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-warning"
-                                        ng-click="openEditLecturerModal(lecturer.id)">
+                                        ng-click="setAvaible(test.id)">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
                                 <button type="button" class="btn btn-danger"
-                                        ng-click="deleteLecturer(lecturer.id)">
+                                        ng-click="setUnavaible(test.id)">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                                 <button type="button" class="btn btn-warning"
-                                        ng-click="openAddSubject(lecturer.id)">
+                                        ng-click="removeTest(test.id)">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>
                                 <button type="button" class="btn btn-success"
-                                        ng-click="openListOfSubjects(lecturer.id)">
+                                        ng-click="loolUp(test.id)">
                                     <span class="glyphicon glyphicon-book"></span>
                                 </button>
                             </div>
@@ -100,31 +101,31 @@
                     </ul>
                 </div>
             </script>
-            <script type="text/ng-template" id="ng-table/filters/academicStatus.html">
-                <ui-select ng-model="selectedAcademicStatus.name" theme="select2" on-select='doSearch()'
+            <script type="text/ng-template" id="ng-table/filters/type.html">
+                <ui-select ng-model="selectedType.name" theme="select2" on-select='doSearch()'
                            search-enabled="false"
-                           name="filter-academicStatus">
+                           name="filter-type">
                     <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
                                      allow-clear="true">
                         {{$select.selected.label}}
                     </ui-select-match>
                     <ui-select-choices
-                            repeat="academicStatus in academicStatusData">
-                        <span ng-bind-html="academicStatus.label"></span>
+                            repeat="type in typeData">
+                        <span ng-bind-html="type.label"></span>
                     </ui-select-choices>
                 </ui-select>
             </script>
-            <script type="text/ng-template" id="ng-table/filters/degree.html">
-                <ui-select ng-model="selectedDegree.name" theme="select2" on-select='doSearch()'
+            <script type="text/ng-template" id="ng-table/filters/avaible.html">
+                <ui-select ng-model="selectedAvaible.name" theme="select2" on-select='doSearch()'
                            search-enabled="false"
-                           name="filter-degree">
-                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_DEGREE' | translate}}"
+                           name="filter-avaible">
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
                                      allow-clear="true">
                         {{$select.selected.label}}
                     </ui-select-match>
                     <ui-select-choices
-                            repeat="degree in degreeData">
-                        <span ng-bind-html="degree.label"></span>
+                            repeat="avaible in avaibleData">
+                        <span ng-bind-html="avaible.label"></span>
                     </ui-select-choices>
                 </ui-select>
             </script>

@@ -4,7 +4,7 @@ angular
     ['spring-security-csrf-token-interceptor', 'ui.bootstrap',
         'ui.router', 'ui.bootstrap.showErrors', 'ngTable',
         'pascalprecht.translate', 'ngCookies', 'ui.select', 'ngSanitize', 'localytics.directives', 'checklist-model','ngAnimate', 'toaster',
-        'angular-loading-bar', 'angularInlineEdit'])
+        'angular-loading-bar'])
 
     .config(
     [
@@ -49,10 +49,10 @@ angular
                     templateUrl: '/resources/app/lecturer/views/subjects-panel.html'
                 })
                 .state(
-                'lecturers',
+                'tests',
                 {
-                    url: '/lecturers',
-                    templateUrl: '/resources/app/lecturer/views/lecturers-panel.html'
+                    url: '/tests',
+                    templateUrl: '/resources/app/lecturer/views/tests-panel.html'
                 })
                 .state(
                 'groups',
@@ -115,9 +115,9 @@ define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'controllers/subject/SubjectsPanelController',
     'controllers/subject/SubjectAddModalController',
     'controllers/subject/SubjectEditModalController',
-    'controllers/lecturer/LecturersPanelController',
-    'controllers/lecturer/LecturerAddModalController',
-    'controllers/lecturer/LecturerEditModalController',
+    'controllers/test/TestsPanelController',
+    'controllers/test/TestAddModalController',
+    'controllers/test/TestEditModalController',
     'controllers/student/StudentsPanelController',
     'controllers/student/StudentAddModalController',
     'controllers/student/StudentEditModalController',
@@ -129,7 +129,7 @@ define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'services/StatisticService',
     'services/UserService',
     'services/SubjectsService',
-    'services/LecturersService',
+    'services/TestsService',
     'services/StudentsService',
     'services/GroupsService',
     'services/SettingsService',

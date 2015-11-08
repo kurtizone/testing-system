@@ -52,7 +52,7 @@ public class Tests implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "subject_id_subject", nullable = false)
 	public Subject getSubject() {
 		return this.subject;

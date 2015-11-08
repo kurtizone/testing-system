@@ -3,7 +3,7 @@ angular
     .factory('LecturersService', function ($http) {
         return {
             getPage: function (pageNumber, itemsPerPage, search, sortCriteria, sortOrder) {
-                return getDataWithParams('/lecturer/lecturers/' + pageNumber + '/' + itemsPerPage + '/' + sortCriteria + '/' + sortOrder, search);
+                return getDataWithParams('/lecturer/tests/' + pageNumber + '/' + itemsPerPage + '/' + sortCriteria + '/' + sortOrder, search);
             },
             saveLecturer: function (formData) {
                 return $http.post("/lecturer/lecturers/add", formData)

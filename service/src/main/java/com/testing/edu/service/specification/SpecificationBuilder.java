@@ -114,6 +114,9 @@ public abstract class SpecificationBuilder<T> {
     private Path getCriteriaPath(SearchCriterion sc, Root root) {
         String key = sc.getEntityField();
         if (sc.getJoinEntityField() != null) {
+            if (sc.getSecondJoinEntityField() != null) {
+                return root.join(key).join(sc.getJoinEntityField()).get(sc.getSecondJoinEntityField());
+            }
             return root.join(key).get(sc.getJoinEntityField());
         } else {
             return root.get(key);

@@ -9,7 +9,8 @@ import lombok.Setter;
 public class TestDTO {
     private Long id;
     private String title;
-    private String testType;
+    private String type;
+    private String subject;
     private Integer maxGrade;
     private Boolean avaible;
 
@@ -17,10 +18,11 @@ public class TestDTO {
 
     }
 
-    public TestDTO(Long id, String title, String testType, Integer maxGrade, Boolean avaible) {
+    public TestDTO(Long id, String title, String type, String subject, Integer maxGrade, Boolean avaible) {
         this.id = id;
         this.title = title;
-        this.testType = testType;
+        this.type = type;
+        this.subject = subject;
         this.maxGrade = maxGrade;
         this.avaible = avaible;
     }
