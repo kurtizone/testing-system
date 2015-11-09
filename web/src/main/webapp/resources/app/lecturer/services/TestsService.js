@@ -32,14 +32,22 @@ angular
                         return result.status;
                     });
             },
-            findSubjects: function (id) {
+            findSubjects: function () {
                 return $http.get('/lecturer/tests/get/subjects')
                     .success(function (data) {
                         return data;
                     }).error(function(err) {
                         return err;
                     });
-            }
+            },
+            findTestBySubject: function (id) {
+                return $http.get('/lecturer/tests/get/subjects/tests/' + id)
+                    .success(function (data) {
+                        return data;
+                    }).error(function(err) {
+                        return err;
+                    });
+            },
         };
 
         function getDataWithParams(url, params) {

@@ -1,32 +1,38 @@
 angular
     .module('lecturerModule')
-    .factory('GroupsService', function ($http) {
+    .factory('FillTestsService', function ($http) {
         return {
             getPage: function (pageNumber, itemsPerPage, search, sortCriteria, sortOrder) {
-                return getDataWithParams('/lecturer/groups/' + pageNumber + '/' + itemsPerPage + '/' + sortCriteria + '/' + sortOrder, search);
+                return getDataWithParams('/lecturer/fill-tests/' + pageNumber + '/' + itemsPerPage + '/' + sortCriteria + '/' + sortOrder, search);
             },
-            saveGroup: function (formData) {
-                return $http.post("/lecturer/groups/add", formData)
+            saveQuestion: function (formData) {
+                return $http.post("/lecturer/fill-tests/add/question", formData)
                     .then(function (result) {
                         return result.status;
 
                     });
             },
-            getGroupById: function (id) {
-                var url = '/lecturer/groups/get/' + id;
+            getTestById: function (id) {
+                var url = '/lecturer/fill-tests/get/' + id;
                 return $http.get(url).then(function (result) {
                     return result.data;
                 });
             },
-            editGroup: function (formData, id) {
-                var url = '/lecturer/groups/edit/' + id;
+            getQuestionById: function (id) {
+                var url = '/lecturer/fill-tests/get/question/' + id;
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
+            editQuestion: function (formData, id) {
+                var url = '/lecturer/fill-tests/edit/question/' + id;
                 return $http.post(url, formData)
                     .then(function (result) {
                         return result.status;
                     });
             },
-            deleteGroup: function (id) {
-                var url = '/lecturer/groups/delete/' + id;
+            deleteQuestion: function (id) {
+                var url = '/lecturer/fill-tests/delete/question/' + id;
                 return $http.delete(url)
                     .then(function (result) {
                         return result.status;

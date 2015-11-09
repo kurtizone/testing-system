@@ -1,13 +1,13 @@
 angular
     .module('lecturerModule')
     .controller(
-    'GroupAddModalController',
+    'QuestionAddModalController',
     [
         '$rootScope',
         '$scope',
         '$translate',
         '$modalInstance',
-        'GroupsService',
+        'FillTestsService',
         '$filter',
         function ($rootScope, $scope, $translate, $modalInstance,
                   groupsService, $filter) {

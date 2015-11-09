@@ -5,10 +5,12 @@ import com.testing.edu.dto.PageDTO;
 import com.testing.edu.dto.admin.SubjectDTO;
 import com.testing.edu.dto.admin.TestDTO;
 import com.testing.edu.entity.Lecturers;
+import com.testing.edu.entity.Subject;
 import com.testing.edu.entity.Tests;
 import com.testing.edu.entity.User;
 import com.testing.edu.service.LecturersService;
 import com.testing.edu.service.StatisticService;
+import com.testing.edu.service.SubjectService;
 import com.testing.edu.service.TestsService;
 import com.testing.edu.service.security.SecurityUserDetailsService;
 import com.testing.edu.service.utils.ListToPageTransformer;
@@ -36,6 +38,9 @@ public class TestsController {
 
     @Autowired
     private LecturersService lecturersService;
+
+    @Autowired
+    private SubjectService subjectService;
 
     @Autowired
     private TestsService testsService;
@@ -131,11 +136,19 @@ public class TestsController {
     }
 
     @RequestMapping(value = "get/subjects")
-    public List<SubjectDTO> getTest(@AuthenticationPrincipal SecurityUserDetailsService.CustomUserDetails user) {
+    public List<SubjectDTO> getSubjects(@AuthenticationPrincipal SecurityUserDetailsService.CustomUserDetails user) {
         User userous = statisticService.employeeExist(user.getUsername());
         Lecturers lecturer = lecturersService.findByUser(userous);
         return lecturer.getSubjects().stream()
                 .map(subject -> new SubjectDTO(subject.getId(), subject.getTitle()))
+                .collect(Collectors.toList());
+    }
+
+    @RequestMapping(value = "get/subjects/tests/{subjectId}")
+    public List<TestDTO> getTests(@PathVariable Long subjectId) {
+        Subject subject = subjectService.findById(subjectId);
+        return subject.getTestses().stream()
+                .map(test -> new TestDTO(test.getId(), test.getTitle()))
                 .collect(Collectors.toList());
     }
 

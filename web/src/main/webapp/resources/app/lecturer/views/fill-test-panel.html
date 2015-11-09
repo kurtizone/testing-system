@@ -1,0 +1,48 @@
+<div id="page-wrapper" ng-controller="FillTestPanelController">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">{{ 'GROUPS' | translate }}</h1>
+        </div>
+    </div>
+
+    <div class="row row-test-fill">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <ui-select type="text" theme="select2" class="form-control"
+                       ng-model="chooseData.subjectTitle"
+                       on-select="receiveTests(chooseData.subjectTitle)"
+                       name="subjectTitle" id="subjectTitle" required>
+                <ui-select-match placeholder="{{'SELECT_SUBJECT_TITLE' | translate}}" allow-clear="true">
+                    {{$select.selected.title}}
+                </ui-select-match>
+                <ui-select-choices repeat="subject in subjects | filter: $select.search">
+                    <span ng-bind-html="subject.title"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <ui-select type="text" theme="select2" class="form-control"
+                       ng-model="chooseData.test"
+                       ng-disabled="!chooseData.subjectTitle"
+                       on-select="getTestById(chooseData.test)"
+                       name="test" id="test" required>
+                <ui-select-match placeholder="{{'SELECT_TEST_TITLE' | translate}}" allow-clear="true">
+                    {{$select.selected.title}}
+                </ui-select-match>
+                <ui-select-choices repeat="test in tests | filter: $select.search">
+                    <span ng-bind-html="test.title"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="row row-test-fill">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <button ng-click="clearAll()" ng-show="isFilter()"
+                    class="btn btn-danger col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                {{'ADD_QUESTION' | translate }}
+            </button>
+        </div>
+    </div>
+    <p></p>
+</div>
+</div>
+<!-- /#page-wrapper -->

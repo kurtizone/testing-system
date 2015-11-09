@@ -55,16 +55,10 @@ angular
                     templateUrl: '/resources/app/lecturer/views/tests-panel.html'
                 })
                 .state(
-                'groups',
+                'fill-test',
                 {
-                    url: '/groups',
-                    templateUrl: '/resources/app/lecturer/views/groups-panel.html'
-                })
-                .state(
-                'students',
-                {
-                    url: '/students',
-                    templateUrl: '/resources/app/lecturer/views/students-panel.html'
+                    url: '/fill-test',
+                    templateUrl: '/resources/app/lecturer/views/fill-test-panel.html'
                 })
                 .state(
                 'results',
@@ -121,9 +115,9 @@ define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'controllers/student/StudentsPanelController',
     'controllers/student/StudentAddModalController',
     'controllers/student/StudentEditModalController',
-    'controllers/group/GroupsPanelController',
-    'controllers/group/GroupAddModalController',
-    'controllers/group/GroupEditModalController',
+    'controllers/fill-test/FillTestPanelController',
+    'controllers/fill-test/QuestionAddModalController',
+    'controllers/fill-test/QuestionEditModalController',
     'controllers/UsersController',
     'controllers/InternationalizationController',
     'services/StatisticService',
@@ -131,7 +125,7 @@ define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'services/SubjectsService',
     'services/TestsService',
     'services/StudentsService',
-    'services/GroupsService',
+    'services/FillTestsService',
     'services/SettingsService',
     'services/RoleService',
     'directives/unique',
