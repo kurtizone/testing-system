@@ -18,6 +18,8 @@ angular
 
             $scope.chooseData = {};
 
+            console.log($scope.testData);
+
             $scope.getAllSubjects = function() {
                 $scope.subjects = [];
                 testsService.findSubjects()
@@ -62,7 +64,7 @@ angular
               $scope.testData = [];
                 fillTestsService.getTestById(test.id)
                     .then(function(testData) {
-                        $scope.testData = testData.data;
+                        $scope.testData = testData;
                         console.log(testData);
                         console.log($scope.testData);
                 });

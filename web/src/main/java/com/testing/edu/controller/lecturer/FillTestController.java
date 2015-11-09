@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +33,16 @@ public class FillTestController {
     @RequestMapping(value = "get/{id}")
     public TestDTO getTest(@PathVariable("id") Long id) {
         Tests test = testsService.findById(id);
-        Map<QuestionDTO, List<AnswerDTO>> mapQuestAns = new HashMap<>();
+        List<QuestionDTO> listQuestAns = new ArrayList<>();
         for (Questions questions : test.getQuestionses()){
-            mapQuestAns.put(new QuestionDTO(questions.getId(), questions.getText(), questions.getQuestionType().name()),
+            listQuestAns.add(new QuestionDTO(
+                    questions.getId(),
+                    questions.getText(),
+                    questions.getQuestionType().name(),
                     questions.getAnswerses().stream()
                     .map(answers -> new AnswerDTO(answers.getId(), answers.getText(), answers.getGrade()))
-                    .collect(Collectors.toList()));
-
+                    .collect(Collectors.toList())
+            ));
         }
         TestDTO testDTO = new TestDTO(
                 test.getId(),
@@ -48,8 +52,7 @@ public class FillTestController {
                 test.getMaxGrade(),
                 test.getAvaible(),
                 test.getSubject().getId(),
-                mapQuestAns
-        );
+                listQuestAns);
         return testDTO;
 
     }

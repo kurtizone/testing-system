@@ -18,7 +18,7 @@ public class TestDTO {
     private Integer maxGrade;
     private Boolean avaible;
     private Long subjectId;
-    private Map<QuestionDTO, List<AnswerDTO>> mapQuestAns;
+    private List<QuestionDTO> listQuestAns;
 
     public TestDTO() {
 
@@ -39,9 +39,9 @@ public class TestDTO {
     }
 
     public TestDTO(Long id, String title, String type, String subject, Integer maxGrade, Boolean avaible, Long subjectId,
-                   Map<QuestionDTO, List<AnswerDTO>> mapQuestAns) {
+                   List<QuestionDTO> listQuestAns) {
         this(id, title, type, subject, maxGrade, avaible, subjectId);
-        this.mapQuestAns = mapQuestAns;
+        this.listQuestAns = listQuestAns;
     }
 
     public TestDTO(Long id, String title) {

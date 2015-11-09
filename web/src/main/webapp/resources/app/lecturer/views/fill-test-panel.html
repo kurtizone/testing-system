@@ -1,48 +1,134 @@
 <div id="page-wrapper" ng-controller="FillTestPanelController">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">{{ 'GROUPS' | translate }}</h1>
+            <h1 class="page-header">{{ 'INFORMATION_ABOUT_TEST' | translate }}</h1>
         </div>
     </div>
 
     <div class="row row-test-fill">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <ui-select type="text" theme="select2" class="form-control"
-                       ng-model="chooseData.subjectTitle"
-                       on-select="receiveTests(chooseData.subjectTitle)"
-                       name="subjectTitle" id="subjectTitle" required>
-                <ui-select-match placeholder="{{'SELECT_SUBJECT_TITLE' | translate}}" allow-clear="true">
-                    {{$select.selected.title}}
-                </ui-select-match>
-                <ui-select-choices repeat="subject in subjects | filter: $select.search">
-                    <span ng-bind-html="subject.title"></span>
-                </ui-select-choices>
-            </ui-select>
+            <div class="row row-test-fill">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ui-select type="text" theme="select2" class="form-control"
+                               ng-model="chooseData.subjectTitle"
+                               on-select="receiveTests(chooseData.subjectTitle)"
+                               name="subjectTitle" id="subjectTitle" required>
+                        <ui-select-match placeholder="{{'SELECT_SUBJECT_TITLE' | translate}}" allow-clear="true">
+                            {{$select.selected.title}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="subject in subjects | filter: $select.search">
+                            <span ng-bind-html="subject.title"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row row-test-fill">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ui-select type="text" theme="select2" class="form-control"
+                               ng-model="chooseData.test"
+                               ng-disabled="!chooseData.subjectTitle"
+                               on-select="getTestById(chooseData.test)"
+                               name="test" id="test" required>
+                        <ui-select-match placeholder="{{'SELECT_TEST_TITLE' | translate}}" allow-clear="true">
+                            {{$select.selected.title}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="test in tests | filter: $select.search">
+                            <span ng-bind-html="test.title"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row row-test-fill">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <button ng-click="clearAll()" ng-show="testData !== undefined"
+                            class="btn btn-danger col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        {{'ADD_QUESTION' | translate }}
+                    </button>
+                </div>
+            </div>
+
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <ui-select type="text" theme="select2" class="form-control"
-                       ng-model="chooseData.test"
-                       ng-disabled="!chooseData.subjectTitle"
-                       on-select="getTestById(chooseData.test)"
-                       name="test" id="test" required>
-                <ui-select-match placeholder="{{'SELECT_TEST_TITLE' | translate}}" allow-clear="true">
-                    {{$select.selected.title}}
-                </ui-select-match>
-                <ui-select-choices repeat="test in tests | filter: $select.search">
-                    <span ng-bind-html="test.title"></span>
-                </ui-select-choices>
-            </ui-select>
-        </div>
-    </div>
-    <div class="row row-test-fill">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <button ng-click="clearAll()" ng-show="isFilter()"
-                    class="btn btn-danger col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                {{'ADD_QUESTION' | translate }}
-            </button>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="testData !== undefined">
+            <div class="well well-lg modal-padding">
+                <div class="row">
+                    <label class="col-md-4">{{'TEST_TITLE' |translate }}</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" type="text" ng-model="testData.title" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4">{{'SUBJECT' |translate }}</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" type="text" ng-model="testData.subject" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4">{{'MAX_GRADE' |translate }}</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" type="text" ng-model="testData.maxGrade" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4">{{'TEST_TYPE' |translate }}</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" type="text" ng-model="testData.type" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4">{{'AVAIBLE' |translate }}</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" type="text" ng-model="testData.avaible" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4">{{'TEST_TIME' |translate }}</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control" type="text" ng-model="testData.id" readonly>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <p></p>
+    <div class="row" ng-repeat="question in testData.listQuestAns">
+        <div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"><p></p></div>
+        <div class="panel panel-primary panel-questions col-lg-8 col-md-8 col-sm-10 col-xs-12">
+            <div class="panel-heading">
+                {{'QUESTION' | translate}} №{{$index+1}}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <label class="control-label col-md-12">{{question.text}}</label>
+                </div>
+                <p></p>
+                <p></p>
+                <div class="row" ng-show="question.questionType === 'MULTI'">
+                    <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
+                           ng-repeat="answer in question.answerDTOList">
+                        <input type="checkbox" checklist-model="selectedAnswers"
+                               checklist-value="answer.text">
+                        {{answer.text}}
+                    </label>
+                </div>
+                <div class="row" ng-show="question.questionType === 'ONE'">
+                    <div class="input-group">
+                        <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
+                               ng-repeat="answer in question.answerDTOList">
+                            <input type="radio" ng-model="selectedAnswer" value="{{answer.text}}" name="{{question.id}}">
+                            {{answer.text}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"><p></p></div>
+    </div>
 </div>
-</div>
+
 <!-- /#page-wrapper -->
