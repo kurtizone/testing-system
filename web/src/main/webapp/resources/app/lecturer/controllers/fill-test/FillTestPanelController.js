@@ -32,26 +32,6 @@ angular
 
             $scope.getAllSubjects();
 
-
-
-
-
-            /**
-             * Localization of multiselect for type of organization
-
-
-
-            $scope.isFilter = function () {
-                var obj = $scope.tableParams.filter();
-                for (var i in obj) {
-                    if (obj.hasOwnProperty(i) && obj[i]) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-             */
-
             $scope.receiveTests = function(subject) {
                 $scope.tests = [];
                 testsService.findTestBySubject(subject.id)
@@ -74,14 +54,17 @@ angular
             /**
              * Opens modal window for adding new category of counters.
              */
-            $scope.openAddGroupModal = function() {
-                var addGroup = $modal.open({
+            $scope.openAddQuestionModal = function(id) {
+                var addQuestion = $modal.open({
                     animation : true,
-                    controller : 'GroupAddModalController',
-                    templateUrl : '/resources/app/lecturer/views/modals/groups/group-add-modal.html',
-                    size: 'md'
+                    controller : 'QuestionAddModalController',
+                    templateUrl : '/resources/app/lecturer/views/modals/fill-test/question-add-modal.html',
+                    size: 'lg',
+                    resolve: {
+                        testId: id
+                    }
                 });
-                addGroup.result.then(function () {
+                addQuestion.result.then(function () {
                     toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_GROUP'));
                 });
             };
@@ -89,10 +72,10 @@ angular
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openEditGroupModal = function(
+            $scope.openEditQuestionModal = function(
                 groupId) {
                 $rootScope.groupId = groupId;
-                fillTestsService.getGroupById(
+                fillTestsService.getQuestionById(
                     $rootScope.groupId).then(
                     function(data) {
                         $rootScope.group = data;
@@ -101,8 +84,8 @@ angular
                         var groupDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'GroupEditModalController',
-                                templateUrl : '/resources/app/lecturer/views/modals/groups/group-edit-modal.html',
+                                controller : 'QuestionEditModalController',
+                                templateUrl : '/resources/app/lecturer/views/modals/fill-test/question-edit-modal.html',
                                 size: 'md'
                             });
                         groupDTOModal.result.then(function () {
@@ -112,10 +95,10 @@ angular
 
             };
 
-            $scope.deleteGroup = function (id) {
+            $scope.deleteQuestion = function (id) {
                 $rootScope.id = id;
                 console.log($rootScope.id);
-                fillTestsService.deleteGroup(id).then(function () {
+                fillTestsService.deleteQuestion(id).then(function () {
                     toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_GROUP'));
                 });
                 $timeout(function() {
@@ -126,6 +109,7 @@ angular
 
             $scope.$watch('chooseData.subjectTitle', function () {
                 $scope.chooseData.test = undefined;
+                $scope.testData = undefined;
             });
 
 

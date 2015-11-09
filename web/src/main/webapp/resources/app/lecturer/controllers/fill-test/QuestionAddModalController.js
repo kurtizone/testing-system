@@ -10,39 +10,23 @@ angular
         'FillTestsService',
         '$filter',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  groupsService, $filter) {
+                  fillTestsService, $filter) {
 
-            $scope.addGroupFormData = {};
-            $scope.addGroupFormData.studyForm = undefined;
-            $scope.addGroupFormData.degree = undefined;
+            $scope.addQuestionFormData = {};
+            $scope.addQuestionFormData.questionType = undefined;
 
-            $scope.degreeData = [
+            $scope.questionTypeData = [
                 {
-                    id: 'MASTER',
-                    label: $filter('translate')('MASTER')
+                    id: 'ONE',
+                    label: $filter('translate')('ONE')
                 },
                 {
-                    id: 'BACHELOR',
-                    label: $filter('translate')('BACHELOR')
+                    id: 'MULTI',
+                    label: $filter('translate')('MULTI')
                 }
             ];
 
-            $scope.studyFormData = [
-                {
-                    id: 'EXTERNAL',
-                    label: $filter('translate')('EXTERNAL')
-                },
-                {
-                    id: 'DAILY',
-                    label: $filter('translate')('DAILY')
-                },
-                {
-                    id: 'NONRESIDENCE',
-                    label: $filter('translate')('NONRESIDENCE')
-                }
-            ];
-
-
+            $scope.choices = [{id: 'choice1'}];
             /**
              * Localization of multiselect for type of organization
              */
@@ -60,11 +44,11 @@ angular
             /**
              * Resets organization form
              */
-            $scope.resetAddGroupForm = function () {
+            $scope.resetAddQuestionForm = function () {
                 $scope.$broadcast('show-errors-reset');
-                $scope.addGroupForm.$setPristine();
-                $scope.addGroupForm.$setUntouched();
-                $scope.addGroupFormData = {};
+                $scope.addQuestionForm.$setPristine();
+                $scope.addQuestionForm.$setUntouched();
+                $scope.addQuestionFormData = {};
             };
 
             /**
@@ -72,23 +56,33 @@ angular
              * organization.
              */
             $rootScope.closeModal = function (close) {
-                $scope.resetAddGroupForm();
+                $scope.resetAddQuestionForm();
                 if(close === true) {
                     $modalInstance.close();
                 }
                 $modalInstance.dismiss();
             };
 
+            $scope.addNewChoice = function() {
+                var newItemNo = $scope.choices.length+1;
+                $scope.choices.push({'id':'choice'+newItemNo});
+            };
+
+            $scope.removeChoice = function() {
+                var lastItem = $scope.choices.length-1;
+                $scope.choices.splice(lastItem);
+            };
+
             /**
              * Validates organization form before saving
              */
-            $scope.onAddGroupFormSubmit = function () {
+            $scope.onAddQuestionFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
-                if ($scope.addGroupForm.$valid) {
-                    $scope.addGroupFormData.studyForm = $scope.addGroupFormData.studyForm.id;
-                    $scope.addGroupFormData.degree = $scope.addGroupFormData.degree.id;
-                    console.log($scope.addGroupForm);
-                    saveGroup();
+                if ($scope.addQuestionForm.$valid) {
+                    $scope.addQuestionFormData.studyForm = $scope.addQuestionFormData.studyForm.id;
+                    $scope.addQuestionFormData.degree = $scope.addQuestionFormData.degree.id;
+                    console.log($scope.addQuestionForm);
+                    saveQuestion();
                 }
             };
 
@@ -97,9 +91,9 @@ angular
              * If everything is ok then resets the organization
              * form and updates table with organizations.
              */
-            function saveGroup() {
-                console.log($scope.addGroupFormData);
-                groupsService.saveGroup($scope.addGroupFormData)
+            function saveQuestion() {
+                console.log($scope.addQuestionFormData);
+                fillTestsService.saveQuestion($scope.addQuestionFormData)
                     .then(function (data) {
                         if (data == 201) {
                             $scope.closeModal(true);

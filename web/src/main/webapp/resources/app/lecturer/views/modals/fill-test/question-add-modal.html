@@ -4,106 +4,89 @@
 </div>
 
 <div class="modal-body modal-padding">
-    <form name="addGroupForm" id="addGroupForm" role="form" ng-submit="onAddGroupFormSubmit()"
+    <form name="addQuestionForm" id="addQuestionForm" role="form" ng-submit="onAddQuestionFormSubmit()"
           class="form-group" novalidate>
-
         <div class="form-group row row-fields" show-errors>
-            <label class="control-label col-md-4" for="title">
-                {{'TITLE_GROUP' |translate }}
+            <label class="control-label col-md-3" for="questionText">
+                {{'QUESTION_TEXT' |translate }}
             </label>
 
-            <div class="col-md-8">
-                <input id="title" name="title" class="form-control"
-                       type="text" ng-model="addGroupFormData.title" required>
-							<span class="form-control-feedback glyphicon
-						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
-
-                <p class="help-block" ng-if="addGroupForm.title.$error.required">
+            <div class="col-md-9">
+                <textarea id="questionText" name="questionText" class="form-control" rows="3"
+                          ng-model="addQuestionFormData.questionText" maxlength="1000" required></textarea>
+                <p class="help-block" ng-if="addQuestionForm.questionText.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
                     {{'REQUIRED' | translate}}
-                </p>
-
-                <p class="help-block" ng-if="addGroupForm.title.$error.pattern">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
                 </p>
             </div>
         </div>
 
         <div class="form-group row row-fields" show-errors>
-            <label class="control-label col-md-4" for="grade">
-                {{'GRADE' |translate }}
+            <label for="questionType" class="control-label col-md-3">
+                {{'QUESTION_TYPE' | translate}}
             </label>
 
-            <div class="col-md-8">
-                <input id="grade" name="grade" class="form-control"
-                       type="number" ng-model="addGroupFormData.grade"
-                       min="1" max="6" required>
-							<span class="form-control-feedback glyphicon
-						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
-
-                <p class="help-block" ng-if="addGroupForm.grade.$error.required">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'REQUIRED' | translate}}
-                </p>
-
-                <p class="help-block" ng-if="addGroupForm.grade.$error.min || addGroupForm.grade.$error.max">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group row row-fields" show-errors>
-            <label for="degree" class="control-label col-md-4">
-                {{'DEGREE' | translate}}
-            </label>
-
-            <div class="col-md-8">
-                <ui-select name="degree" id="degree" class="form-control"
-                           type="text" ng-model="addGroupFormData.degree" theme="select2"
-                           search-enabled="false" required>
+            <div class="col-md-9">
+                <ui-select name="questionType" id="questionType" class="form-control"
+                           type="text" ng-model="addQuestionFormData.questionType" theme="select2"
+                           search-enabled="false" on-select="" required>
                     <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_DEGREE' | translate}}"
                                      allow-clear="true">
                         {{$select.selected.label}}
                     </ui-select-match>
                     <ui-select-choices
-                            repeat="degree in degreeData">
-                        <span ng-bind-html="degree.label"></span>
+                            repeat="questionType in questionTypeData">
+                        <span ng-bind-html="questionType.label"></span>
                     </ui-select-choices>
                 </ui-select>
 
-                <p class="help-block" ng-if="addGroupForm.degree.$error.required">
+                <p class="help-block" ng-if="addQuestionForm.questionType.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
                     {{'REQUIRED' | translate}}
                 </p>
             </div>
         </div>
 
-        <div class="form-group row row-fields" show-errors>
-            <label for="studyForm" class="control-label col-md-4">
-                {{'STUDYFORM' | translate}}
+        <div class="form-group row row-fields" data-ng-repeat="choice in choices" ng-show="addQuestionFormData.questionType !== undefined">
+            <label  class="control-label col-md-3">
+                {{'ANSWER' | translate}}
             </label>
-
-            <div class="col-md-8">
-                <ui-select class="form-control" type="text" ng-model="addGroupFormData.studyForm" theme="select2"
-                           search-enabled="false" name="studyForm" id="studyForm" required>
-                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_STUDY_FORM' | translate}}"
-                                     allow-clear="true">
-                        {{$select.selected.label}}
-                    </ui-select-match>
-                    <ui-select-choices
-                            repeat="studyForm in studyFormData">
-                        <span ng-bind-html="studyForm.label"></span>
-                    </ui-select-choices>
-                </ui-select>
-
-                <p class="help-block" ng-if="addGroupForm.studyForm.$error.required">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'REQUIRED' | translate}}
-                </p>
+            <div class="col-md-9" ng-show="addQuestionFormData.questionType.id === 'MULTI'">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                    <input type="checkbox">
+                    </span>
+                <textarea class="form-control" rows="3" ng-model="secondDeviceComment" maxlength="500">
+                </textarea>
+                    <span class="input-group-addon" ng-show="$last">
+                        <i class="glyphicon glyphicon-minus" ng-click="removeChoice()"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-9" ng-show="addQuestionFormData.questionType.id === 'ONE'">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                    <input type="radio" name="answer">
+                    </span>
+                <textarea class="form-control" rows="3" ng-model="secondDeviceComment" maxlength="500">
+                </textarea>
+                    <span class="input-group-addon" ng-show="$last">
+                        <i class="glyphicon glyphicon-minus" ng-click="removeChoice()"></i>
+                    </span>
+                </div>
             </div>
         </div>
+
+        <div class="form-group row row-buttons">
+            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3">
+                <p></p>
+            </div>
+            <div class="col-md-9 col-sm-12 col-xs-12 col-lg-9">
+                <input type="button" class="btn btn-primary btn-block pull-right"
+                       value="{{'ADD_ANSWER' | translate }}" ng-click="addNewChoice()">
+            </div>
+        </div>
+
 
         <hr>
         <div class="form-group row row-buttons">
@@ -111,7 +94,7 @@
                 {{'ADD' | translate}}
             </button>
             <input type="reset" class="btn btn-warning col-md-2 col-sm-12 col-xs-12 col-lg-2"
-                   value="{{'CLEAR_FORM' | translate }}" ng-click="resetAddGroupForm()">
+                   value="{{'CLEAR_FORM' | translate }}" ng-click="resetAddQuestionForm()">
 
             <div class="col-md-6 col-sm-0 col-xs-0 col-lg-6">
                 <p></p>

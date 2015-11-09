@@ -40,7 +40,7 @@
             </div>
             <div class="row row-test-fill">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <button ng-click="clearAll()" ng-show="testData !== undefined"
+                    <button ng-click="openAddQuestionModal(testData.id)" ng-show="testData !== undefined"
                             class="btn btn-danger col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         {{'ADD_QUESTION' | translate }}
                     </button>
@@ -96,18 +96,37 @@
         </div>
     </div>
     <p></p>
+
     <div class="row" ng-repeat="question in testData.listQuestAns">
         <div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"><p></p></div>
         <div class="panel panel-primary panel-questions col-lg-8 col-md-8 col-sm-10 col-xs-12">
             <div class="panel-heading">
-                {{'QUESTION' | translate}} №{{$index+1}}
+                <div class="row">
+                    <div class="col-lg-10">
+                        <p>{{'QUESTION' | translate}} №{{$index+1}}</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-warning"
+                                    ng-click="openEditQuestionsModal(question.id)">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger"
+                                    ng-click="deleteQuestion(question.id)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <label class="control-label col-md-12">{{question.text}}</label>
                 </div>
                 <p></p>
+
                 <p></p>
+
                 <div class="row" ng-show="question.questionType === 'MULTI'">
                     <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
                            ng-repeat="answer in question.answerDTOList">
@@ -120,7 +139,8 @@
                     <div class="input-group">
                         <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
                                ng-repeat="answer in question.answerDTOList">
-                            <input type="radio" ng-model="selectedAnswer" value="{{answer.text}}" name="{{question.id}}">
+                            <input type="radio" ng-model="selectedAnswer" value="{{answer.text}}"
+                                   name="{{question.id}}">
                             {{answer.text}}
                         </label>
                     </div>

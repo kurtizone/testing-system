@@ -48,6 +48,11 @@ hr {
     margin-top: 5px;
 }
 
+.panel-heading p:only-child {
+    margin-top: 8px;
+}
+
+textarea{resize:vertical;}
 
 .nav,
 .pagination,
