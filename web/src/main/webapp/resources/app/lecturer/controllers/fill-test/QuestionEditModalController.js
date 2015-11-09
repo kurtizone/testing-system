@@ -25,12 +25,12 @@ angular
 
             $scope.degreeData = [
                 {
-                    id: 'MASTER',
-                    label: $filter('translate')('MASTER')
+                    id: 'ONE',
+                    label: $filter('translate')('ONE')
                 },
                 {
-                    id: 'BACHELOR',
-                    label: $filter('translate')('BACHELOR')
+                    id: 'MULTI',
+                    label: $filter('translate')('ONE')
                 }
             ];
 
