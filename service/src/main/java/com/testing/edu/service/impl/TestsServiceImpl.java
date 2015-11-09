@@ -3,6 +3,8 @@ package com.testing.edu.service.impl;
 import com.testing.edu.entity.Lecturers;
 import com.testing.edu.entity.Subject;
 import com.testing.edu.entity.Tests;
+import com.testing.edu.entity.enumeration.TestType;
+import com.testing.edu.repository.SubjectRepository;
 import com.testing.edu.repository.TestsRepository;
 import com.testing.edu.service.TestsService;
 import com.testing.edu.service.specification.builder.TestSpecificationBuilder;
@@ -23,6 +25,79 @@ public class TestsServiceImpl implements TestsService {
 
     @Autowired
     private TestsRepository testsRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
+
+    /**
+     * Save test with params
+     *
+     * @param title
+     * @param type
+     * @param maxGrade
+     * @param avaible
+     * @param subjectId
+     */
+    @Override
+    @Transactional
+    public void addTest(String title, String type, Integer maxGrade, Boolean avaible, Long subjectId) {
+        Tests test = new Tests(
+                title,
+                TestType.valueOf(type),
+                maxGrade,
+                avaible,
+                subjectRepository.findOne(subjectId)
+        );
+        testsRepository.save(test);
+    }
+
+    /**
+     * Edit test with params
+     *
+     * @param id
+     * @param title
+     * @param type
+     * @param maxGrade
+     * @param avaible
+     * @param subjectId
+     */
+    @Override
+    @Transactional
+    public void editTest(Long id, String title, String type, Integer maxGrade, Boolean avaible, Long subjectId) {
+        Tests test = testsRepository.findOne(id);
+
+        test.setTitle(title);
+        test.setType(TestType.valueOf(type));
+        test.setMaxGrade(maxGrade);
+        test.setAvaible(avaible);
+        test.setSubject(subjectRepository.findOne(subjectId));
+
+        testsRepository.save(test);
+    }
+
+    /**
+     * Delete test by his id
+     *
+     * @param id
+     */
+    @Override
+    @Transactional
+    public void removeTest(Long id) {
+        testsRepository.delete(id);
+    }
+
+    /**
+     * Find test by id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional
+    public Tests findById(Long id) {
+        return testsRepository.findOne(id);
+    }
+
     /**
      * Service for building page by SortCriteria, SortOrder and Searching data
      *

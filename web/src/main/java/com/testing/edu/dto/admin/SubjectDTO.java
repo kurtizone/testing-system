@@ -33,4 +33,9 @@ public class SubjectDTO {
         this.numberOfTests = numberOfTests;
     }
 
+    public SubjectDTO(Long id, String title){
+        this.id = id;
+        this.title = title;
+    }
+
 }

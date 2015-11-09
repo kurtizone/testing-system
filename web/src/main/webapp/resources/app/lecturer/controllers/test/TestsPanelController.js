@@ -7,7 +7,7 @@ angular
         '$scope',
         '$modal',
         '$http',
-        'LecturersService',
+        'TestsService',
         'ngTableParams',
         '$translate',
         '$timeout',
@@ -135,14 +135,20 @@ angular
             /**
              * Opens modal window for adding new category of counters.
              */
-            $scope.openAddLecturerModal = function() {
-                var addLecturer = $modal.open({
+            $scope.openAddTestModal = function() {
+                var addTest = $modal.open({
                     animation : true,
-                    controller : 'LecturerAddModalController',
-                    templateUrl : '/resources/app/lecturer/views/modals/lecturers/lecturer-add-modal.html',
-                    size: 'md'
+                    controller : 'TestAddModalController',
+                    templateUrl : '/resources/app/lecturer/views/modals/tests/test-add-modal.html',
+                    size: 'md',
+                    resolve: {
+                        subjects: function () {
+                            console.log(testsService.findSubjects());
+                            return testsService.findSubjects();
+                        }
+                    }
                 });
-                addLecturer.result.then(function () {
+                addTest.result.then(function () {
                     toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_LECTURER'));
                 });
             };
@@ -150,10 +156,10 @@ angular
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openEditLecturerModal = function(
+            $scope.openEditTestModal = function(
                 testId) {
                 $rootScope.testId = testId;
-                testsService.getLecturerById(
+                testsService.getTestById(
                     $rootScope.testId).then(
                     function(data) {
                         $rootScope.test = data;
@@ -162,9 +168,15 @@ angular
                         var testDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'LecturerEditModalController',
-                                templateUrl : '/resources/app/lecturer/views/modals/lecturers/lecturer-edit-modal.html',
-                                size: 'md'
+                                controller : 'TestEditModalController',
+                                templateUrl : '/resources/app/lecturer/views/modals/tests/test-edit-modal.html',
+                                size: 'md',
+                                resolve: {
+                                    subjects: function () {
+                                        console.log(testsService.findSubjects());
+                                        return testsService.findSubjects();
+                                    }
+                                }
                             });
                         testDTOModal.result.then(function () {
                             toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_LECTURER'));
@@ -173,10 +185,10 @@ angular
 
             };
 
-            $scope.deleteLecturer = function (id) {
+            $scope.deleteTest = function (id) {
                 $rootScope.id = id;
                 console.log($rootScope.id);
-                testsService.deleteLecturer(id).then(function () {
+                testsService.deleteTest(id).then(function () {
                     toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_LECTURER'));
                 });
                 $timeout(function() {

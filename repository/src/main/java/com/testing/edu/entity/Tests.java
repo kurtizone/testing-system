@@ -41,6 +41,14 @@ public class Tests implements java.io.Serializable {
 		this.questionses = questionses;
 	}
 
+	public Tests(String title, TestType type, Integer maxGrade, Boolean avaible, Subject subject) {
+		this.title = title;
+		this.type = type;
+		this.maxGrade = maxGrade;
+		this.avaible = avaible;
+		this.subject = subject;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -108,7 +116,7 @@ public class Tests implements java.io.Serializable {
 		this.results = results;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests", cascade = CascadeType.ALL)
 	public Set<Questions> getQuestionses() {
 		return this.questionses;
 	}

@@ -1,51 +1,51 @@
 angular
     .module('lecturerModule')
     .controller(
-    'LecturerAddModalController',
+    'TestAddModalController',
     [
         '$rootScope',
         '$scope',
         '$translate',
         '$modalInstance',
-        'LecturersService',
+        'TestsService',
         '$filter',
+        'subjects',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  lecturersService, $filter) {
+                  testsService, $filter, subjects) {
 
-            $scope.addLecturerFormData = {};
-            $scope.addLecturerFormData.academicStatus = undefined;
-            $scope.addLecturerFormData.degree = undefined;
+            $scope.addTestFormData = {};
+            $scope.addTestFormData.type = undefined;
+            $scope.addTestFormData.avaible = undefined;
+            $scope.subjects = subjects.data;
 
-            $scope.academicStatusData = [
+            $scope.typeData = [
                 {
-                    id: 'PROFESSOR',
-                    label: $filter('translate')('PROFESSOR')
+                    id: 'MODUL',
+                    label: $filter('translate')('MODUL')
                 },
                 {
-                    id: 'DOCENT',
-                    label: $filter('translate')('DOCENT')
+                    id: 'LABARATORY',
+                    label: $filter('translate')('LABARATORY')
                 },
                 {
-                    id: 'SENIOR_LECTURER',
-                    label: $filter('translate')('SENIOR_LECTURER')
+                    id: 'FINAL',
+                    label: $filter('translate')('FINAL')
                 }
             ];
 
-            $scope.degreeData = [
-                {
-                    id: 'CANDIDATE',
-                    label: $filter('translate')('CANDIDATE')
-                },
-                {
-                    id: 'DOCTOR',
-                    label: $filter('translate')('DOCTOR')
-                },
-                {
-                    id: 'POSTGRADUATE',
-                    label: $filter('translate')('POSTGRADUATE')
-                }
-            ];
+            console.log($scope.typeData);
 
+            $scope.avaibleData = [
+                {
+                    id: 'true',
+                    label: $filter('translate')('TRUE_AVAIBLE')
+                },
+                {
+                    id: 'false',
+                    label: $filter('translate')('FALSE_AVAIBLE')
+                },
+
+            ];
             $scope.setTypeDataLanguage = function () {
             };
             $scope.setTypeDataLanguage();
@@ -59,11 +59,11 @@ angular
             /**
              * Resets organization form
              */
-            $scope.resetAddLecturerForm = function () {
+            $scope.resetAddTestForm = function () {
                 $scope.$broadcast('show-errors-reset');
-                $scope.addLecturerForm.$setPristine();
-                $scope.addLecturerForm.$setUntouched();
-                $scope.addLecturerFormData = {};
+                $scope.addTestForm.$setPristine();
+                $scope.addTestForm.$setUntouched();
+                $scope.addTestFormData = {};
             };
 
             /**
@@ -71,22 +71,35 @@ angular
              * organization.
              */
             $rootScope.closeModal = function (close) {
-                $scope.resetAddLecturerForm();
+                $scope.resetAddTestForm();
                 if(close === true) {
                     $modalInstance.close();
                 }
                 $modalInstance.dismiss();
             };
 
+            $scope.setSubject = function (selectedSubject) {
+                console.log($scope.addTestForm.subject);
+                console.log(selectedSubject.title);
+                $scope.addTestForm.subject = selectedSubject.title;
+                console.log($scope.addTestForm.subjectId);
+                console.log(selectedSubject.id);
+                $scope.addTestForm.subjectId = selectedSubject.id;
+            };
+
             /**
              * Validates organization form before saving
              */
-            $scope.onAddLecturerFormSubmit = function () {
+            $scope.onAddTestFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
-                if ($scope.addLecturerForm.$valid) {
-                    $scope.addLecturerFormData.academicStatus = $scope.addLecturerFormData.academicStatus.id;
-                    $scope.addLecturerFormData.degree = $scope.addLecturerFormData.degree.id;
-                    saveLecturer();
+                if ($scope.addTestForm.$valid) {
+                    console.log($scope.addTestFormData);
+                    console.log($scope.addTestForm);
+                    $scope.addTestFormData.subject = $scope.addTestFormData.subjectTitle.title;
+                    $scope.addTestFormData.subjectId = $scope.addTestFormData.subjectTitle.id;
+                    $scope.addTestFormData.type = $scope.addTestFormData.type.id;
+                    $scope.addTestFormData.avaible = $scope.addTestFormData.avaible.id;
+                    saveTest();
                 }
             };
 
@@ -95,9 +108,9 @@ angular
              * If everything is ok then resets the organization
              * form and updates table with organizations.
              */
-            function saveLecturer() {
-                console.log($scope.addLecturerFormData);
-                lecturersService.saveLecturer($scope.addLecturerFormData)
+            function saveTest() {
+                console.log($scope.addTestFormData);
+                testsService.saveTest($scope.addTestFormData)
                     .then(function (data) {
                         if (data == 201) {
                             $scope.closeModal(true);

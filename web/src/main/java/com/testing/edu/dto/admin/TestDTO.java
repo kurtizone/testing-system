@@ -13,6 +13,7 @@ public class TestDTO {
     private String subject;
     private Integer maxGrade;
     private Boolean avaible;
+    private Long subjectId;
 
     public TestDTO() {
 
@@ -25,5 +26,10 @@ public class TestDTO {
         this.subject = subject;
         this.maxGrade = maxGrade;
         this.avaible = avaible;
+    }
+
+    public TestDTO(Long id, String title, String type, String subject, Integer maxGrade, Boolean avaible, Long subjectId) {
+        this(id, title, type, subject, maxGrade, avaible);
+        this.subjectId = subjectId;
     }
 }

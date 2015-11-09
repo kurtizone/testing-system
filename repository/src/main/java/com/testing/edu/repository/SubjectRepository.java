@@ -14,5 +14,4 @@ import java.util.List;
 @Repository
 public interface SubjectRepository extends PagingAndSortingRepository<Subject, Long>, JpaSpecificationExecutor<Subject> {
 
-
 }

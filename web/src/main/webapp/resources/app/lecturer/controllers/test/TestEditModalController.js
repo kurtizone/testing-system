@@ -1,58 +1,61 @@
 angular
     .module('lecturerModule')
     .controller(
-    'LecturerEditModalController',
+    'TestEditModalController',
     [
         '$rootScope',
         '$scope',
         '$translate',
         '$modalInstance',
-        'LecturersService',
+        'TestsService',
         '$filter',
+        'subjects',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  lecturersService, $filter) {
+                  testsService, $filter, subjects) {
 
-    
+            $scope.subjects = subjects.data;
             $scope.defaultData = {};
-            $scope.defaultData.academicStatus = {
-                id: $rootScope.lecturer.academicStatus,
-                label: $filter('translate')($rootScope.lecturer.academicStatus)
+            $scope.defaultData.type = {
+                id: $rootScope.test.type,
+                label: $filter('translate')($rootScope.test.type)
             };
-            $scope.defaultData.degree = {
-                id: $rootScope.lecturer.degree,
-                label: $filter('translate')($rootScope.lecturer.degree)
+            $scope.defaultData.avaible = {
+                id: $rootScope.test.avaible,
+                label: $filter('translate')($rootScope.test.avaible)
+            };
+            $scope.defaultData.subjectTitle = {
+                id: $rootScope.test.subjectId,
+                title: $rootScope.test.subject
             };
 
-            $scope.academicStatusData = [
+            $scope.typeData = [
                 {
-                    id: 'PROFESSOR',
-                    label: $filter('translate')('PROFESSOR')
+                    id: 'MODUL',
+                    label: $filter('translate')('MODUL')
                 },
                 {
-                    id: 'DOCENT',
-                    label: $filter('translate')('DOCENT')
+                    id: 'LABARATORY',
+                    label: $filter('translate')('LABARATORY')
                 },
                 {
-                    id: 'SENIOR_LECTURER',
-                    label: $filter('translate')('SENIOR_LECTURER')
+                    id: 'FINAL',
+                    label: $filter('translate')('FINAL')
                 }
             ];
 
-            $scope.degreeData = [
-                {
-                    id: 'CANDIDATE',
-                    label: $filter('translate')('CANDIDATE')
-                },
-                {
-                    id: 'DOCTOR',
-                    label: $filter('translate')('DOCTOR')
-                },
-                {
-                    id: 'POSTGRADUATE',
-                    label: $filter('translate')('POSTGRADUATE')
-                }
-            ];
+            console.log($scope.typeData);
 
+            $scope.avaibleData = [
+                {
+                    id: true,
+                    label: $filter('translate')('TRUE_AVAIBLE')
+                },
+                {
+                    id: false,
+                    label: $filter('translate')('FALSE_AVAIBLE')
+                },
+
+            ];
 
             $scope.setTypeDataLanguage = function () {
             };
@@ -67,7 +70,7 @@ angular
 
             /**
              * Closes the modal window for adding new
-             * lecturer.
+             * test.
              */
             $rootScope.closeModal = function (close) {
                 if(close === true) {
@@ -77,45 +80,36 @@ angular
             };
 
             /**
-             * Validates lecturer form before saving
+             * Validates test form before saving
              */
-            $scope.onEditLecturerFormSubmit = function () {
-                console.log($scope.lecturer.academicStatus);
-                console.log($scope.lecturer.degree);
-                console.log($scope.defaultData.academicStatus.id);
-                console.log($scope.defaultData.degree.id);
+            $scope.onEditTestFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
-                if ($scope.editLecturerForm.$valid) {
-                    var lecturerForm = {
-                        firstName: $rootScope.lecturer.firstName,
-                        lastName: $rootScope.lecturer.lastName,
-                        middleName: $rootScope.lecturer.middleName,
-                        academicStatus: $scope.defaultData.academicStatus.id,
-                        degree: $scope.defaultData.degree.id
+                if ($scope.editTestForm.$valid) {
+                    var testForm = {
+                        title: $rootScope.test.title,
+                        subjectId: $scope.defaultData.subjectTitle.id,
+                        subject: $scope.defaultData.subjectTitle.title,
+                        type: $scope.defaultData.type.id,
+                        maxGrade: $rootScope.test.maxGrade,
+                        avaible: $scope.defaultData.avaible.id
                     };
-                    console.log(lecturerForm.academicStatus);
-                    console.log(lecturerForm.degree);
-                    console.log(lecturerForm);
-                    saveLecturer(lecturerForm);
+                    saveTest(testForm);
                 }
             };
 
-            $scope.OnSelectDegree = function () {
-                console.log($scope.defaultData.academicStatus);
-                console.log($scope.defaultData.degree);
-            };
+
 
             /**
-             * Saves new lecturer from the form in database.
+             * Saves new test from the form in database.
              * If everything is ok then resets the organization
              * form and updates table with organizations.
              */
-            function saveLecturer(lecturerForm) {
-                console.log(lecturerForm);
-                console.log($rootScope.lecturer.id);
-                lecturersService.editLecturer(
-                    lecturerForm,
-                    $rootScope.lecturer.id).then(
+            function saveTest(testForm) {
+                console.log(testForm);
+                console.log($rootScope.test.id);
+                testsService.editTest(
+                    testForm,
+                    $rootScope.test.id).then(
                     function (data) {
                         if (data == 200) {
                             $scope.closeModal(true);

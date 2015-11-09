@@ -1,0 +1,153 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{'FILL_IN_INFORMATION_ABOUT_LECTURER'
+        | translate}}</h3>
+</div>
+
+<div class="modal-body modal-padding">
+    <form name="addTestForm" id="addTestForm" role="form" ng-submit="onAddTestFormSubmit()"
+          class="form-group" novalidate>
+
+
+        <div class="form-group row row-fields" show-errors>
+            <label class="control-label col-md-4" for="title">
+                {{'TITLE_TEST' |translate }}
+            </label>
+
+            <div class="col-md-8">
+                <input id="title" name="title" class="form-control"
+                       type="text" ng-model="addTestFormData.title"
+                       ng-pattern="FIRST_LAST_NAME_REGEX" required>
+							<span class="form-control-feedback glyphicon
+						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                <p class="help-block" ng-if="addTestForm.title.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'REQUIRED' | translate}}
+                </p>
+
+                <p class="help-block" ng-if="addTestForm.title.$error.pattern">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row row-fields" show-errors>
+            <label class="control-label col-md-4" for="subjectTitle">
+                {{'SUBJECT_TITLE' | translate }}
+            </label>
+
+            <div class="col-md-8">
+                <ui-select class="form-control" type="text" theme="select2"
+                           ng-model="addTestFormData.subjectTitle"
+                           on-select="setSubjectId(addTestFormData.subjectTitle)"
+                           name="subjectTitle" id="subjectTitle" required>
+                    <ui-select-match placeholder="{{'SELECT_NAME_OF_COUNTER' | translate}}" allow-clear="true">
+                        {{$select.selected.title}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="subject in subjects | filter: $select.search">
+                        <span ng-bind-html="subject.title"></span>
+                    </ui-select-choices>
+                </ui-select>
+
+                <p class="help-block" ng-if="addTestForm.subjectTitle.$error.required || addTestFormData.subjectTitle === null">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'TYPEAHEAD_ERROR' | translate}}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row row-fields" show-errors>
+            <label for="type" class="control-label col-md-4">
+                {{'TEST_TYPE' | translate}}
+            </label>
+
+            <div class="col-md-8">
+                <ui-select name="type" id="type" class="form-control"
+                           type="text" ng-model="addTestFormData.type" theme="select2"
+                           search-enabled="false" required>
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                                     allow-clear="true">
+                        {{$select.selected.label}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="type in typeData">
+                        <span ng-bind-html="type.label"></span>
+                    </ui-select-choices>
+                </ui-select>
+
+                <p class="help-block" ng-if="addTestFormData.type.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'REQUIRED' | translate}}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row row-fields" show-errors>
+            <label class="control-label col-md-4" for="maxGrade">
+                {{'MAX_GRADE' | translate }}
+            </label>
+
+            <div class="col-md-8">
+                <input type="number" ng-model="addTestFormData.maxGrade" id="maxGrade"
+                       ng-pattern="CATEGORY_DEVICE_CODE" name="maxGrade"
+                       class="form-control" popover="Введіть код лічильника"
+                       popover-trigger="focus" popover-placement="top" required>
+						 	<span class="form-control-feedback glyphicon
+						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                <p class="help-block" ng-if="addTestForm.maxGrade.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'REQUIRED' | translate}}
+                </p>
+
+                <p class="help-block" ng-if="addTestForm.maxGrade.$error.pattern">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'ORGANIZATION_NAME_LENGTH' | translate }}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row row-fields" show-errors>
+            <label for="avaible" class="control-label col-md-4">
+                {{'AVAIBLE' | translate}}
+            </label>
+
+            <div class="col-md-8">
+                <ui-select name="avaible" id="avaible" class="form-control"
+                           type="text" ng-model="addTestFormData.avaible" theme="select2"
+                           search-enabled="false" required>
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                                     allow-clear="true">
+                        {{$select.selected.label}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="avaible in avaibleData">
+                        <span ng-bind-html="avaible.label"></span>
+                    </ui-select-choices>
+                </ui-select>
+
+                <p class="help-block" ng-if="addTestForm.avaible.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'REQUIRED' | translate}}
+                </p>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group row row-buttons">
+            <button type="submit" class="btn btn-success col-md-2 col-sm-12 col-xs-12 col-lg-2">
+                {{'ADD' | translate}}
+            </button>
+            <input type="reset" class="btn btn-warning col-md-2 col-sm-12 col-xs-12 col-lg-2"
+                   value="{{'CLEAR_FORM' | translate }}" ng-click="resetAddTestForm()">
+
+            <div class="col-md-6 col-sm-0 col-xs-0 col-lg-6">
+                <p></p>
+            </div>
+
+            <input type="button" class="btn btn-danger col-md-2 col-sm-12 col-xs-12 col-lg-2 pull-right"
+                   value="{{'CLOSE' | translate}}" ng-click="closeModal()">
+        </div>
+
+    </form>
+</div>
