@@ -68,14 +68,20 @@ public class QuestionsServiceImpl implements QuestionsService {
         Questions question = questionsRepository.findOne(id);
         Tests test = question.getTests();
         recountGrades(test.getQuestionses(), test, gradeForQuestion);
+        for(Answers answers : question.getAnswerses()){
+            if(!answerses.contains(answers) && !answers.getId().equals(-1l)){
+                answerRepository.delete(answers);
+            }
+        }
         for (Answers answers : answerses) {
-            if(!answers.getId().equals(null)){
+            if(!answers.getId().equals(-1l)){
                 Answers existAnswer = answerRepository.findOne(answers.getId());
                 existAnswer.setGrade(answers.getGrade());
                 existAnswer.setText(answers.getText());
                 existAnswer.setQuestions(question);
                 answerRepository.save(existAnswer);
             } else {
+                answers.setId(null);
                 answers.setQuestions(question);
                 answerRepository.save(answers);
             }
@@ -107,6 +113,18 @@ public class QuestionsServiceImpl implements QuestionsService {
         answerRepository.delete(question.getAnswerses());
         questionsRepository.delete(question);
     }
+
+    /**
+     * Delete answer by his id
+     *
+     * @param id
+     */
+    @Override
+    @Transactional
+    public void removeAnswer(Long id) {
+        answerRepository.delete(id);
+    }
+
 
     /**
      * Find question by id

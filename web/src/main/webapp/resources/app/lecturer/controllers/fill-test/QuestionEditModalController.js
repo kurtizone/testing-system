@@ -9,10 +9,11 @@ angular
         '$modalInstance',
         'FillTestsService',
         '$filter',
+        'toaster',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  fillTestsService, $filter) {
+                  fillTestsService, $filter, toaster) {
 
-
+            $scope.defaultData = {};
             $scope.editQuestionFormData = {};
             $scope.editQuestionFormData.questionType = undefined;
             $scope.answerDTOList = [{}];
@@ -39,6 +40,11 @@ angular
                     correct: correctness
                 }
             }
+            $scope.defaultData.questionType = {
+                    id: $rootScope.question.questionType,
+                    label: $filter('translate')($rootScope.question.questionType)
+            }
+
 
 
             /**
@@ -78,25 +84,30 @@ angular
 
             $scope.addNewChoice = function() {
                 var newItemNo = $scope.choices.length+1;
-                $scope.choices.push({'id':'choice'+newItemNo, text: '', correct: false});
+                $scope.choices.push({'id': -1, text: '', correct: false});
             };
 
-            $scope.removeChoice = function() {
+            $scope.removeChoice = function(id) {
                 var lastItem = $scope.choices.length-1;
                 $scope.choices.splice(lastItem);
+                /*if(id !== null) {
+                    fillTestsService.deleteAnswer(id).then(function () {
+                        toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_ANSWER'));
+                    });
+                }*/
             };
 
             /**
              * Validates organization form before saving
              */
-            $scope.onAddQuestionFormSubmit = function () {
+            $scope.onEditQuestionFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
                 if ($scope.editQuestionForm.$valid) {
                     console.log($scope.editQuestionForm);
                     choicesToAnswerDTOList();
                     var questionForm = {
-                        text: $scope.editQuestionFormData.questionText,
-                        questionType: $scope.editQuestionFormData.questionType.id,
+                        text: $rootScope.question.text,
+                        questionType: $scope.defaultData.questionType.id,
                         answerDTOList: $scope.answerDTOList,
                         testId: $rootScope.testId
                     };
@@ -106,7 +117,7 @@ angular
 
             function choicesToAnswerDTOList() {
                 angular.forEach($scope.choices, function (choice) {
-                    $scope.answerDTOList.push({'text': choice.text, 'correct': choice.correct});
+                    $scope.answerDTOList.push({id: choice.id,'text': choice.text, 'correct': choice.correct});
                 });
                 $scope.answerDTOList.shift();
             }
@@ -118,9 +129,11 @@ angular
              */
             function saveQuestion(questionForm) {
                 console.log(questionForm);
-                fillTestsService.saveQuestion(questionForm)
-                    .then(function (data) {
-                        if (data == 201) {
+                fillTestsService.editQuestion(
+                    questionForm,
+                    $rootScope.question.id
+                    ).then(function (data) {
+                        if (data == 200) {
                             $scope.closeModal(true);
                             $rootScope.reloadQuestions();
                         }

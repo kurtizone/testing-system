@@ -37,6 +37,13 @@ angular
                     .then(function (result) {
                         return result.status;
                     });
+            },
+            deleteAnswer: function (id) {
+                var url = '/lecturer/fill-tests/delete/answer/' + id;
+                return $http.delete(url)
+                    .then(function (result) {
+                        return result.status;
+                    });
             }
         };
 

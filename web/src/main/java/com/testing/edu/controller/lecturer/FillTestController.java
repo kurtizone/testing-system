@@ -70,7 +70,7 @@ public class FillTestController {
     public ResponseEntity editQuestion(@RequestBody QuestionDTO questionDTO,
                                    @PathVariable Long questionId) {
         HttpStatus httpStatus = HttpStatus.OK;
-        Tests test = testsService.findById(questionDTO.getTestId());
+        Tests test = questionsService.findById(questionId).getTests();
         gradeForQuest = (double) test.getMaxGrade() / (test.getQuestionses().size());
         try {
             questionsService.editQuestion(
@@ -105,6 +105,24 @@ public class FillTestController {
         return new ResponseEntity(httpStatus);
     }
 
+    /**
+     * Delete answer
+     * @param answerId Long id of answer
+     * @return a response body with http status {@literal OK} if answer
+     * successfully edited or else http status {@literal CONFLICT}
+     */
+    @RequestMapping(value = "delete/answer/{answerId}", method = RequestMethod.DELETE)
+    public ResponseEntity removeAnswer(@PathVariable Long answerId) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        try {
+            questionsService.removeAnswer(answerId);
+        } catch (Exception e) {
+            logger.error("Got exeption while remove question ",e);
+            httpStatus = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity(httpStatus);
+    }
+
     @RequestMapping(value = "get/question/{id}")
     public QuestionDTO getQuestion(@PathVariable("id") Long id) {
         Questions question = questionsService.findById(id);
@@ -114,7 +132,8 @@ public class FillTestController {
                 question.getQuestionType().name(),
                 question.getAnswerses().stream()
                         .map(answers -> new AnswerDTO(answers.getId(), answers.getText(), answers.getGrade()))
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                question.getTests().getId()
         );
         return questionDTO;
 
@@ -157,7 +176,7 @@ public class FillTestController {
         }
         Double grade = gradeForQuestion / correctAnswers;
         return list.stream()
-                .map(answerDTO -> new Answers(answerDTO.getText(), (answerDTO.getCorrect() ? grade : new Double(0))))
+                .map(answerDTO -> new Answers(!answerDTO.getId().equals(-1l) ? answerDTO.getId() : -1, answerDTO.getText(), (answerDTO.getCorrect() ? grade : new Double(0))))
                 .collect(Collectors.toList());
     }
 

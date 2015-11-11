@@ -92,7 +92,7 @@ angular
                                 animation : true,
                                 controller : 'QuestionEditModalController',
                                 templateUrl : '/resources/app/lecturer/views/modals/fill-test/question-edit-modal.html',
-                                size: 'md'
+                                size: 'lg'
                             });
                         groupDTOModal.result.then(function () {
                             toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_GROUP'));

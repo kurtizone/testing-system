@@ -27,6 +27,11 @@ public class Answers implements java.io.Serializable {
 		this.grade = grade;
 	}
 
+	public Answers(Long id, String text, Double grade) {
+		this(text, grade);
+		this.id = id;
+	}
+
 	public Answers(Questions questions, String text, Double grade) {
 		this(text, grade);
 		this.questions = questions;

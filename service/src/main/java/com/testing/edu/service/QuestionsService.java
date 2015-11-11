@@ -33,6 +33,12 @@ public interface QuestionsService {
     void removeQuestion(Long id);
 
     /**
+     * Delete answer by his id
+     * @param id
+     */
+    void removeAnswer(Long id);
+
+    /**
      * Find question by id
      * @param id
      * @return

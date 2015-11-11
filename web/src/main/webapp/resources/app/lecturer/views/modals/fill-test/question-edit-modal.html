@@ -4,7 +4,7 @@
 </div>
 
 <div class="modal-body modal-padding">
-    <form name="editQuestionForm" id="editQuestionForm" role="form" ng-submit="onAddQuestionFormSubmit()"
+    <form name="editQuestionForm" id="editQuestionForm" role="form" ng-submit="onEditQuestionFormSubmit()"
           class="form-group" novalidate>
         <div class="form-group row row-fields" show-errors>
             <label class="control-label col-md-3" for="questionText">
@@ -13,7 +13,7 @@
 
             <div class="col-md-9">
                 <textarea id="questionText" name="questionText" class="form-control" rows="3"
-                          ng-model="$root.question.questionText" maxlength="1000" required></textarea>
+                          ng-model="$root.question.text" maxlength="1000" required></textarea>
                 <p class="help-block" ng-if="editQuestionForm.questionText.$error.required">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
                     {{'REQUIRED' | translate}}
@@ -47,40 +47,40 @@
             </div>
         </div>
 
-        <div class="form-group row row-fields" data-ng-repeat="choice in choices" ng-show="editQuestionFormData.questionType !== undefined">
+        <div class="form-group row row-fields" data-ng-repeat="choice in choices" ng-show="defaultData.questionType !== undefined">
             <label  class="control-label col-md-3">
                 {{'ANSWER' | translate}}
             </label>
-            <div class="col-md-9" ng-show="editQuestionFormData.questionType.id === 'MULTI'">
+            <div class="col-md-9" ng-show="defaultData.questionType.id === 'MULTI'">
                 <div class="input-group">
                     <span class="input-group-addon">
-                    <input type="checkbox" ng-model="choice.correct"
+                    <input type="checkbox" ng-model="choice.correct" ng-checked="choice.correct"
                            value="choice.correct">
                     </span>
                 <textarea class="form-control" rows="3" ng-model="choice.text" maxlength="500"
                           placeholder="Enter your answer">
                 </textarea>
                     <span class="input-group-addon" ng-show="$last">
-                        <i class="glyphicon glyphicon-minus" ng-click="removeChoice()"></i>
+                        <i class="glyphicon glyphicon-minus" ng-click="removeChoice(choice.id)"></i>
                     </span>
                 </div>
             </div>
-            <div class="col-md-9" ng-show="editQuestionFormData.questionType.id === 'ONE'">
+            <div class="col-md-9" ng-show="defaultData.questionType.id === 'ONE'">
                 <div class="input-group">
                     <span class="input-group-addon">
-                    <input type="radio" name="answer" model="choice.correct" value="true" ng-click="setChoiceForQuestion(choice)">
+                    <input type="radio" name="answer" ng-checked="choice.correct" model="choice.correct" value="true" ng-click="setChoiceForQuestion(choice)">
                     </span>
                 <textarea class="form-control" rows="3" ng-model="choice.text" maxlength="500"
                           placeholder="Enter your answer">
                 </textarea>
                     <span class="input-group-addon" ng-show="$last">
-                        <i class="glyphicon glyphicon-minus" ng-click="removeChoice()"></i>
+                        <i class="glyphicon glyphicon-minus" ng-click="removeChoice(choice.id)"></i>
                     </span>
                 </div>
             </div>
         </div>
 
-        <div class="form-group row row-buttons" ng-show="editQuestionFormData.questionType !== undefined">
+        <div class="form-group row row-buttons" ng-show="defaultData.questionType !== undefined">
             <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3">
                 <p></p>
             </div>
@@ -99,17 +99,15 @@
         </div>
         <hr>
         <div class="form-group row row-buttons">
-            <button type="submit" class="btn btn-success col-md-2 col-sm-12 col-xs-12 col-lg-2">
+            <button type="submit" class="btn btn-success col-md-3 col-sm-12 col-xs-12 col-lg-3">
                 {{'ADD' | translate}}
             </button>
-            <input type="reset" class="btn btn-warning col-md-2 col-sm-12 col-xs-12 col-lg-2"
-                   value="{{'CLEAR_FORM' | translate }}" ng-click="resetAddQuestionForm()">
 
             <div class="col-md-6 col-sm-0 col-xs-0 col-lg-6">
                 <p></p>
             </div>
 
-            <input type="button" class="btn btn-danger col-md-2 col-sm-12 col-xs-12 col-lg-2 pull-right"
+            <input type="button" class="btn btn-danger col-md-3 col-sm-12 col-xs-12 col-lg-3 pull-right"
                    value="{{'CLOSE' | translate}}" ng-click="closeModal()">
         </div>
     </form>
