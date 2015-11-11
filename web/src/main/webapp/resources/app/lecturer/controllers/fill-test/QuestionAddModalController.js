@@ -14,6 +14,7 @@ angular
 
             $scope.addQuestionFormData = {};
             $scope.addQuestionFormData.questionType = undefined;
+            $scope.answerDTOList = [{}];
 
             $scope.questionTypeData = [
                 {
@@ -26,7 +27,7 @@ angular
                 }
             ];
 
-            $scope.choices = [{id: 'choice1'}];
+            $scope.choices = [{id: 'choice1', text: '', correct: false}];
             /**
              * Localization of multiselect for type of organization
              */
@@ -49,6 +50,7 @@ angular
                 $scope.addQuestionForm.$setPristine();
                 $scope.addQuestionForm.$setUntouched();
                 $scope.addQuestionFormData = {};
+                $scope.choices = [{id: 'choice1'}];
             };
 
             /**
@@ -63,9 +65,18 @@ angular
                 $modalInstance.dismiss();
             };
 
+            $scope.setChoiceForQuestion = function (choice) {
+                angular.forEach($scope.choices, function (choice) {
+                    choice.correct = false;
+                });
+
+                choice.correct = true;
+            };
+
+
             $scope.addNewChoice = function() {
                 var newItemNo = $scope.choices.length+1;
-                $scope.choices.push({'id':'choice'+newItemNo});
+                $scope.choices.push({'id':'choice'+newItemNo, text: '', correct: false});
             };
 
             $scope.removeChoice = function() {
@@ -79,25 +90,37 @@ angular
             $scope.onAddQuestionFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
                 if ($scope.addQuestionForm.$valid) {
-                    $scope.addQuestionFormData.studyForm = $scope.addQuestionFormData.studyForm.id;
-                    $scope.addQuestionFormData.degree = $scope.addQuestionFormData.degree.id;
                     console.log($scope.addQuestionForm);
-                    saveQuestion();
+                    choicesToAnswerDTOList();
+                    var questionForm = {
+                        text: $scope.addQuestionFormData.questionText,
+                        questionType: $scope.addQuestionFormData.questionType.id,
+                        answerDTOList: $scope.answerDTOList,
+                        testId: $rootScope.testId
+                    };
+                    saveQuestion(questionForm);
                 }
             };
+
+            function choicesToAnswerDTOList() {
+                angular.forEach($scope.choices, function (choice) {
+                    $scope.answerDTOList.push({'text': choice.text, 'correct': choice.correct});
+                });
+                $scope.answerDTOList.shift();
+            }
 
             /**
              * Saves new organization from the form in database.
              * If everything is ok then resets the organization
              * form and updates table with organizations.
              */
-            function saveQuestion() {
-                console.log($scope.addQuestionFormData);
-                fillTestsService.saveQuestion($scope.addQuestionFormData)
+            function saveQuestion(questionForm) {
+                console.log(questionForm);
+                fillTestsService.saveQuestion(questionForm)
                     .then(function (data) {
                         if (data == 201) {
                             $scope.closeModal(true);
-                            $rootScope.onTableHandling();
+                            $rootScope.reloadQuestions();
                         }
                     });
             }

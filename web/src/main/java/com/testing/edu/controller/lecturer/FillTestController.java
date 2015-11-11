@@ -8,17 +8,15 @@ import com.testing.edu.entity.Answers;
 import com.testing.edu.entity.Questions;
 import com.testing.edu.entity.Tests;
 import com.testing.edu.entity.enumeration.QuestionType;
+import com.testing.edu.service.QuestionsService;
 import com.testing.edu.service.TestsService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,8 +25,101 @@ public class FillTestController {
 
     private final Logger logger = Logger.getLogger(FillTestController.class);
 
+    private static Double gradeForQuest = 0d;
+
     @Autowired
     private TestsService testsService;
+
+    @Autowired
+    private QuestionsService questionsService;
+
+
+    /**
+     * Add question
+     * @param questionDTO object with question data
+     * @return a response body with http status {@literal OK} if question
+     * successfully edited or else http status {@literal CONFLICT}
+     */
+    @RequestMapping(value = "add/question", method = RequestMethod.POST)
+    public ResponseEntity addQuestion(@RequestBody QuestionDTO questionDTO) {
+        HttpStatus httpStatus = HttpStatus.CREATED;
+        Tests test = testsService.findById(questionDTO.getTestId());
+        gradeForQuest = (double) test.getMaxGrade() / (test.getQuestionses().size() + 1);
+        try {
+            questionsService.addQuestion(
+                    questionDTO.getText(),
+                    questionDTO.getQuestionType(),
+                    toListFromAnswerDTO(questionDTO.getAnswerDTOList(), gradeForQuest),
+                    test,
+                    gradeForQuest
+            );
+        } catch (Exception e) {
+            logger.error("Got exeption while add question ",e);
+            httpStatus = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity(httpStatus);
+    }
+
+    /**
+     * Edit question
+     * @param questionDTO object with question data
+     * @return a response body with http status {@literal OK} if question
+     * successfully edited or else http status {@literal CONFLICT}
+     */
+    @RequestMapping(value = "edit/question/{questionId}", method = RequestMethod.POST)
+    public ResponseEntity editQuestion(@RequestBody QuestionDTO questionDTO,
+                                   @PathVariable Long questionId) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        Tests test = testsService.findById(questionDTO.getTestId());
+        gradeForQuest = (double) test.getMaxGrade() / (test.getQuestionses().size());
+        try {
+            questionsService.editQuestion(
+                    questionId,
+                    questionDTO.getText(),
+                    questionDTO.getQuestionType(),
+                    toListFromAnswerDTO(questionDTO.getAnswerDTOList(), gradeForQuest),
+                    gradeForQuest
+            );
+        } catch (Exception e) {
+            logger.error("Got exeption while editing question ",e);
+            httpStatus = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity(httpStatus);
+    }
+
+    /**
+     * Delete question
+     * @param questionId Long id of question
+     * @return a response body with http status {@literal OK} if question
+     * successfully edited or else http status {@literal CONFLICT}
+     */
+    @RequestMapping(value = "delete/question/{questionId}", method = RequestMethod.DELETE)
+    public ResponseEntity removeQuestion(@PathVariable Long questionId) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        try {
+            questionsService.removeQuestion(questionId);
+        } catch (Exception e) {
+            logger.error("Got exeption while remove question ",e);
+            httpStatus = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity(httpStatus);
+    }
+
+    @RequestMapping(value = "get/question/{id}")
+    public QuestionDTO getQuestion(@PathVariable("id") Long id) {
+        Questions question = questionsService.findById(id);
+        QuestionDTO questionDTO = new QuestionDTO(
+                question.getId(),
+                question.getText(),
+                question.getQuestionType().name(),
+                question.getAnswerses().stream()
+                        .map(answers -> new AnswerDTO(answers.getId(), answers.getText(), answers.getGrade()))
+                        .collect(Collectors.toList())
+        );
+        return questionDTO;
+
+    }
+
 
     @RequestMapping(value = "get/{id}")
     public TestDTO getTest(@PathVariable("id") Long id) {
@@ -55,6 +146,19 @@ public class FillTestController {
                 listQuestAns);
         return testDTO;
 
+    }
+
+    public static List<Answers> toListFromAnswerDTO(List<AnswerDTO> list, Double gradeForQuestion){
+        int correctAnswers = 0;
+        for (AnswerDTO answersDTO : list) {
+            if(answersDTO.getCorrect().equals(true)){
+                correctAnswers++;
+            }
+        }
+        Double grade = gradeForQuestion / correctAnswers;
+        return list.stream()
+                .map(answerDTO -> new Answers(answerDTO.getText(), (answerDTO.getCorrect() ? grade : new Double(0))))
+                .collect(Collectors.toList());
     }
 
 

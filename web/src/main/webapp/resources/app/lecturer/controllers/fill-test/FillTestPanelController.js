@@ -49,20 +49,27 @@ angular
                         console.log($scope.testData);
                 });
             };
+
+            $rootScope.reloadQuestions = function() {
+                $timeout(function() {
+                    fillTestsService.getTestById($scope.testData.id)
+                        .then(function(testData) {
+                            $scope.testData = testData;
+                        });
+                }, 700);
+            }
                 
             
             /**
              * Opens modal window for adding new category of counters.
              */
-            $scope.openAddQuestionModal = function(id) {
+            $scope.openAddQuestionModal = function() {
+                $rootScope.testId = $scope.testData.id;
                 var addQuestion = $modal.open({
                     animation : true,
                     controller : 'QuestionAddModalController',
                     templateUrl : '/resources/app/lecturer/views/modals/fill-test/question-add-modal.html',
-                    size: 'lg',
-                    resolve: {
-                        testId: id
-                    }
+                    size: 'lg'
                 });
                 addQuestion.result.then(function () {
                     toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_GROUP'));
@@ -73,14 +80,13 @@ angular
              * Opens modal window for editing category of counter.
              */
             $scope.openEditQuestionModal = function(
-                groupId) {
-                $rootScope.groupId = groupId;
+                questionId) {
+                $rootScope.questionId = questionId;
                 fillTestsService.getQuestionById(
-                    $rootScope.groupId).then(
+                    $rootScope.questionId).then(
                     function(data) {
-                        $rootScope.group = data;
-                        console.log($rootScope.group);
-
+                        $rootScope.question = data;
+                        console.log($rootScope.question);
                         var groupDTOModal = $modal
                             .open({
                                 animation : true,
@@ -103,7 +109,7 @@ angular
                 });
                 $timeout(function() {
                     console.log('delete with timeout');
-                    $rootScope.onTableHandling();
+                    $rootScope.reloadQuestions();
                 }, 700);
             };
 

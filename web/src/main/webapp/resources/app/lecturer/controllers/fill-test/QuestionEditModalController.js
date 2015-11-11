@@ -10,44 +10,36 @@ angular
         'FillTestsService',
         '$filter',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  groupsService, $filter) {
+                  fillTestsService, $filter) {
 
-    
-            $scope.defaultData = {};
-            $scope.defaultData.studyForm = {
-                id: $rootScope.group.studyForm,
-                label: $filter('translate')($rootScope.group.studyForm)
-            };
-            $scope.defaultData.degree = {
-                id: $rootScope.group.degree,
-                label: $filter('translate')($rootScope.group.degree)
-            };
 
-            $scope.degreeData = [
+            $scope.editQuestionFormData = {};
+            $scope.editQuestionFormData.questionType = undefined;
+            $scope.answerDTOList = [{}];
+
+            $scope.questionTypeData = [
                 {
                     id: 'ONE',
                     label: $filter('translate')('ONE')
                 },
                 {
                     id: 'MULTI',
-                    label: $filter('translate')('ONE')
+                    label: $filter('translate')('MULTI')
                 }
             ];
+            $scope.choices = [{}];
+            for (var i = 0; i < $rootScope.question.answerDTOList.length; i++) {
+                correctness = false;
+                if($rootScope.question.answerDTOList[i].grade > 0) {
+                    correctness = true;
+                }
+                $scope.choices[i] = {
+                    id: $rootScope.question.answerDTOList[i].id,
+                    text: $rootScope.question.answerDTOList[i].text,
+                    correct: correctness
+                }
+            }
 
-            $scope.studyFormData = [
-                {
-                    id: 'EXTERNAL',
-                    label: $filter('translate')('EXTERNAL')
-                },
-                {
-                    id: 'DAILY',
-                    label: $filter('translate')('DAILY')
-                },
-                {
-                    id: 'NONRESIDENCE',
-                    label: $filter('translate')('NONRESIDENCE')
-                }
-            ];
 
             /**
              * Localization of multiselect for type of organization
@@ -64,8 +56,9 @@ angular
             });
 
             /**
-             * Closes the modal window for adding new
-             * group.
+            /**
+             * Closes the modal window for editing new
+             * organization.
              */
             $rootScope.closeModal = function (close) {
                 if(close === true) {
@@ -74,43 +67,62 @@ angular
                 $modalInstance.dismiss();
             };
 
+            $scope.setChoiceForQuestion = function (choice) {
+                angular.forEach($scope.choices, function (choice) {
+                    choice.correct = false;
+                });
+
+                choice.correct = true;
+            };
+
+
+            $scope.addNewChoice = function() {
+                var newItemNo = $scope.choices.length+1;
+                $scope.choices.push({'id':'choice'+newItemNo, text: '', correct: false});
+            };
+
+            $scope.removeChoice = function() {
+                var lastItem = $scope.choices.length-1;
+                $scope.choices.splice(lastItem);
+            };
+
             /**
-             * Validates group form before saving
+             * Validates organization form before saving
              */
-            $scope.onEditGroupFormSubmit = function () {
+            $scope.onAddQuestionFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
-                if ($scope.editGroupForm.$valid) {
-                    var groupForm = {
-                        title: $rootScope.group.title,
-                        grade: $rootScope.group.grade,
-                        degree: $scope.defaultData.degree.id,
-                        studyForm: $scope.defaultData.studyForm.id,
+                if ($scope.editQuestionForm.$valid) {
+                    console.log($scope.editQuestionForm);
+                    choicesToAnswerDTOList();
+                    var questionForm = {
+                        text: $scope.editQuestionFormData.questionText,
+                        questionType: $scope.editQuestionFormData.questionType.id,
+                        answerDTOList: $scope.answerDTOList,
+                        testId: $rootScope.testId
                     };
-                    saveGroup(groupForm);
+                    saveQuestion(questionForm);
                 }
             };
 
-            $scope.OnSelectDegree = function () {
-                console.log($scope.defaultData.studyForm);
-                console.log($scope.defaultData.degree);
-            };
+            function choicesToAnswerDTOList() {
+                angular.forEach($scope.choices, function (choice) {
+                    $scope.answerDTOList.push({'text': choice.text, 'correct': choice.correct});
+                });
+                $scope.answerDTOList.shift();
+            }
 
             /**
-             * Saves new group from the form in database.
+             * Saves new organization from the form in database.
              * If everything is ok then resets the organization
              * form and updates table with organizations.
              */
-            function saveGroup(groupForm) {
-                console.log(groupForm);
-                console.log($rootScope.group.id);
-                groupsService.editGroup(
-                    groupForm,
-                    $rootScope.group.id).then(
-                    function (data) {
-                        if (data == 200) {
+            function saveQuestion(questionForm) {
+                console.log(questionForm);
+                fillTestsService.saveQuestion(questionForm)
+                    .then(function (data) {
+                        if (data == 201) {
                             $scope.closeModal(true);
-                            console.log(data);
-                            $rootScope.onTableHandling();
+                            $rootScope.reloadQuestions();
                         }
                     });
             }

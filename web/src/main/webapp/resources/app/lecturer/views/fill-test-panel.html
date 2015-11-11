@@ -40,9 +40,9 @@
             </div>
             <div class="row row-test-fill">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <button ng-click="openAddQuestionModal(testData.id)" ng-show="testData !== undefined"
+                    <button ng-click="openAddQuestionModal()" ng-show="testData !== undefined"
                             class="btn btn-danger col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        {{'ADD_QUESTION' | translate }}
+                        {{'ADD_QUESTION' | translate }} {{test.id}}
                     </button>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                     <div class="col-lg-2">
                         <div class="btn-group pull-right">
                             <button type="button" class="btn btn-warning"
-                                    ng-click="openEditQuestionsModal(question.id)">
+                                    ng-click="openEditQuestionModal(question.id)">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                             <button type="button" class="btn btn-danger"
@@ -130,7 +130,7 @@
                 <div class="row" ng-show="question.questionType === 'MULTI'">
                     <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
                            ng-repeat="answer in question.answerDTOList">
-                        <input type="checkbox" checklist-model="selectedAnswers"
+                        <input type="checkbox" checklist-model="selectedAnswers" ng-checked="answer.grade > 0"
                                checklist-value="answer.text">
                         {{answer.text}}
                     </label>
@@ -139,7 +139,7 @@
                     <div class="input-group">
                         <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
                                ng-repeat="answer in question.answerDTOList">
-                            <input type="radio" ng-model="selectedAnswer" value="{{answer.text}}"
+                            <input type="radio" ng-model="selectedAnswer" value="{{answer.text}}" ng-checked="answer.grade > 0"
                                    name="{{question.id}}">
                             {{answer.text}}
                         </label>

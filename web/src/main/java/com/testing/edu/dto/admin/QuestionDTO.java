@@ -13,6 +13,7 @@ public class QuestionDTO {
     private String text;
     private String questionType;
     private List<AnswerDTO> answerDTOList;
+    private Long testId;
 
     public QuestionDTO(){}
 
@@ -21,5 +22,10 @@ public class QuestionDTO {
         this.text = text;
         this.questionType = questionType;
         this.answerDTOList = answerDTOList;
+    }
+
+    public QuestionDTO(Long id, String text, String questionType, List<AnswerDTO> answerDTOList, Long testId) {
+        this(id, text, questionType, answerDTOList);
+        this.testId = testId;
     }
 }

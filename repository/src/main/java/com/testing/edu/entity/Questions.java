@@ -33,6 +33,16 @@ public class Questions implements java.io.Serializable {
 		this.answerses = answerses;
 	}
 
+	public Questions(String text, QuestionType questionType, Tests tests){
+		this.text = text;
+		this.questionType = questionType;
+		this.tests = tests;
+	}
+	public Questions(String text, QuestionType questionType, Set<Answers> answerses, Tests tests) {
+		this(tests, text, answerses);
+		this.questionType = questionType;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)

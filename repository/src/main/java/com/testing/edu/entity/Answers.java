@@ -22,11 +22,16 @@ public class Answers implements java.io.Serializable {
 		this.questions = questions;
 	}
 
-	public Answers(Questions questions, String text, Double grade) {
-		this.questions = questions;
+	public Answers(String text, Double grade) {
 		this.text = text;
 		this.grade = grade;
 	}
+
+	public Answers(Questions questions, String text, Double grade) {
+		this(text, grade);
+		this.questions = questions;
+	}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
