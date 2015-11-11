@@ -115,6 +115,9 @@ public abstract class SpecificationBuilder<T> {
         String key = sc.getEntityField();
         if (sc.getJoinEntityField() != null) {
             if (sc.getSecondJoinEntityField() != null) {
+                if(sc.getThirdJoinEntityField() != null){
+                    return root.join(key).join(sc.getJoinEntityField()).join(sc.getSecondJoinEntityField()).get(sc.getThirdJoinEntityField());
+                }
                 return root.join(key).join(sc.getJoinEntityField()).get(sc.getSecondJoinEntityField());
             }
             return root.join(key).get(sc.getJoinEntityField());

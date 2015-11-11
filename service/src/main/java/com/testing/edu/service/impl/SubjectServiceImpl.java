@@ -136,13 +136,13 @@ public class SubjectServiceImpl implements SubjectService {
         Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
         Specification<Subject> searchSpec = specificationBuilder.buildPredicate();
 
-        int totalItems = lecturer.getSubjects().size();
+        int totalItems = subjectRepository.findAll(searchSpec).size();
         Page<Subject> subjectPage = subjectRepository.findAll(searchSpec, pageSpec);
         List<Subject> subjects = subjectPage.getContent();
 
         ListToPageTransformer<Subject> result = new ListToPageTransformer<>();
         result.setContent(subjects);
-        result.setTotalItems((long) subjects.size());
+        result.setTotalItems((long) totalItems);
         return result;
     }
 
@@ -166,12 +166,14 @@ public class SubjectServiceImpl implements SubjectService {
         Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
         Specification<Subject> searchSpec = specificationBuilder.buildPredicate();
 
+
+        int totalItems = subjectRepository.findAll(searchSpec).size();
         Page<Subject> subjectPage = subjectRepository.findAll(searchSpec, pageSpec);
         List<Subject> subjects = subjectPage.getContent();
 
         ListToPageTransformer<Subject> result = new ListToPageTransformer<>();
         result.setContent(subjects);
-        result.setTotalItems((long) subjects.size());
+        result.setTotalItems((long) totalItems);
         return result;
     }
 

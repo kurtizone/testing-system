@@ -49,29 +49,18 @@ angular
                     templateUrl: '/resources/app/student/views/subjects-panel.html'
                 })
                 .state(
-                'lecturers',
-                {
-                    url: '/lecturers',
-                    templateUrl: '/resources/app/student/views/lecturers-panel.html'
-                })
-                .state(
-                'groups',
-                {
-                    url: '/groups',
-                    templateUrl: '/resources/app/student/views/groups-panel.html'
-                })
-                .state(
-                'students',
-                {
-                    url: '/students',
-                    templateUrl: '/resources/app/student/views/students-panel.html'
-                })
-                .state(
                 'results',
                 {
                     url: '/results',
                     templateUrl: '/resources/app/student/views/results-panel.html'
                 })
+                .state(
+                'tests',
+                {
+                    url: '/tests',
+                    templateUrl: '/resources/app/student/views/tests-panel.html'
+                })
+
 
             /*
              Extended ui-select-choices: added watch for ng-translate event called translateChangeEnd
@@ -124,6 +113,9 @@ define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'controllers/group/GroupsPanelController',
     'controllers/group/GroupAddModalController',
     'controllers/group/GroupEditModalController',
+    'controllers/tests/TestsPanelController',
+    'controllers/tests/TestAddModalController',
+    'controllers/tests/TestEditModalController',
     'controllers/UsersController',
     'controllers/InternationalizationController',
     'services/StatisticService',

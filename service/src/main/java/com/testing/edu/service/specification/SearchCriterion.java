@@ -16,6 +16,7 @@ public class SearchCriterion<T extends Enum<T>> {
     private ValueType valueType;
     private String joinEntityField;
     private String secondJoinEntityField;
+    private String thirdJoinEntityField;
     private Class<T> enumKeyType;
 
     /**
@@ -38,13 +39,20 @@ public class SearchCriterion<T extends Enum<T>> {
         this.joinEntityField = joinEntityField;
     }
 
-    public SearchCriterion(String key, String entityField, Operator operation, ValueType valueType, String joinEntityField, String secondJoinEntityField) {
+    public SearchCriterion(String key, String entityField, Operator operation, ValueType valueType, String joinEntityField,
+                           String secondJoinEntityField) {
         this.key = key;
         this.entityField = entityField;
         this.operation = operation;
         this.valueType = valueType;
         this.joinEntityField = joinEntityField;
         this.secondJoinEntityField = secondJoinEntityField;
+    }
+
+    public SearchCriterion(String key, String entityField, Operator operation, ValueType valueType, String joinEntityField,
+                           String secondJoinEntityField, String thirdJoinEntityField) {
+        this(key, entityField, operation, valueType, joinEntityField, secondJoinEntityField);
+        this.thirdJoinEntityField = thirdJoinEntityField;
     }
 
 
@@ -91,7 +99,10 @@ public class SearchCriterion<T extends Enum<T>> {
      * @param additionKey addition key to filter (e.g: for between operation)
      */
     public SearchCriterion(String key, String entityField, Operator operation, String additionKey) {
-        this(key, entityField, operation, null, additionKey, null, null);
+        this.key = key;
+        this.entityField = entityField;
+        this.operation = operation;
+        this.additionKey = additionKey;
     }
 
     /**

@@ -15,7 +15,7 @@ public class Result implements java.io.Serializable {
 	private Students students;
 	private Tests tests;
 	private String testTitle;
-	private Integer mark;
+	private Double mark;
 	private Integer maxGrade;
 
 	public Result() {
@@ -26,7 +26,7 @@ public class Result implements java.io.Serializable {
 		this.tests = tests;
 	}
 
-	public Result(Students students, Tests tests, String testTitle, Integer mark, Integer maxGrade) {
+	public Result(Students students, Tests tests, String testTitle, Double mark, Integer maxGrade) {
 		this.students = students;
 		this.tests = tests;
 		this.testTitle = testTitle;
@@ -75,11 +75,11 @@ public class Result implements java.io.Serializable {
 	}
 
 	@Column(name = "mark")
-	public Integer getMark() {
+	public Double getMark() {
 		return this.mark;
 	}
 
-	public void setMark(Integer mark) {
+	public void setMark(Double mark) {
 		this.mark = mark;
 	}
 

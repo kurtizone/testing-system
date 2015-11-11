@@ -1,7 +1,25 @@
-<div id="page-wrapper" ng-controller="GroupsPanelController">
+<div id="page-wrapper" ng-controller="TestsPanelController">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">{{ 'GROUPS' | translate }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <button type="submit" class="btn btn-primary col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-click="openAddGroupModal()">
+                <span class="glyphicon glyphicon-plus"></span>
+                {{'ADD_GROUP' | translate}}
+            </button>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <p></p>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+            <button ng-click="clearAll()" ng-show="isFilter()"
+                    class="btn btn-danger pull-right col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                {{'CLEAR_ALL' | translate }}
+            </button>
         </div>
     </div>
     <p></p>
@@ -11,7 +29,7 @@
                 <table show-filter="true" ng-table="tableParams" template-pagination="custom/pager"
                        class="table table-bordered table-hover users_table">
                     <tbody>
-                    <tr ng-repeat="result in $data">
+                    <tr ng-repeat="group in $data">
                         <td data-title="'TITLE_GROUP' | translate" sortable="'title'"
                             filter="{ 'title': 'text' }" >
                             {{ group.title }}
@@ -25,6 +43,28 @@
                         </td>
                         <td data-title="'STUDYFORM' | translate" sortable="'studyForm'"
                             filter="{ 'studyForm': 'studyForm' }">{{ group.studyForm | translate }}
+                        </td>
+                        <td data-title="'ACTIONS' | translate" class="text-center">
+                            <div class="btn-group-vertical">
+                                <button type="button" class="btn btn-warning"
+                                        ng-click="openEditGroupModal(group.id)">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button type="button" class="btn btn-danger"
+                                        ng-click="deleteGroup(group.id)">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                            <div class="btn-group-vertical">
+                                <button type="button" class="btn btn-success"
+                                        ng-click="openListOfGroups(group.id)">
+                                    <span class="glyphicon glyphicon-education"></span>
+                                </button>
+                                <button type="button" class="btn btn-success"
+                                        ng-click="openListOfLecturers(group.id)">
+                                    <span class="glyphicon glyphicon-blackboard"></span>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                     </tbody>

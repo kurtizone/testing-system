@@ -216,6 +216,19 @@ INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subje
 VALUES (9,0,'60','Модуль №1','MODUL',4);
 INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
 VALUES (10,0,'60','Модуль №2','MODUL',4);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
+VALUES (11,0,'40','Модуль №1','MODUL',8);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
+VALUES (12,0,'40','Модуль №2','MODUL',8);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
+VALUES (13,0,'10','Лабораторна №2','LABARATORY',8);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
+VALUES (14,0,'40','Модуль №1','MODUL',10);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
+VALUES (15,0,'40','Модуль №2','MODUL',10);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
+VALUES (16,0,'10','Лабораторна №2','LABARATORY',10);
+
 
 /*
 -- Query: SELECT * FROM testing_system.questions
@@ -273,3 +286,26 @@ VALUES (15,'1.25','Відповідь №4.4',4);
 */
 INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
 VALUES (1,'7.5','10','Лабораторна №1',1,1);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (2,'25','40','Модуль №1',1,11);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (3,'32','40','Модуль №2',1,12);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (4,'8.2','10','Лабораторна №2',1,13);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (5,'37','40','Модуль №1',1,14);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (6,'17','40','Модуль №2',1,15);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (7,'6.3','10','Лабораторна №2',1,16);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (8,'40','40','Модуль №2',2,12);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (9,'7.5','10','Лабораторна №2',2,13);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (10,'29.7','40','Модуль №1',2,14);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (11,'34','40','Модуль №2',2,15);
+INSERT INTO `result` (`id`,`mark`,`max_grade`,`test_title`,`students_id_student`,`tests_id`) 
+VALUES (12,'6.5','10','Лабораторна №2',2,16);
+
