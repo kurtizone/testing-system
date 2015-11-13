@@ -189,17 +189,13 @@ angular
             $scope.openAddSubject = function(
                 lecturerId) {
                 $rootScope.lecturerId = lecturerId;
-                lecturersService.getLecturerById(
-                    $rootScope.lecturerId).then(
+                lecturersService.getLecturerById($rootScope.lecturerId).then(
                     function(data) {
-                        $rootScope.lecturer = data;
-                        console.log($rootScope.lecturer);
-
                         var lecturerDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'LecturerEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/lecturers/lecturer-edit-modal.html',
+                                controller : 'LecturerAddSubjectController',
+                                templateUrl : '/resources/app/admin/views/modals/lecturers/lecturer-add-subject.html',
                                 size: 'md'
                             });
                     });
@@ -209,23 +205,20 @@ angular
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openListOfSubjects = function(
-                lecturerId) {
-                $rootScope.lecturerId = lecturerId;
-                lecturersService.getLecturerById(
-                    $rootScope.lecturerId).then(
+            $scope.openListOfSubjects = function(lecturerId) {
+                lecturersService.getListOfSubjects(lecturerId).then(
                     function(data) {
-                        $rootScope.lecturer = data;
-                        console.log($rootScope.lecturer);
-
-                        var lecturerDTOModal = $modal
+                        $rootScope.lecturerSubjects = data;
+                        console.log($rootScope.lecturerSubjects);
+                        var subjectsDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'LecturerEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/lecturers/lecturer-edit-modal.html',
-                                size: 'md'
+                                controller : 'LecturerSubjectsController',
+                                templateUrl : '/resources/app/admin/views/modals/lecturers/lecturer-subjects.html',
+                                size: 'lg'
                             });
                     });
+
 
             };
 

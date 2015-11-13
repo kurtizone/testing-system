@@ -3,8 +3,11 @@ package com.testing.edu.controller.admin;
 
 import com.testing.edu.dto.PageDTO;
 import com.testing.edu.dto.admin.LecturerDTO;
+import com.testing.edu.dto.admin.SubjectDTO;
 import com.testing.edu.entity.Lecturers;
+import com.testing.edu.entity.Subject;
 import com.testing.edu.service.LecturersService;
+import com.testing.edu.service.SubjectService;
 import com.testing.edu.service.utils.ListToPageTransformer;
 import com.testing.edu.service.utils.TypeConverter;
 import org.apache.log4j.Logger;
@@ -13,9 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/admin/lecturers/")
@@ -25,6 +27,9 @@ public class LecturersController {
 
     @Autowired
     private LecturersService lecturersService;
+
+    @Autowired
+    private SubjectService subjectService;
 
     /**
      * Add lecturer
@@ -113,6 +118,64 @@ public class LecturersController {
         );
         return lecturerDTO;
     }
+
+    /**
+     * Edit lecturer add new subject
+     * @param subjectDTO object with subject data
+     * @return a response body with http status {@literal OK} if lecturer
+     * successfully edited or else http status {@literal CONFLICT}
+     */
+    @RequestMapping(value = "add/subject/{id}", method = RequestMethod.POST)
+    public ResponseEntity editLecturerWithSubjects(@RequestBody SubjectDTO subjectDTO,
+                                       @PathVariable Long id) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        try {
+            lecturersService.addSubject(
+                    id,
+                    subjectDTO.getId()
+            );
+        } catch (Exception e) {
+            logger.error("Got exeption while editing lecturer ",e);
+            httpStatus = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity(httpStatus);
+    }
+
+    /**
+     * Get all subjects
+     * @return subjectDTO
+     */
+    @RequestMapping(value = "get/subjects/{id}")
+    public List<SubjectDTO> getSubjects(@PathVariable("id") Long id) {
+        Lecturers lecturer = lecturersService.findById(id);
+        Set<Subject> subjectSet = new HashSet<>(subjectService.getAllSubjects());
+        subjectSet.removeAll(lecturer.getSubjects());
+        return subjectSet.stream()
+                .map(subject -> new SubjectDTO(
+                        subject.getId(),
+                        subject.getTitle()
+                )).collect(Collectors.toList());
+    }
+
+    /**
+     * Get subject with id
+     * @param id Integer id of subject
+     * @return subjectDTO
+     */
+    @RequestMapping(value = "get/{id}/subjects")
+    public List<SubjectDTO> getListOfSubjects(@PathVariable("id") Long id) {
+        Lecturers lecturer = lecturersService.findById(id);
+        return lecturer.getSubjects().stream()
+                .map(subject -> new SubjectDTO(
+                        subject.getId(),
+                        subject.getTitle(),
+                        subject.getMultiplier().toString(),
+                        subject.getHours(),
+                        subjectService.countOfGroups(subject.getId()),
+                        subjectService.countOfTests(subject.getId())
+                )).collect(Collectors.toList());
+    }
+
 
     /**
      * Build page by SortCriteria, SortOrder and Searching data

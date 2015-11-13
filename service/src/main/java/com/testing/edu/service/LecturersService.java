@@ -70,4 +70,11 @@ public interface LecturersService {
      * @return List of lecturers
      */
     List<Lecturers> getAllLecturers();
+
+    /**
+     * add new subject for lecturer
+     * @param lecturerId
+     * @param subjectId
+     */
+    void addSubject(Long lecturerId, Long subjectId);
 }

@@ -6,6 +6,7 @@ import com.testing.edu.entity.User;
 import com.testing.edu.entity.enumeration.AcademicStatus;
 import com.testing.edu.entity.enumeration.Degree;
 import com.testing.edu.repository.LecturersRepository;
+import com.testing.edu.repository.SubjectRepository;
 import com.testing.edu.service.LecturersService;
 import com.testing.edu.service.criteria.LecturersQueryConstructor;
 import com.testing.edu.service.specification.builder.LecturersSpecificationBuilder;
@@ -25,6 +26,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class LecturersServiceImpl implements LecturersService {
@@ -33,6 +35,9 @@ public class LecturersServiceImpl implements LecturersService {
 
     @Autowired
     private LecturersRepository lecturersRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -154,5 +159,22 @@ public class LecturersServiceImpl implements LecturersService {
     @Transactional
     public List<Lecturers> getAllLecturers() {
         return (List<Lecturers>) lecturersRepository.findAll();
+    }
+
+    /**
+     * add new subject for lecturer
+     *
+     * @param lecturerId
+     * @param subjectId
+     */
+    @Override
+    @Transactional
+    public void addSubject(Long lecturerId, Long subjectId) {
+        Lecturers lecturer = lecturersRepository.findOne(lecturerId);
+        Subject subject = subjectRepository.findOne(subjectId);
+        Set<Subject> subjectSet = lecturer.getSubjects();
+        subjectSet.add(subject);
+        lecturer.setSubjects(subjectSet);
+        lecturersRepository.save(lecturer);
     }
 }

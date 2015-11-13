@@ -25,6 +25,25 @@ angular
                         return result.status;
                     });
             },
+            getListOfSubjects: function (id) {
+                var url = '/admin/lecturers/get/' + id + '/subjects';
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
+            getAllAvaibleSubjects: function (id) {
+                var url = '/admin/lecturers/get/subjects/' + id;
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
+            addSubjectToLecturer: function (formData, id) {
+                var url = '/admin/lecturers/add/subject/' + id;
+                return $http.post(url, formData)
+                    .then(function (result) {
+                        return result.status;
+                    });
+            },
             deleteLecturer: function (id) {
                 var url = '/admin/lecturers/delete/' + id;
                 return $http.delete(url)

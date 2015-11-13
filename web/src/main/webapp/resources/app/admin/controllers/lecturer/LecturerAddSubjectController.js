@@ -1,28 +1,30 @@
 angular
     .module('adminModule')
     .controller(
-    'GroupAddSubjectController',
+    'LecturerAddSubjectController',
     [
         '$rootScope',
         '$scope',
         '$translate',
         '$modalInstance',
-        'GroupsService',
+        'LecturersService',
         '$filter',
         function ($rootScope, $scope, $translate, $modalInstance,
-                  groupsService, $filter) {
+                  lecturersService) {
+
+            console.log($rootScope.lecturerId);
 
             $scope.chooseData = {};
-            $scope.getAllSubjects = function() {
+            $scope.getAllSubjects = function(lecturerId) {
                 $scope.subjects = [];
-                groupsService.getAllSubjects()
+                lecturersService.getAllAvaibleSubjects(lecturerId)
                     .then(function(subjects) {
                         $scope.subjects = subjects;
                         console.log($scope.subjects);
                     });
             };
 
-            $scope.getAllSubjects();
+            $scope.getAllSubjects($rootScope.lecturerId);
 
 
             /**
@@ -67,9 +69,11 @@ angular
             $scope.onAddSubjectFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
                 if ($scope.addSubjectForm.$valid) {
-                    $scope.addSubjectFormData.studyForm = $scope.addSubjectFormData.studyForm.id;
-                    console.log($scope.addSubjectForm);
-                    saveSubject();
+                    $scope.addSubjectForm.subjectTitle = $scope.chooseData.subjectTitle.id;
+                    var subjectForm = {
+                        id: $scope.chooseData.subjectTitle.id
+                    };
+                    saveSubject(subjectForm);
                 }
             };
 
@@ -78,23 +82,20 @@ angular
              * If everything is ok then resets the organization
              * form and updates table with organizations.
              */
-            function saveSubject() {
-                console.log($scope.addSubjectFormData);
-                groupsService.addSubjectToGroup($scope.addGroupFormData)
-                    .then(function (data) {
-                        if (data == 201) {
+            function saveSubject(subjectForm) {
+                console.log(subjectForm);;
+                console.log($rootScope.lecturer.id);
+                lecturersService.addSubjectToLecturer(
+                    subjectForm,
+                    $rootScope.lecturer.id).then(
+                    function (data) {
+                        if (data == 200) {
                             $scope.closeModal(true);
                             $rootScope.onTableHandling();
                         }
                     });
             }
 
-            $scope.USERNAME_REGEX = /^[a-z0-9_-]{3,16}$/;
-            $scope.PASSWORD_REGEX = /^(?=.{4,20}$).*/;
-            $scope.PHONE_REGEX = /^[1-9]\d{8}$/;
-            $scope.EMAIL_REGEX = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-            $scope.FIRST_LAST_NAME_REGEX = /^([A-Z\u0410-\u042f\u0407\u0406\u0404']{1}[a-z\u0430-\u044f\u0456\u0457\u0454']{1,20}\u002d{1}[A-Z\u0410-\u042f\u0407\u0406\u0404']{1}[a-z\u0430-\u044f\u0456\u0457\u0454']{1,20}|[A-Z\u0410-\u042f\u0407\u0406\u0404']{1}[a-z\u0430-\u044f\u0456\u0457\u0454']{1,20})$/;
-            $scope.FIRST_LAST_NAME_REGEX = /^([A-Z\u0410-\u042f\u0407\u0406\u0404']{1}[a-z\u0430-\u044f\u0456\u0457\u0454']{1,20}\u002d{1}[A-Z\u0410-\u042f\u0407\u0406\u0404']{1}[a-z\u0430-\u044f\u0456\u0457\u0454']{1,20}|[A-Z\u0410-\u042f\u0407\u0406\u0404']{1}[a-z\u0430-\u044f\u0456\u0457\u0454']{1,20})$/;
-            $scope.MIDDLE_NAME_REGEX = /^[A-Z\u0410-\u042f\u0407\u0406\u0404']{1}[a-z\u0430-\u044f\u0456\u0457\u0454']{1,20}$/;
+
         }
     ]);
