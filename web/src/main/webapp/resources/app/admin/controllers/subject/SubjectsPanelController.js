@@ -123,40 +123,32 @@ angular
             };
 
 
-            $scope.openListOfGroups = function(
-                subjectId) {
-                $rootScope.subjectId = subjectId;
-                subjectsService.getSubjectById(
-                    $rootScope.subjectId).then(
+            $scope.openListOfGroups = function(subjectId) {
+                subjectsService.getGroupsBySubjectId(subjectId).then(
                     function(data) {
-                        $rootScope.subject = data;
-                        console.log($rootScope.subject);
-
-                        var subjectDTOModal = $modal
+                        $rootScope.groups = data;
+                        console.log($rootScope.groups);
+                        var groupsDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'SubjectEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/subject/subject-edit-modal.html',
+                                controller : 'SubjectGroupController',
+                                templateUrl : '/resources/app/admin/views/modals/subject/subject-group.html',
                                 size: 'md'
                             });
                     });
 
             };
 
-            $scope.openListOfLecturers = function(
-                subjectId) {
-                $rootScope.subjectId = subjectId;
-                subjectsService.getSubjectById(
-                    $rootScope.subjectId).then(
+            $scope.openListOfLecturers = function(subjectId) {
+                subjectsService.getLecturersBySubjectId(subjectId).then(
                     function(data) {
-                        $rootScope.subject = data;
-                        console.log($rootScope.subject);
-
-                        var subjectDTOModal = $modal
+                        $rootScope.lecturers = data;
+                        console.log($rootScope.lecturers);
+                        var lecturersDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'SubjectEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/subject/subject-edit-modal.html',
+                                controller : 'SubjectLecturerController',
+                                templateUrl : '/resources/app/admin/views/modals/subject/subject-lecturer.html',
                                 size: 'md'
                             });
                     });

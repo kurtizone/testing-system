@@ -196,38 +196,38 @@ VALUES (10,4);
 -- Query: SELECT * FROM testing_system.tests
 -- Date: 2015-10-24 13:37
 */
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (1,1,'10','Лабораторна №1','LABARATORY',1);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (2,0,'10','Лабораторна №2','LABARATORY',1);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (3,1,'60','Екзамен','FINAL',1);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (4,1,'10','Лабораторна №1','LABARATORY',2);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (5,0,'10','Лабораторна №2','LABARATORY',2);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (6,0,'60','Модуль №1','FINAL',2);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (7,1,'10','Лабораторна №1','LABARATORY',4);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (8,0,'10','Лабораторна №2','LABARATORY',4);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (9,0,'60','Модуль №1','MODUL',4);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (10,0,'60','Модуль №2','MODUL',4);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (11,0,'40','Модуль №1','MODUL',8);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (12,0,'40','Модуль №2','MODUL',8);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (13,0,'10','Лабораторна №2','LABARATORY',8);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (14,0,'40','Модуль №1','MODUL',10);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (15,0,'40','Модуль №2','MODUL',10);
-INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`subject_id_subject`) 
-VALUES (16,0,'10','Лабораторна №2','LABARATORY',10);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (1,1,'10','Лабораторна №1','LABARATORY','15',1);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (2,0,'10','Лабораторна №2','LABARATORY','20',1);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (3,1,'60','Екзамен','FINAL','90',1);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (4,1,'10','Лабораторна №1','LABARATORY','20',2);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (5,0,'10','Лабораторна №2','LABARATORY','20',2);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (6,0,'60','Модуль №1','MODUL','60',2);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (7,1,'10','Лабораторна №1','LABARATORY','20',4);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (8,0,'10','Лабораторна №2','LABARATORY','20',4);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (9,0,'60','Модуль №1','MODUL','60',4);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (10,0,'60','Модуль №2','MODUL','70',4);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (11,0,'40','Модуль №1','MODUL','70',8);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (12,0,'40','Модуль №2','MODUL','60',8);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (13,0,'10','Лабораторна №2','LABARATORY','15',8);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (14,0,'40','Модуль №1','MODUL','60',10);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (15,0,'40','Модуль №2','MODUL','60',10);
+INSERT INTO `tests` (`id`,`avaible`,`max_grade`,`title`,`type`,`time`,`subject_id_subject`) 
+VALUES (16,0,'10','Лабораторна №2','LABARATORY','25',10);
 
 
 /*

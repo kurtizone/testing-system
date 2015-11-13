@@ -5,6 +5,7 @@ import com.testing.edu.entity.Lecturers;
 import com.testing.edu.entity.User;
 import com.testing.edu.service.utils.ListToPageTransformer;
 
+import java.util.List;
 import java.util.Map;
 
 public interface LecturersService {
@@ -63,4 +64,10 @@ public interface LecturersService {
      * @return
      */
     Lecturers findByUser(User user);
+
+    /**
+     * Get all lecturers
+     * @return List of lecturers
+     */
+    List<Lecturers> getAllLecturers();
 }

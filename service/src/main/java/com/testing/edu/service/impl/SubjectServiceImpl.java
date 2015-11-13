@@ -183,6 +183,7 @@ public class SubjectServiceImpl implements SubjectService {
      * @return
      */
     @Override
+    @Transactional
     public Long countOfGroups(Long subjectId) {
         Subject subject = subjectRepository.findOne(subjectId);
         return (long) subject.getGroupses().size();
@@ -195,8 +196,20 @@ public class SubjectServiceImpl implements SubjectService {
      * @return
      */
     @Override
+    @Transactional
     public Long countOfTests(Long subjectId) {
         Subject subject = subjectRepository.findOne(subjectId);
         return (long) subject.getTestses().size();
+    }
+
+    /**
+     * Get all subjects
+     *
+     * @return List of subjects
+     */
+    @Override
+    @Transactional
+    public List<Subject> getAllSubjects() {
+        return (List<Subject>) subjectRepository.findAll();
     }
 }

@@ -49,7 +49,7 @@ public class FillTestController {
             questionsService.addQuestion(
                     questionDTO.getText(),
                     questionDTO.getQuestionType(),
-                    toListFromAnswerDTO(questionDTO.getAnswerDTOList(), gradeForQuest),
+                    toListWithoutIdFromAnswerDTO(questionDTO.getAnswerDTOList(), gradeForQuest),
                     test,
                     gradeForQuest
             );
@@ -77,7 +77,7 @@ public class FillTestController {
                     questionId,
                     questionDTO.getText(),
                     questionDTO.getQuestionType(),
-                    toListFromAnswerDTO(questionDTO.getAnswerDTOList(), gradeForQuest),
+                    toListWithIdFromAnswerDTO(questionDTO.getAnswerDTOList(), gradeForQuest),
                     gradeForQuest
             );
         } catch (Exception e) {
@@ -167,7 +167,7 @@ public class FillTestController {
 
     }
 
-    public static List<Answers> toListFromAnswerDTO(List<AnswerDTO> list, Double gradeForQuestion){
+    public static List<Answers> toListWithIdFromAnswerDTO(List<AnswerDTO> list, Double gradeForQuestion){
         int correctAnswers = 0;
         for (AnswerDTO answersDTO : list) {
             if(answersDTO.getCorrect().equals(true)){
@@ -177,6 +177,19 @@ public class FillTestController {
         Double grade = gradeForQuestion / correctAnswers;
         return list.stream()
                 .map(answerDTO -> new Answers(!answerDTO.getId().equals(-1l) ? answerDTO.getId() : -1, answerDTO.getText(), (answerDTO.getCorrect() ? grade : new Double(0))))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Answers> toListWithoutIdFromAnswerDTO(List<AnswerDTO> list, Double gradeForQuestion){
+        int correctAnswers = 0;
+        for (AnswerDTO answersDTO : list) {
+            if(answersDTO.getCorrect().equals(true)){
+                correctAnswers++;
+            }
+        }
+        Double grade = gradeForQuestion / correctAnswers;
+        return list.stream()
+                .map(answerDTO -> new Answers(answerDTO.getText(), (answerDTO.getCorrect() ? grade : new Double(0))))
                 .collect(Collectors.toList());
     }
 

@@ -17,6 +17,11 @@ public class GroupDTO {
 
     }
 
+    public GroupDTO(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     public GroupDTO(Long id, String title, Integer grade, String degree, String studyForm) {
         this.id = id;
         this.title = title;

@@ -18,6 +18,18 @@ angular
                     return result.data;
                 });
             },
+            getGroupsBySubjectId: function (id) {
+                var url = '/admin/subjects/get/' + id + '/groups';
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
+            getLecturersBySubjectId: function (id) {
+                var url = '/admin/subjects/get/' + id + '/lecturers';
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
             editSubject: function (formData, id) {
                 var url = '/admin/subjects/edit/' + id;
                 return $http.post(url, formData)

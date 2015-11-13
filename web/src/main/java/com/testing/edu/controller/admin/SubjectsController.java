@@ -1,20 +1,28 @@
 package com.testing.edu.controller.admin;
 
 import com.testing.edu.dto.PageDTO;
+import com.testing.edu.dto.admin.GroupDTO;
+import com.testing.edu.dto.admin.LecturerDTO;
 import com.testing.edu.dto.admin.SubjectDTO;
+import com.testing.edu.entity.Groups;
+import com.testing.edu.entity.Lecturers;
 import com.testing.edu.entity.Subject;
+import com.testing.edu.entity.User;
 import com.testing.edu.service.SubjectService;
+import com.testing.edu.service.security.SecurityUserDetailsService;
 import com.testing.edu.service.utils.ListToPageTransformer;
 import com.testing.edu.service.utils.TypeConverter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/admin/subjects/")
@@ -108,6 +116,44 @@ public class SubjectsController {
                 subject.getHours()
         );
         return subjectDTO;
+    }
+
+
+    /**
+     * Get subject with id
+     * @param id Integer id of subject
+     * @return subjectDTO
+     */
+    @RequestMapping(value = "get/{id}/groups")
+    public List<GroupDTO> getListOfGroups(@PathVariable("id") Long id) {
+        Subject subject = subjectService.findById(id);
+        return subject.getGroupses().stream()
+                .map(groups -> new GroupDTO(
+                        groups.getId(),
+                        groups.getTitle(),
+                        groups.getGrade(),
+                        groups.getDegree().name(),
+                        groups.getStudyForm().name()
+                )).collect(Collectors.toList());
+    }
+
+    /**
+     * Get subject with id
+     * @param id Integer id of subject
+     * @return subjectDTO
+     */
+    @RequestMapping(value = "get/{id}/lecturers")
+    public List<LecturerDTO> getListOfLecturers(@PathVariable("id") Long id) {
+        Subject subject = subjectService.findById(id);
+        return subject.getLecturerses().stream()
+                .map(lecturer -> new LecturerDTO(
+                        lecturer.getId(),
+                        lecturer.getLastName(),
+                        lecturer.getFirstName(),
+                        lecturer.getMiddleName(),
+                        lecturer.getAcademicStatus().name(),
+                        lecturer.getDegree().name()
+                )).collect(Collectors.toList());
     }
 
     /**

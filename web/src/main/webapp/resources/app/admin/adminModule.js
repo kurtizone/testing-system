@@ -114,6 +114,8 @@ angular.module('adminModule').run(function (paginationConfig) {
 define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'controllers/subject/SubjectsPanelController',
     'controllers/subject/SubjectAddModalController',
+    'controllers/subject/SubjectGroupController',
+    'controllers/subject/SubjectLecturerController',
     'controllers/subject/SubjectEditModalController',
     'controllers/lecturer/LecturersPanelController',
     'controllers/lecturer/LecturerAddModalController',

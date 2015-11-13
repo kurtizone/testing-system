@@ -184,46 +184,42 @@ angular
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openAddSubject = function(
-                groupId) {
-                $rootScope.groupId = groupId;
-                groupsService.getGroupById(
-                    $rootScope.groupId).then(
+            $scope.openAddSubject = function(groupId) {
+                groupsService.getAllSubjects().then(
                     function(data) {
-                        $rootScope.group = data;
-                        console.log($rootScope.group);
-
-                        var groupDTOModal = $modal
-                            .open({
-                                animation : true,
-                                controller : 'GroupEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/groups/group-edit-modal.html',
-                                size: 'md'
-                            });
-                    });
+                        $rootScope.groupId = groupId;
+                        $rootScope.subjects = data;
+                        var addGroup = $modal.open({
+                            animation : true,
+                            controller : 'GroupAddSubjectController',
+                            templateUrl : '/resources/app/admin/views/modals/groups/group-add-subject.html',
+                            size: 'md'
+                        });
+                        addGroup.result.then(function () {
+                            toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_GROUP'));
+                        });
+                    }
+                )
 
             };
 
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openListOfSubjects = function(
-                groupId) {
-                $rootScope.groupId = groupId;
-                groupsService.getGroupById(
-                    $rootScope.groupId).then(
+            $scope.openListOfSubjects = function(groupId) {
+                groupsService.getSubjectsByGroupId(groupId).then(
                     function(data) {
-                        $rootScope.group = data;
-                        console.log($rootScope.group);
-
-                        var groupDTOModal = $modal
+                        $rootScope.groupSubjects = data;
+                        console.log($rootScope.groupSubjects);
+                        var subjectsDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'GroupEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/groups/group-edit-modal.html',
+                                controller : 'GroupSubjectsController',
+                                templateUrl : '/resources/app/admin/views/modals/groups/group-subjects.html',
                                 size: 'md'
                             });
                     });
+
 
             };
 

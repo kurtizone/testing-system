@@ -1,9 +1,11 @@
 package com.testing.edu.service.impl;
 
 import com.testing.edu.entity.Groups;
+import com.testing.edu.entity.Subject;
 import com.testing.edu.entity.enumeration.Degree;
 import com.testing.edu.entity.enumeration.StudyForm;
 import com.testing.edu.repository.GroupsRepository;
+import com.testing.edu.repository.SubjectRepository;
 import com.testing.edu.service.GroupsService;
 import com.testing.edu.service.specification.builder.GroupsSpecificationBuilder;
 import com.testing.edu.service.utils.ListToPageTransformer;
@@ -18,12 +20,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class GroupsServiceImpl implements GroupsService {
 
     @Autowired
     private GroupsRepository groupsRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -113,5 +119,32 @@ public class GroupsServiceImpl implements GroupsService {
         result.setContent(groupses);
         result.setTotalItems((long) totalItems);
         return result;
+    }
+
+    /**
+     * get all groups
+     *
+     * @return list of groups
+     */
+    @Override
+    @Transactional
+    public List<Groups> getAllGroups() {
+        return (List<Groups>) groupsRepository.findAll();
+    }
+
+    /**
+     * add subject to exsting group
+     * @param groupId
+     * @param subjectId
+     */
+    @Override
+    @Transactional
+    public void addSubject(Long groupId, Long subjectId) {
+        Groups groups = groupsRepository.findOne(groupId);
+        Subject subject = subjectRepository.findOne(subjectId);
+        Set<Subject> subjectSet = groups.getSubjects();
+        subjectSet.add(subject);
+        groups.setSubjects(subjectSet);
+        groupsRepository.save(groups);
     }
 }

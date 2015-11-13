@@ -2,8 +2,10 @@ package com.testing.edu.service;
 
 
 import com.testing.edu.entity.Groups;
+import com.testing.edu.entity.Lecturers;
 import com.testing.edu.service.utils.ListToPageTransformer;
 
+import java.util.List;
 import java.util.Map;
 
 public interface GroupsService {
@@ -52,5 +54,18 @@ public interface GroupsService {
     ListToPageTransformer<Groups> getGroupBySearchAndPagination(int pageNumber, int itemsPerPage,
                                                                    Map<String, String> searchKeys,
                                                                    String sortCriteria, String sortOrder);
+
+    /**
+     * get all groups
+     * @return list of groups
+     */
+    List<Groups> getAllGroups ();
+
+    /**
+     * add subject to exsting group
+     * @param groupId
+     * @param subjectId
+     */
+    void addSubject(Long groupId, Long subjectId);
 }
 

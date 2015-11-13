@@ -144,4 +144,15 @@ public class LecturersServiceImpl implements LecturersService {
     public Lecturers findByUser(User user) {
         return lecturersRepository.findByUserId(user.getId());
     }
+
+    /**
+     * Get all lecturers
+     *
+     * @return List of lecturers
+     */
+    @Override
+    @Transactional
+    public List<Lecturers> getAllLecturers() {
+        return (List<Lecturers>) lecturersRepository.findAll();
+    }
 }

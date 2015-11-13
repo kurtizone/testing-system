@@ -25,6 +25,25 @@ angular
                         return result.status;
                     });
             },
+            getSubjectsByGroupId: function (id) {
+                var url = '/admin/groups/get/' + id + '/subjects';
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
+            getAllSubjects: function () {
+                var url = '/admin/groups/get/subjects';
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
+            addSubjectToGroup: function (formData, id) {
+                var url = '/admin/groups/add/subject/' + id;
+                return $http.post(url, formData)
+                    .then(function (result) {
+                        return result.status;
+                    });
+            },
             deleteGroup: function (id) {
                 var url = '/admin/groups/delete/' + id;
                 return $http.delete(url)
