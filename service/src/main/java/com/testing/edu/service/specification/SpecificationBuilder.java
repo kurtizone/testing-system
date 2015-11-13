@@ -1,6 +1,7 @@
 package com.testing.edu.service.specification;
 
 import org.apache.log4j.Logger;
+import org.hibernate.criterion.Subqueries;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -48,6 +49,11 @@ public abstract class SpecificationBuilder<T> {
                             break;
                         case EQUAL: {
                             predicates.add(buildEqualPredicate(sc, root, cb));
+                            break;
+                        }
+                        case EQUAL_DISTINCT: {
+                            predicates.add(buildEqualPredicate(sc, root, cb));
+                            query.distinct(true);
                             break;
                         }
                         case EQUAL_BY_ENUM:

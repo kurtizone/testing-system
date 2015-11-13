@@ -106,7 +106,7 @@ angular
                             .open({
                                 animation : true,
                                 controller : 'StudentEditModalController',
-                                templateUrl : '/resources/app/student/views/modals/students/student-edit-modal.html',
+                                templateUrl : '/resources/app/student/views/modals/subject/student-subject-lecturers.html',
                                 size: 'md'
                             });
                         studentDTOModal.result.then(function () {
@@ -144,7 +144,7 @@ angular
                             .open({
                                 animation : true,
                                 controller : 'StudentEditModalController',
-                                templateUrl : '/resources/app/student/views/modals/students/student-edit-modal.html',
+                                templateUrl : '/resources/app/student/views/modals/subject/student-subject-lecturers.html',
                                 size: 'md'
                             });
                     });
@@ -167,7 +167,7 @@ angular
                             .open({
                                 animation : true,
                                 controller : 'StudentEditModalController',
-                                templateUrl : '/resources/app/student/views/modals/students/student-edit-modal.html',
+                                templateUrl : '/resources/app/student/views/modals/subject/student-subject-lecturers.html',
                                 size: 'md'
                             });
                     });

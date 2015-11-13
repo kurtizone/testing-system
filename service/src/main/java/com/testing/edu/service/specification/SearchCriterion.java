@@ -130,7 +130,7 @@ public class SearchCriterion<T extends Enum<T>> {
      *
      */
     public enum Operator {
-        EQUAL, EQUAL_BY_ENUM, BETWEEN_DATE,  LIKE, DOUBLE_JOIN
+        EQUAL, EQUAL_BY_ENUM, BETWEEN_DATE,  LIKE, DOUBLE_JOIN, EQUAL_DISTINCT
     }
 
     public enum ValueType {

@@ -24,6 +24,8 @@ public class SubjectSpecificationBuilder extends SpecificationBuilder<Subject> {
     public static final String TITLE = "title";
     public static final String MULTIPLIER = "multiplier";
     public static final String HOURS = "hours";
+    public static final String GROUP = "group";
+    public static final String GROUP_JOIN_ID = "groupses.id";
 
     public SubjectSpecificationBuilder(Map<String, String> searchValues) {
         super(searchValues);
@@ -38,6 +40,7 @@ public class SubjectSpecificationBuilder extends SpecificationBuilder<Subject> {
     protected List<SearchCriterion> initCriteria() {
         List<SearchCriterion> searchCriteria = new ArrayList<>();
         searchCriteria.add(new SearchCriterion<>("lecturer", "lecturerses", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.LONG, "id"));
+        searchCriteria.add(new SearchCriterion<>(GROUP, "groupses", SearchCriterion.Operator.EQUAL_DISTINCT, SearchCriterion.ValueType.LONG, "id"));
         searchCriteria.add(new SearchCriterion<>(TITLE, "title", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(MULTIPLIER, "multiplier", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.DOUBLE));
         searchCriteria.add(new SearchCriterion<>(HOURS, "hours", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.INTEGER));

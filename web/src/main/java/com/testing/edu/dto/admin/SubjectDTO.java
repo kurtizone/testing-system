@@ -32,6 +32,11 @@ public class SubjectDTO {
         this.numberOfGroups = numberOfGroups;
         this.numberOfTests = numberOfTests;
     }
+    public SubjectDTO(Long id, String title, String multiplier, Integer hours, Long numberOfTests) {
+        this(id, title, multiplier, hours);
+        this.numberOfTests = numberOfTests;
+    }
+
 
     public SubjectDTO(Long id, String title){
         this.id = id;
