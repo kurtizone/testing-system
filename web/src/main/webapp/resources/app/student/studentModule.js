@@ -55,6 +55,12 @@ angular
                     templateUrl: '/resources/app/student/views/results-panel.html'
                 })
                 .state(
+                'group-results',
+                {
+                    url: '/results/group',
+                    templateUrl: '/resources/app/student/views/group-results-panel.html'
+                })
+                .state(
                 'tests',
                 {
                     url: '/tests',
@@ -113,9 +119,11 @@ define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'controllers/group/GroupsPanelController',
     'controllers/group/GroupAddModalController',
     'controllers/group/GroupEditModalController',
-    'controllers/tests/TestsPanelController',
-    'controllers/tests/TestAddModalController',
-    'controllers/tests/TestEditModalController',
+    'controllers/result/ResultsPanelController',
+    'controllers/result/GroupResultsPanelController',
+    'controllers/test/TestsPanelController',
+    'controllers/test/TestAddModalController',
+    'controllers/test/TestEditModalController',
     'controllers/UsersController',
     'controllers/InternationalizationController',
     'services/StatisticService',
@@ -124,6 +132,8 @@ define(['controllers/TopNavBarController', 'controllers/MainPanelController',
     'services/LecturersService',
     'services/StudentsService',
     'services/GroupsService',
+    'services/ResultsService',
+    'services/GroupResultsService',
     'services/SettingsService',
     'services/RoleService',
     'directives/unique',

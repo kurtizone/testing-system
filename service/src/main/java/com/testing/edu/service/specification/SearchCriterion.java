@@ -72,6 +72,18 @@ public class SearchCriterion<T extends Enum<T>> {
      * @param key key to filter
      * @param entityField name of corresponding entity field
      * @param operation type of operation
+     * @param enumKeyType type of Enum, if entity field is Enum
+     * @param joinEntityField join table field
+     */
+    public SearchCriterion(String key, String entityField, Operator operation, Class<T> enumKeyType, String joinEntityField) {
+        this(key, entityField, operation, enumKeyType, null, null, joinEntityField);
+    }
+
+    /**
+     *
+     * @param key key to filter
+     * @param entityField name of corresponding entity field
+     * @param operation type of operation
      * @param valueType type of key value
      */
     public SearchCriterion(String key, String entityField, Operator operation, ValueType valueType) {

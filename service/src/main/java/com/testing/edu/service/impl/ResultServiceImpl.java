@@ -41,13 +41,11 @@ public class ResultServiceImpl implements ResultService {
      * @param searchKeys
      * @param sortCriteria
      * @param sortOrder
-     * @param students
      * @return
      */
     @Override
     @Transactional
-    public ListToPageTransformer<Result> getResultByStudentBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String, String> searchKeys, String sortCriteria, String sortOrder, Students students) {
-        searchKeys.put("students", students.getId().toString());
+    public ListToPageTransformer<Result> getResultByStudentBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String, String> searchKeys, String sortCriteria, String sortOrder) {
         ResultSpecificationBuilder specificationBuilder = new ResultSpecificationBuilder(searchKeys);
         Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
         Specification<Result> searchSpec = specificationBuilder.buildPredicate();

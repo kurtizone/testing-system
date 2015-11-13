@@ -27,5 +27,5 @@ public interface ResultService {
      */
     ListToPageTransformer<Result> getResultByStudentBySearchAndPagination(int pageNumber, int itemsPerPage,
                                                                    Map<String, String> searchKeys,
-                                                                   String sortCriteria, String sortOrder, Students students);
+                                                                   String sortCriteria, String sortOrder);
 }

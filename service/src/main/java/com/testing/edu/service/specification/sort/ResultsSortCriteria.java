@@ -67,6 +67,24 @@ public enum ResultsSortCriteria implements SortCriteria{
             }
         }
     },
+    TEST_TITLE {
+        public Sort getSort(String sortOrder) {
+            if(sortOrder.equalsIgnoreCase("asc")) {
+                return new Sort(Sort.Direction.ASC, ResultSpecificationBuilder.TEST_TITLE);
+            } else {
+                return new Sort(Sort.Direction.DESC, ResultSpecificationBuilder.TEST_TITLE);
+            }
+        }
+    },
+    TEST_TYPE {
+        public Sort getSort(String sortOrder) {
+            if(sortOrder.equalsIgnoreCase("asc")) {
+                return new Sort(Sort.Direction.ASC, ResultSpecificationBuilder.TEST_JOIN_TEST_TYPE);
+            } else {
+                return new Sort(Sort.Direction.DESC, ResultSpecificationBuilder.TEST_JOIN_TEST_TYPE);
+            }
+        }
+    },
     MARK {
         public Sort getSort(String sortOrder) {
             if(sortOrder.equalsIgnoreCase("asc")) {

@@ -1,19 +1,19 @@
 angular
     .module('studentModule')
     .controller(
-    'ResultsPanelController',
+    'GroupResultsPanelController',
     [
         '$rootScope',
         '$scope',
         '$modal',
         '$http',
-        'ResultsService',
+        'GroupResultsService',
         'ngTableParams',
         '$translate',
         '$timeout',
         '$filter',
         'toaster',
-        function ($rootScope, $scope, $modal, $http, resultsService, ngTableParams, $translate, $timeout, $filter, toaster) {
+        function ($rootScope, $scope, $modal, $http, groupResultsService, ngTableParams, $translate, $timeout, $filter, toaster) {
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
@@ -77,7 +77,7 @@ angular
                         params.filter().testType = null; //case when the filter is cleared with a button on the select
                     }
 
-                    resultsService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
+                    groupResultsService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
                         .success(function (result) {
                             $scope.resultsCount = result.totalItems;
                             $defer.resolve(result.content);
@@ -126,7 +126,7 @@ angular
             $scope.openEditGroupModal = function(
                 groupId) {
                 $rootScope.groupId = groupId;
-                groupsService.getGroupById(
+                groupResultsService.getGroupById(
                     $rootScope.groupId).then(
                     function(data) {
                         $rootScope.group = data;

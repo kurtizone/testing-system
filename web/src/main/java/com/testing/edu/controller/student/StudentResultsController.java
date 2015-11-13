@@ -71,7 +71,9 @@ public class StudentResultsController {
                 result.getStudents().getFirstName(),
                 result.getStudents().getMiddleName(),
                 result.getStudents().getGroups().getTitle(),
-                result.getTests().getTitle(),
+                result.getTests().getSubject().getTitle(),
+                result.getTestTitle(),
+                result.getTests().getType().name(),
                 result.getMark(),
                 result.getMaxGrade()
         );
@@ -79,19 +81,20 @@ public class StudentResultsController {
     }
 
     @RequestMapping(value = "{pageNumber}/{itemsPerPage}/{sortCriteria}/{sortOrder}", method = RequestMethod.GET)
-    public PageDTO<TestDTO> pageResultsByStudentWithSearch(@PathVariable Integer pageNumber, @PathVariable Integer itemsPerPage,
-                                                            @PathVariable String sortCriteria, @PathVariable String sortOrder,
-                                                            TestDTO searchData,
-                                                            @AuthenticationPrincipal SecurityUserDetailsService.CustomUserDetails user) {
+         public PageDTO<ResultDTO> pageResultsByStudentWithSearch(@PathVariable Integer pageNumber, @PathVariable Integer itemsPerPage,
+                                                                  @PathVariable String sortCriteria, @PathVariable String sortOrder,
+                                                                  ResultDTO searchData,
+                                                                  @AuthenticationPrincipal SecurityUserDetailsService.CustomUserDetails user) {
         Map<String, String> searchDataMap = TypeConverter.ObjectToMap(searchData);
         User userous = statisticService.employeeExist(user.getUsername());
         Students student = studentsService.findByUser(userous);
+        searchDataMap.put("students", student.getId().toString());
         ListToPageTransformer<Result> queryResult = resultService.getResultByStudentBySearchAndPagination(
                 pageNumber,
-                itemsPerPage, searchDataMap,
+                itemsPerPage,
+                searchDataMap,
                 sortCriteria,
-                sortOrder,
-                student
+                sortOrder
         );
         List<ResultDTO> content = toResultDtoFromList(queryResult.getContent());
         return new PageDTO(queryResult.getTotalItems(), content);
@@ -104,8 +107,40 @@ public class StudentResultsController {
      * @return
      */
     @RequestMapping(value = "{pageNumber}/{itemsPerPage}", method = RequestMethod.GET)
-    public PageDTO<TestDTO> getTestPage(@PathVariable Integer pageNumber, @PathVariable Integer itemsPerPage,
-                                              @AuthenticationPrincipal SecurityUserDetailsService.CustomUserDetails user) {
+    public PageDTO<ResultDTO> getResultStudentPage(@PathVariable Integer pageNumber, @PathVariable Integer itemsPerPage,
+                                          @AuthenticationPrincipal SecurityUserDetailsService.CustomUserDetails user) {
+        return pageResultsByStudentWithSearch(pageNumber, itemsPerPage, null, null, null, user);
+    }
+
+    @RequestMapping(value = "group/{pageNumber}/{itemsPerPage}/{sortCriteria}/{sortOrder}", method = RequestMethod.GET)
+    public PageDTO<ResultDTO> pageResultsByGroupWithSearch(@PathVariable Integer pageNumber, @PathVariable Integer itemsPerPage,
+                                                             @PathVariable String sortCriteria, @PathVariable String sortOrder,
+                                                             ResultDTO searchData,
+                                                             @AuthenticationPrincipal SecurityUserDetailsService.CustomUserDetails user) {
+        Map<String, String> searchDataMap = TypeConverter.ObjectToMap(searchData);
+        User userous = statisticService.employeeExist(user.getUsername());
+        Groups groups = studentsService.findByUser(userous).getGroups();
+        searchDataMap.put("studentsGroup", groups.getId().toString());
+        ListToPageTransformer<Result> queryResult = resultService.getResultByStudentBySearchAndPagination(
+                pageNumber,
+                itemsPerPage,
+                searchDataMap,
+                sortCriteria,
+                sortOrder
+        );
+        List<ResultDTO> content = toResultDtoFromList(queryResult.getContent());
+        return new PageDTO(queryResult.getTotalItems(), content);
+    }
+
+    /**
+     * Build page without sorting, ordering and searching data
+     * @param pageNumber
+     * @param itemsPerPage
+     * @return
+     */
+    @RequestMapping(value = "group/{pageNumber}/{itemsPerPage}", method = RequestMethod.GET)
+    public PageDTO<ResultDTO> getResultGroupPage(@PathVariable Integer pageNumber, @PathVariable Integer itemsPerPage,
+                                          @AuthenticationPrincipal SecurityUserDetailsService.CustomUserDetails user) {
         return pageResultsByStudentWithSearch(pageNumber, itemsPerPage, null, null, null, user);
     }
     
@@ -119,6 +154,8 @@ public class StudentResultsController {
                     result.getStudents().getMiddleName(),
                     result.getStudents().getGroups().getTitle(),
                     result.getTests().getSubject().getTitle(),
+                    result.getTestTitle(),
+                    result.getTests().getType().name(),
                     result.getMark(),
                     result.getMaxGrade()
             ));
