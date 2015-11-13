@@ -31,8 +31,8 @@ angular
                     return result.data;
                 });
             },
-            getAllSubjects: function () {
-                var url = '/admin/groups/get/subjects';
+            getAllAvaibleSubjects: function (id) {
+                var url = '/admin/groups/get/subjects/' + id;
                 return $http.get(url).then(function (result) {
                     return result.data;
                 });

@@ -131,35 +131,34 @@ angular
             /**
              * Opens modal window for adding new category of counters.
              */
-            $scope.openAddGroupModal = function() {
+            $scope.openAddGroupModal = function () {
                 var addGroup = $modal.open({
-                    animation : true,
-                    controller : 'GroupAddModalController',
-                    templateUrl : '/resources/app/admin/views/modals/groups/group-add-modal.html',
+                    animation: true,
+                    controller: 'GroupAddModalController',
+                    templateUrl: '/resources/app/admin/views/modals/groups/group-add-modal.html',
                     size: 'md'
                 });
                 addGroup.result.then(function () {
-                    toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_GROUP'));
+                    toaster.pop('success', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_GROUP'));
                 });
             };
 
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openEditGroupModal = function(
-                groupId) {
+            $scope.openEditGroupModal = function (groupId) {
                 $rootScope.groupId = groupId;
                 groupsService.getGroupById(
                     $rootScope.groupId).then(
-                    function(data) {
+                    function (data) {
                         $rootScope.group = data;
                         console.log($rootScope.group);
 
                         var groupDTOModal = $modal
                             .open({
-                                animation : true,
-                                controller : 'GroupEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/groups/group-edit-modal.html',
+                                animation: true,
+                                controller: 'GroupEditModalController',
+                                templateUrl: '/resources/app/admin/views/modals/groups/group-edit-modal.html',
                                 size: 'md'
                             });
                         groupDTOModal.result.then(function () {
@@ -175,7 +174,7 @@ angular
                 groupsService.deleteGroup(id).then(function () {
                     toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_GROUP'));
                 });
-                $timeout(function() {
+                $timeout(function () {
                     console.log('delete with timeout');
                     $rootScope.onTableHandling();
                 }, 700);
@@ -185,38 +184,35 @@ angular
              * Opens modal window for editing category of counter.
              */
             $scope.openAddSubject = function(groupId) {
-                groupsService.getAllSubjects().then(
-                    function(data) {
-                        $rootScope.groupId = groupId;
-                        $rootScope.subjects = data;
-                        var addGroup = $modal.open({
-                            animation : true,
-                            controller : 'GroupAddSubjectController',
-                            templateUrl : '/resources/app/admin/views/modals/groups/group-add-subject.html',
-                            size: 'md'
-                        });
-                        addGroup.result.then(function () {
-                            toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_GROUP'));
-                        });
-                    }
-                )
+                $rootScope.groupId = groupId;
+                var addGroup = $modal.open({
+                    animation: true,
+                    controller: 'GroupAddSubjectController',
+                    templateUrl: '/resources/app/admin/views/modals/groups/group-add-subject.html',
+                    size: 'md'
+                });
+                addGroup.result.then(function () {
+                    toaster.pop('success', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_GROUP'));
+                });
+
 
             };
 
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openListOfSubjects = function(groupId) {
+            $scope.openListOfSubjects = function (groupId) {
                 groupsService.getSubjectsByGroupId(groupId).then(
-                    function(data) {
+                    function (data) {
+                        $rootScope.groupId = groupId;
                         $rootScope.groupSubjects = data;
                         console.log($rootScope.groupSubjects);
                         var subjectsDTOModal = $modal
                             .open({
-                                animation : true,
-                                controller : 'GroupSubjectsController',
-                                templateUrl : '/resources/app/admin/views/modals/groups/group-subjects.html',
-                                size: 'md'
+                                animation: true,
+                                controller: 'GroupSubjectsController',
+                                templateUrl: '/resources/app/admin/views/modals/groups/group-subjects.html',
+                                size: 'lg'
                             });
                     });
 

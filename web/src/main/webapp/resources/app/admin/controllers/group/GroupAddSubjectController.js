@@ -12,17 +12,19 @@ angular
         function ($rootScope, $scope, $translate, $modalInstance,
                   groupsService, $filter) {
 
+            console.log($rootScope.groupId);
+
             $scope.chooseData = {};
-            $scope.getAllSubjects = function() {
+            $scope.getAllSubjects = function(id) {
                 $scope.subjects = [];
-                groupsService.getAllSubjects()
+                groupsService.getAllAvaibleSubjects(id)
                     .then(function(subjects) {
                         $scope.subjects = subjects;
                         console.log($scope.subjects);
                     });
             };
 
-            $scope.getAllSubjects();
+            $scope.getAllSubjects($rootScope.groupId);
 
 
             /**

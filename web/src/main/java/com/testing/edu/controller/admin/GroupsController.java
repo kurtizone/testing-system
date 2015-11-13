@@ -15,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.LongSummaryStatistics;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -133,7 +130,9 @@ public class GroupsController {
                         subject.getId(),
                         subject.getTitle(),
                         subject.getMultiplier().toString(),
-                        subject.getHours()
+                        subject.getHours(),
+                        subjectService.countOfGroups(subject.getId()),
+                        subjectService.countOfTests(subject.getId())
                 )).collect(Collectors.toList());
     }
 
@@ -141,9 +140,12 @@ public class GroupsController {
      * Get all subjects
      * @return subjectDTO
      */
-    @RequestMapping(value = "get/subjects")
-    public List<SubjectDTO> getSubjects() {
-        return subjectService.getAllSubjects().stream()
+    @RequestMapping(value = "get/subjects/{id}")
+    public List<SubjectDTO> getSubjects(@PathVariable("id") Long id) {
+        Groups group = groupsService.findById(id);
+        Set<Subject> subjectSet = new HashSet<>(subjectService.getAllSubjects());
+        subjectSet.removeAll(group.getSubjects());
+        return subjectSet.stream()
                 .map(subject -> new SubjectDTO(
                         subject.getId(),
                         subject.getTitle()
