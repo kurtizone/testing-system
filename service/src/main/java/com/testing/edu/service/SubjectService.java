@@ -3,6 +3,7 @@ package com.testing.edu.service;
 import com.testing.edu.entity.*;
 import com.testing.edu.service.utils.ListToPageTransformer;
 
+import java.util.List;
 import java.util.Map;
 
 public interface SubjectService {
@@ -89,4 +90,10 @@ public interface SubjectService {
      * @return
      */
     Long countOfTests(Long subjectId);
+
+    /**
+     * Get all subjects
+     * @return List of subjects
+     */
+    List<Subject> getAllSubjects();
 }

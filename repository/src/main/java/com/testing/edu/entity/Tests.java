@@ -2,12 +2,10 @@ package com.testing.edu.entity;
 
 import com.testing.edu.entity.enumeration.TestType;
 import lombok.EqualsAndHashCode;
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @EqualsAndHashCode(of = "id")
@@ -18,10 +16,11 @@ public class Tests implements java.io.Serializable {
 	private Subject subject;
 	private String title;
 	private TestType type;
+	private Integer time;
 	private Integer maxGrade;
 	private Boolean avaible;
-	private Set<Result> results = new HashSet<Result>(0);
-	private Set<Questions> questionses = new HashSet<Questions>(0);
+	private Set<Result> results = new HashSet<>(0);
+	private Set<Questions> questionses = new HashSet<>(0);
 
 	public Tests() {
 	}
@@ -87,6 +86,15 @@ public class Tests implements java.io.Serializable {
 
 	public void setType(TestType type) {
 		this.type = type;
+	}
+
+	@Column(name = "time")
+	public Integer getTime() {
+		return time;
+	}
+
+	public void setTime(Integer time) {
+		this.time = time;
 	}
 
 	@Column(name = "max_grade")

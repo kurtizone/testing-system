@@ -2,8 +2,11 @@ package com.testing.edu.controller.admin;
 
 import com.testing.edu.dto.PageDTO;
 import com.testing.edu.dto.admin.GroupDTO;
+import com.testing.edu.dto.admin.SubjectDTO;
 import com.testing.edu.entity.Groups;
+import com.testing.edu.entity.Subject;
 import com.testing.edu.service.GroupsService;
+import com.testing.edu.service.SubjectService;
 import com.testing.edu.service.utils.ListToPageTransformer;
 import com.testing.edu.service.utils.TypeConverter;
 import org.apache.log4j.Logger;
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LongSummaryStatistics;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/admin/groups/")
@@ -24,6 +29,9 @@ public class GroupsController {
 
     @Autowired
     private GroupsService groupsService;
+
+    @Autowired
+    private SubjectService subjectService;
 
     /**
      * Add group
@@ -92,6 +100,8 @@ public class GroupsController {
         return new ResponseEntity(httpStatus);
     }
 
+
+
     /**
      * Get group with id
      * @param id Long id of group
@@ -108,6 +118,55 @@ public class GroupsController {
                 groups.getStudyForm().name()
         );
         return groupDTO;
+    }
+
+    /**
+     * Get subject with id
+     * @param id Integer id of subject
+     * @return subjectDTO
+     */
+    @RequestMapping(value = "get/{id}/subjects")
+    public List<SubjectDTO> getListOfSubjects(@PathVariable("id") Long id) {
+        Groups group = groupsService.findById(id);
+        return group.getSubjects().stream()
+                .map(subject -> new SubjectDTO(
+                        subject.getId(),
+                        subject.getTitle(),
+                        subject.getMultiplier().toString(),
+                        subject.getHours()
+                )).collect(Collectors.toList());
+    }
+
+    /**
+     * Get all subjects
+     * @return subjectDTO
+     */
+    @RequestMapping(value = "get/subjects")
+    public List<SubjectDTO> getSubjects() {
+        return subjectService.getAllSubjects().stream()
+                .map(subject -> new SubjectDTO(
+                        subject.getId(),
+                        subject.getTitle()
+                )).collect(Collectors.toList());
+    }
+
+    /**
+     * @return a response body with http status {@literal OK} if group
+     * successfully edited or else http status {@literal CONFLICT}
+     */
+    @RequestMapping(value = "add/subject/{id}", method = RequestMethod.POST)
+    public ResponseEntity addSubject(@RequestBody SubjectDTO subjectDTO, @PathVariable Long id) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        try {
+            groupsService.addSubject(
+                    id,
+                    subjectDTO.getId()
+            );
+        } catch (Exception e) {
+            logger.error("Got exeption while adding subject for group ",e);
+            httpStatus = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity(httpStatus);
     }
 
     /**
