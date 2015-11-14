@@ -23,6 +23,8 @@ public class StudentsSpecificationBuilder extends SpecificationBuilder<Students>
     public static final String FIRSTNAME = "firstName";
     public static final String MIDDLENAME = "middleName";
     public static final String NUMBERGRADEBOOK = "numberGradebook";
+    public static final String GROUP_TITLE = "groupTitle";
+    public static final String GROUP_JOIN_TITLE = "groups.title";
 
     public StudentsSpecificationBuilder(Map<String, String> searchValues) {
         super(searchValues);
@@ -35,6 +37,7 @@ public class StudentsSpecificationBuilder extends SpecificationBuilder<Students>
     @Override
     protected List<SearchCriterion> initCriteria(){
         List<SearchCriterion> searchCriteria = new ArrayList<>();
+        searchCriteria.add(new SearchCriterion<>(GROUP_TITLE, "groups", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "title"));
         searchCriteria.add(new SearchCriterion<>(LASTNAME, "lastName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(FIRSTNAME, "firstName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(MIDDLENAME, "middleName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));

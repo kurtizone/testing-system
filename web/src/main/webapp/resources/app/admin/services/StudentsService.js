@@ -18,6 +18,12 @@ angular
                     return result.data;
                 });
             },
+            getAllGroups: function () {
+                var url = '/admin/students/get/groups';
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
             editStudent: function (formData, id) {
                 var url = '/admin/students/edit/' + id;
                 return $http.post(url, formData)

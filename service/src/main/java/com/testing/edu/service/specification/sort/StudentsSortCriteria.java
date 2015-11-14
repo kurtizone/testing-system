@@ -49,6 +49,15 @@ public enum StudentsSortCriteria implements SortCriteria {
             }
         }
     },
+    GROUP_TITLE {
+        public Sort getSort(String sortOrder) {
+            if(sortOrder.equalsIgnoreCase("asc")) {
+                return new Sort(Sort.Direction.ASC, StudentsSpecificationBuilder.GROUP_JOIN_TITLE);
+            } else {
+                return new Sort(Sort.Direction.DESC, StudentsSpecificationBuilder.GROUP_JOIN_TITLE);
+            }
+        }
+    },
     NUMBERGRADEBOOK {
         public Sort getSort(String sortOrder) {
             if(sortOrder.equalsIgnoreCase("asc")) {

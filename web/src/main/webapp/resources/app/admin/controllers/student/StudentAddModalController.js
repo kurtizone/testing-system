@@ -13,6 +13,18 @@ angular
 
             $scope.addStudentFormData = {};
 
+            $scope.chooseData = {};
+            $scope.getAllGroups = function() {
+                $scope.groups = [];
+                studentsService.getAllGroups()
+                    .then(function(groups) {
+                        $scope.groups = groups;
+                        console.log($scope.groups);
+                    });
+            };
+
+            $scope.getAllGroups();
+
             $scope.setTypeDataLanguage = function () {
             };
             $scope.setTypeDataLanguage();
@@ -51,6 +63,7 @@ angular
             $scope.onAddStudentFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
                 if ($scope.addStudentForm.$valid) {
+                    $scope.addStudentFormData.groupId = $scope.chooseData.group.id;
                     saveStudent();
                 }
             };

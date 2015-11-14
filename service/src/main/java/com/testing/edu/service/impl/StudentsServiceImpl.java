@@ -1,8 +1,10 @@
 package com.testing.edu.service.impl;
 
+import com.testing.edu.entity.Groups;
 import com.testing.edu.entity.Students;
 import com.testing.edu.entity.User;
 import com.testing.edu.repository.StudentsRepository;
+import com.testing.edu.service.GroupsService;
 import com.testing.edu.service.StudentsService;
 import com.testing.edu.service.specification.builder.StudentsSpecificationBuilder;
 import com.testing.edu.service.utils.ListToPageTransformer;
@@ -37,15 +39,17 @@ public class StudentsServiceImpl implements StudentsService {
      * @param firstname
      * @param middleName
      * @param numberGradebook
+     * @param groups
      */
     @Override
     @Transactional
-    public void addStudent(String lastname, String firstname, String middleName, String numberGradebook) {
+    public void addStudent(String lastname, String firstname, String middleName, String numberGradebook, Groups groups) {
         Students students = new Students(
                 lastname,
                 firstname,
                 middleName,
-                numberGradebook
+                numberGradebook,
+                groups
         );
 
         studentsRepository.save(students);
@@ -62,13 +66,14 @@ public class StudentsServiceImpl implements StudentsService {
      */
     @Override
     @Transactional
-    public void editStudent(Long id, String lastname, String firstname, String middleName, String numberGradebook) {
+    public void editStudent(Long id, String lastname, String firstname, String middleName, String numberGradebook, Groups groups) {
         Students students = studentsRepository.findOne(id);
 
         students.setLastName(lastname);
         students.setFirstName(firstname);
         students.setMiddleName(middleName);
         students.setNumberGradebook(numberGradebook);
+        students.setGroups(groups);
 
         studentsRepository.save(students);
     }

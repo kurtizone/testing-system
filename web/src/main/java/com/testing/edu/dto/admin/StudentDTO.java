@@ -11,6 +11,8 @@ public class StudentDTO {
     private String firstName;
     private String middleName;
     private String numberGradebook;
+    private Long groupId;
+    private String groupTitle;
 
     public StudentDTO() {
 
@@ -22,5 +24,23 @@ public class StudentDTO {
         this.firstName = firstName;
         this.middleName = middleName;
         this.numberGradebook = numberGradebook;
+    }
+
+    public StudentDTO(Long id, String lastName, String firstName, String middleName, String numberGradebook, Long groupId) {
+        this(id, lastName, firstName, middleName, numberGradebook);
+        this.groupId = groupId;
+    }
+
+    public StudentDTO(Long id, String lastName, String firstName, String middleName, String numberGradebook, Long groupId,
+                      String groupTitle) {
+        this(id, lastName, firstName, middleName, numberGradebook);
+        this.groupId = groupId;
+        this.groupTitle = groupTitle;
+    }
+
+    public StudentDTO(Long id, String lastName, String firstName, String middleName, String numberGradebook,
+                      String groupTitle) {
+        this(id, lastName, firstName, middleName, numberGradebook);
+        this.groupTitle = groupTitle;
     }
 }

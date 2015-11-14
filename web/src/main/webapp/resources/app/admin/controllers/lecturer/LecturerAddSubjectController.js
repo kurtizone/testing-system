@@ -83,11 +83,10 @@ angular
              * form and updates table with organizations.
              */
             function saveSubject(subjectForm) {
-                console.log(subjectForm);;
-                console.log($rootScope.lecturer.id);
+                console.log(subjectForm);
                 lecturersService.addSubjectToLecturer(
                     subjectForm,
-                    $rootScope.lecturer.id).then(
+                    $rootScope.lecturerId).then(
                     function (data) {
                         if (data == 200) {
                             $scope.closeModal(true);

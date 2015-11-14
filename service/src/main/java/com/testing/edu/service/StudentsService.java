@@ -1,5 +1,6 @@
 package com.testing.edu.service;
 
+import com.testing.edu.entity.Groups;
 import com.testing.edu.entity.Students;
 import com.testing.edu.entity.User;
 import com.testing.edu.service.utils.ListToPageTransformer;
@@ -15,7 +16,7 @@ public interface StudentsService {
      * @param numberGradebook 
      */
     void addStudent(String lastname, String firstname, String middleName,
-                     String numberGradebook);
+                     String numberGradebook, Groups groups);
 
     /**
      * Edit student with params
@@ -26,7 +27,7 @@ public interface StudentsService {
      * @param numberGradebook 
      */
     void editStudent(Long id, String lastname, String firstname, String middleName,
-                     String numberGradebook);
+                     String numberGradebook, Groups groups);
 
     /**
      * Delete student by his id

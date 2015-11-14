@@ -15,6 +15,22 @@ angular
             };
             $scope.setTypeDataLanguage();
 
+            $scope.chooseData = {};
+            $scope.getAllGroups = function () {
+                $scope.groups = [];
+                studentsService.getAllGroups()
+                    .then(function (groups) {
+                        $scope.groups = groups;
+                        console.log($scope.groups);
+                    });
+                $scope.chooseData.group = {
+                    id: $rootScope.student.groupId,
+                    title: $rootScope.student.groupTitle
+                };
+            };
+
+            $scope.getAllGroups();
+
             /**
              * Closes modal window on browser's back/forward button click.
              */
@@ -27,7 +43,7 @@ angular
              * student.
              */
             $rootScope.closeModal = function (close) {
-                if(close === true) {
+                if (close === true) {
                     $modalInstance.close();
                 }
                 $modalInstance.dismiss();
@@ -43,7 +59,8 @@ angular
                         firstName: $rootScope.student.firstName,
                         lastName: $rootScope.student.lastName,
                         middleName: $rootScope.student.middleName,
-                        numberGradebook: $rootScope.student.numberGradebook
+                        numberGradebook: $rootScope.student.numberGradebook,
+                        groupId: $scope.chooseData.group.id
                     };
                     saveStudent(studentForm);
                 }

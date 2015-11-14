@@ -4,11 +4,11 @@
 </div>
 
 <div class="modal-body modal-padding">
-    <form name="addGroupForm" id="addGroupForm" role="form" ng-submit="onAddGroupFormSubmit()"
+    <form name="addSubjectForm" id="addSubjectForm" role="form" ng-submit="onAddSubjectFormSubmit()"
           class="form-group" novalidate>
 
         <div class="form-group row row-fields" show-errors>
-            <label class="control-label col-md-4" for="title">
+            <label class="control-label col-md-4" for="subjectTitle">
                 {{'SUBJECT' |translate }}
             </label>
 
@@ -34,7 +34,7 @@
                 {{'ADD' | translate}}
             </button>
             <input type="reset" class="btn btn-warning col-md-2 col-sm-12 col-xs-12 col-lg-2"
-                   value="{{'CLEAR_FORM' | translate }}" ng-click="resetAddGroupForm()">
+                   value="{{'CLEAR_FORM' | translate }}" ng-click="resetAddSubjectForm()">
 
             <div class="col-md-6 col-sm-0 col-xs-0 col-lg-6">
                 <p></p>

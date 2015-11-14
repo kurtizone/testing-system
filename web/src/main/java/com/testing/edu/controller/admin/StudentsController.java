@@ -1,8 +1,11 @@
 package com.testing.edu.controller.admin;
 
 import com.testing.edu.dto.PageDTO;
+import com.testing.edu.dto.admin.GroupDTO;
 import com.testing.edu.dto.admin.StudentDTO;
+import com.testing.edu.entity.Groups;
 import com.testing.edu.entity.Students;
+import com.testing.edu.service.GroupsService;
 import com.testing.edu.service.StudentsService;
 import com.testing.edu.service.utils.ListToPageTransformer;
 import com.testing.edu.service.utils.TypeConverter;
@@ -12,9 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/admin/students/")
@@ -24,8 +26,12 @@ public class StudentsController {
     @Autowired
     private StudentsService studentsService;
 
+    @Autowired
+    private GroupsService groupsService;
+
     /**
      * Add student
+     *
      * @param studentDTO object with student data
      * @return a response body with http status {@literal OK} if student
      * successfully edited or else http status {@literal CONFLICT}
@@ -39,10 +45,11 @@ public class StudentsController {
                     studentDTO.getLastName(),
                     studentDTO.getFirstName(),
                     studentDTO.getMiddleName(),
-                    studentDTO.getNumberGradebook()
+                    studentDTO.getNumberGradebook(),
+                    groupsService.findById(studentDTO.getGroupId())
             );
         } catch (Exception e) {
-            logger.error("Got exeption while add student ",e);
+            logger.error("Got exeption while add student ", e);
             httpStatus = HttpStatus.CONFLICT;
         }
         return new ResponseEntity(httpStatus);
@@ -50,13 +57,14 @@ public class StudentsController {
 
     /**
      * Edit student
+     *
      * @param studentDTO object with student data
      * @return a response body with http status {@literal OK} if student
      * successfully edited or else http status {@literal CONFLICT}
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.POST)
     public ResponseEntity editStudent(@RequestBody StudentDTO studentDTO,
-                                       @PathVariable Long id) {
+                                      @PathVariable Long id) {
         HttpStatus httpStatus = HttpStatus.OK;
         try {
             studentsService.editStudent(
@@ -64,10 +72,11 @@ public class StudentsController {
                     studentDTO.getLastName(),
                     studentDTO.getFirstName(),
                     studentDTO.getMiddleName(),
-                    studentDTO.getNumberGradebook()
+                    studentDTO.getNumberGradebook(),
+                    groupsService.findById(studentDTO.getGroupId())
             );
         } catch (Exception e) {
-            logger.error("Got exeption while editing student ",e);
+            logger.error("Got exeption while editing student ", e);
             httpStatus = HttpStatus.CONFLICT;
         }
         return new ResponseEntity(httpStatus);
@@ -75,6 +84,7 @@ public class StudentsController {
 
     /**
      * Delete student
+     *
      * @param id Long id of student
      * @return a response body with http status {@literal OK} if student
      * successfully edited or else http status {@literal CONFLICT}
@@ -85,7 +95,7 @@ public class StudentsController {
         try {
             studentsService.removeStudent(id);
         } catch (Exception e) {
-            logger.error("Got exeption while remove student ",e);
+            logger.error("Got exeption while remove student ", e);
             httpStatus = HttpStatus.CONFLICT;
         }
         return new ResponseEntity(httpStatus);
@@ -93,6 +103,7 @@ public class StudentsController {
 
     /**
      * Get student with id
+     *
      * @param id Long id of student
      * @return subjectDTO
      */
@@ -104,13 +115,31 @@ public class StudentsController {
                 students.getLastName(),
                 students.getFirstName(),
                 students.getMiddleName(),
-                students.getNumberGradebook()
+                students.getNumberGradebook(),
+                students.getGroups().getId(),
+                students.getGroups().getTitle()
         );
         return studentDTO;
     }
 
     /**
+     * Get all groups
+     *
+     * @return subjectDTO
+     */
+    @RequestMapping(value = "get/groups")
+    public List<GroupDTO> getGroups() {
+        return groupsService.getAllGroups().stream()
+                .map(group -> new GroupDTO(
+                        group.getId(),
+                        group.getTitle()
+                )).collect(Collectors.toList());
+    }
+
+
+    /**
      * Build page by SortCriteria, SortOrder and Searching data
+     *
      * @param pageNumber
      * @param itemsPerPage
      * @param sortCriteria
@@ -120,8 +149,8 @@ public class StudentsController {
      */
     @RequestMapping(value = "{pageNumber}/{itemsPerPage}/{sortCriteria}/{sortOrder}", method = RequestMethod.GET)
     public PageDTO<StudentDTO> pageStudentWithSearch(@PathVariable Integer pageNumber, @PathVariable Integer itemsPerPage,
-                                                       @PathVariable String sortCriteria, @PathVariable String sortOrder,
-                                                       StudentDTO  searchData) {
+                                                     @PathVariable String sortCriteria, @PathVariable String sortOrder,
+                                                     StudentDTO searchData) {
         Map<String, String> searchDataMap = TypeConverter.ObjectToMap(searchData);
         ListToPageTransformer<Students> queryResult = studentsService.getStudentBySearchAndPagination(
                 pageNumber,
@@ -136,6 +165,7 @@ public class StudentsController {
 
     /**
      * Build page without sorting, ordering and searching data
+     *
      * @param pageNumber
      * @param itemsPerPage
      * @return
@@ -147,10 +177,11 @@ public class StudentsController {
 
     /**
      * Convert list of counter types to list CounterTypeDTO
+     *
      * @param list
      * @return
      */
-    public static List<StudentDTO> toStudentDtoFromList(List<Students> list){
+    public static List<StudentDTO> toStudentDtoFromList(List<Students> list) {
         List<StudentDTO> resultList = new ArrayList<>();
         for (Students student : list) {
             resultList.add(new StudentDTO(
@@ -158,7 +189,8 @@ public class StudentsController {
                     student.getLastName(),
                     student.getFirstName(),
                     student.getMiddleName(),
-                    student.getNumberGradebook()
+                    student.getNumberGradebook(),
+                    student.getGroups().getTitle()
             ));
         }
         return resultList;

@@ -56,7 +56,6 @@ angular
              * organization.
              */
             $rootScope.closeModal = function (close) {
-                $scope.resetAddSubjectForm();
                 if(close === true) {
                     $modalInstance.close();
                 }
@@ -69,9 +68,11 @@ angular
             $scope.onAddSubjectFormSubmit = function () {
                 $scope.$broadcast('show-errors-check-validity');
                 if ($scope.addSubjectForm.$valid) {
-                    $scope.addSubjectFormData.studyForm = $scope.addSubjectFormData.studyForm.id;
-                    console.log($scope.addSubjectForm);
-                    saveSubject();
+                    $scope.addSubjectForm.subjectTitle = $scope.chooseData.subjectTitle.id;
+                    var subjectForm = {
+                        id: $scope.chooseData.subjectTitle.id
+                    };
+                    saveSubject(subjectForm);
                 }
             };
 
@@ -80,11 +81,14 @@ angular
              * If everything is ok then resets the organization
              * form and updates table with organizations.
              */
-            function saveSubject() {
-                console.log($scope.addSubjectFormData);
-                groupsService.addSubjectToGroup($scope.addGroupFormData)
-                    .then(function (data) {
-                        if (data == 201) {
+            function saveSubject(subjectForm) {
+                console.log(subjectForm);
+                console.log($rootScope.groupId);
+                groupsService.addSubjectToGroup(
+                    subjectForm,
+                    $rootScope.groupId
+                ).then(function (data) {
+                        if (data == 200) {
                             $scope.closeModal(true);
                             $rootScope.onTableHandling();
                         }

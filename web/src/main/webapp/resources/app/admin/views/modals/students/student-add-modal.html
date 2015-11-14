@@ -92,6 +92,30 @@
                 </div>
 
                 <div class="form-group row row-fields" show-errors>
+                    <label for="group" class="control-label col-md-4">
+                        {{'GROUP' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <ui-select type="text" theme="select2" class="form-control"
+                                   ng-model="chooseData.group"
+                                   name="group" id="group" required>
+                            <ui-select-match placeholder="{{'SELECT_SUBJECT_TITLE' | translate}}" allow-clear="true">
+                                {{$select.selected.title}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="group in groups | filter: $select.search">
+                                <span ng-bind-html="group.title"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <p class="help-block" ng-if="addStudentFormData.group.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group row row-fields" show-errors>
                     <label class="control-label col-md-4" for="numberGradebook">
                         {{'NUMBER_GRADEBOOK' |translate }}
                     </label>
