@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{'FILL_IN_INFORMATION_ABOUT_SUBJECT'
+        | translate}}</h3>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <table class="table table-bordered col-lg-12">
+            <thead>
+            <tr>
+                <th>{{'LAST_NAME' | translate}}</th>
+                <th>{{'FIRST_NAME' | translate}}</th>
+                <th>{{'MIDDLE_NAME' | translate}}</th>
+                <th>{{'NUMBER_OF_GRADEBOOK' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="student in $root.groupStudents">
+                <td>{{ student.lastName }}</td>
+                <td>{{ student.firstName }}</td>
+                <td>{{ student.middleName }}</td>
+                <td>{{ student.numberGradebook }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

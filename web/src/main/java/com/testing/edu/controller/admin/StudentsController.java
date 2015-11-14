@@ -3,10 +3,13 @@ package com.testing.edu.controller.admin;
 import com.testing.edu.dto.PageDTO;
 import com.testing.edu.dto.admin.GroupDTO;
 import com.testing.edu.dto.admin.StudentDTO;
+import com.testing.edu.dto.admin.SubjectDTO;
 import com.testing.edu.entity.Groups;
 import com.testing.edu.entity.Students;
+import com.testing.edu.entity.Subject;
 import com.testing.edu.service.GroupsService;
 import com.testing.edu.service.StudentsService;
+import com.testing.edu.service.SubjectService;
 import com.testing.edu.service.utils.ListToPageTransformer;
 import com.testing.edu.service.utils.TypeConverter;
 import org.apache.log4j.Logger;
@@ -28,6 +31,9 @@ public class StudentsController {
 
     @Autowired
     private GroupsService groupsService;
+
+    @Autowired
+    private SubjectService subjectService;
 
     /**
      * Add student
@@ -135,6 +141,27 @@ public class StudentsController {
                         group.getTitle()
                 )).collect(Collectors.toList());
     }
+
+    /**
+     * Get subject with id
+     * @param id Integer id of subject
+     * @return subjectDTO
+     */
+    @RequestMapping(value = "get/{id}/subjects")
+    public List<SubjectDTO> getListOfSubjects(@PathVariable("id") Long id) {
+        Students student= studentsService.findById(id);
+        Groups group = student.getGroups();
+        return group.getSubjects().stream()
+                .map(subject -> new SubjectDTO(
+                        subject.getId(),
+                        subject.getTitle(),
+                        subject.getMultiplier().toString(),
+                        subject.getHours(),
+                        subjectService.countOfGroups(subject.getId()),
+                        subjectService.countOfTests(subject.getId())
+                )).collect(Collectors.toList());
+    }
+
 
 
     /**

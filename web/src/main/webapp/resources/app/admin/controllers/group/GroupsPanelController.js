@@ -219,4 +219,24 @@ angular
 
             };
 
+            /**
+             * Opens modal window for editing category of counter.
+             */
+            $scope.openListOfStudents = function (groupId) {
+                groupsService.getStudentsByGroupId(groupId).then(
+                    function (data) {
+                        $rootScope.groupStudents = data;
+                        console.log($rootScope.groupStudents);
+                        var subjectsDTOModal = $modal
+                            .open({
+                                animation: true,
+                                controller: 'GroupStudentsController',
+                                templateUrl: '/resources/app/admin/views/modals/groups/group-students.html',
+                                size: 'lg'
+                            });
+                    });
+
+
+            };
+
         }]);

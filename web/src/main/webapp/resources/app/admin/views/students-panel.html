@@ -47,7 +47,7 @@
                             filter="{ 'groupTitle': 'text' }">{{ student.groupTitle}}
                         </td>
                         <td data-title="'ACTIONS' | translate" class="text-center">
-                            <div class="btn-group">
+                            <div class="btn-group-vertical">
                                 <button type="button" class="btn btn-warning"
                                         ng-click="openEditStudentModal(student.id)">
                                     <span class="glyphicon glyphicon-pencil"></span>
@@ -55,10 +55,6 @@
                                 <button type="button" class="btn btn-danger"
                                         ng-click="deleteStudent(student.id)">
                                     <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                                <button type="button" class="btn btn-warning"
-                                        ng-click="openAddSubject(student.id)">
-                                    <span class="glyphicon glyphicon-plus"></span>
                                 </button>
                                 <button type="button" class="btn btn-success"
                                         ng-click="openListOfSubjects(student.id)">

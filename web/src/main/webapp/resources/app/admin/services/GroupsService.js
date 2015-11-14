@@ -31,6 +31,12 @@ angular
                     return result.data;
                 });
             },
+            getStudentsByGroupId: function (id) {
+                var url = '/admin/groups/get/' + id + '/students';
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
             getAllAvaibleSubjects: function (id) {
                 var url = '/admin/groups/get/subjects/' + id;
                 return $http.get(url).then(function (result) {

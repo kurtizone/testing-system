@@ -35,7 +35,7 @@ angular
 
             $scope.tableParams = new ngTableParams({
                 page: 1,
-                count: 10,
+                count: 5,
                 sorting: {
                     id: 'desc'
                 }
@@ -128,50 +128,26 @@ angular
                 }, 700);
             };
 
+
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openAddSubject = function(
-                studentId) {
-                $rootScope.studentId = studentId;
-                studentsService.getStudentById(
-                    $rootScope.studentId).then(
-                    function(data) {
-                        $rootScope.student = data;
-                        console.log($rootScope.student);
-
-                        var studentDTOModal = $modal
+            $scope.openListOfSubjects = function(studentId) {
+                studentsService.getSubjectsByStudentId(studentId).then(
+                    function (data) {
+                        $rootScope.groupSubjects = data;
+                        console.log($rootScope.groupSubjects);
+                        var subjectsDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'StudentEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/students/student-edit-modal.html',
-                                size: 'md'
+                                controller : 'StudentSubjectsController',
+                                templateUrl : '/resources/app/admin/views/modals/students/student-subjects.html',
+                                size: 'lg'
                             });
                     });
 
             };
 
-            /**
-             * Opens modal window for editing category of counter.
-             */
-            $scope.openListOfSubjects = function(
-                studentId) {
-                $rootScope.studentId = studentId;
-                studentsService.getStudentById(
-                    $rootScope.studentId).then(
-                    function(data) {
-                        $rootScope.student = data;
-                        console.log($rootScope.student);
 
-                        var studentDTOModal = $modal
-                            .open({
-                                animation : true,
-                                controller : 'StudentEditModalController',
-                                templateUrl : '/resources/app/admin/views/modals/students/student-edit-modal.html',
-                                size: 'md'
-                            });
-                    });
-
-            };
 
         }]);

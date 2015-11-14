@@ -2,6 +2,7 @@ package com.testing.edu.controller.admin;
 
 import com.testing.edu.dto.PageDTO;
 import com.testing.edu.dto.admin.GroupDTO;
+import com.testing.edu.dto.admin.StudentDTO;
 import com.testing.edu.dto.admin.SubjectDTO;
 import com.testing.edu.entity.Groups;
 import com.testing.edu.entity.Subject;
@@ -133,6 +134,24 @@ public class GroupsController {
                         subject.getHours(),
                         subjectService.countOfGroups(subject.getId()),
                         subjectService.countOfTests(subject.getId())
+                )).collect(Collectors.toList());
+    }
+
+    /**
+     * Get subject with id
+     * @param id Integer id of subject
+     * @return subjectDTO
+     */
+    @RequestMapping(value = "get/{id}/students")
+    public List<StudentDTO> getListOfStudents(@PathVariable("id") Long id) {
+        Groups group = groupsService.findById(id);
+        return group.getStudentses().stream()
+                .map(student -> new StudentDTO(
+                        student.getId(),
+                        student.getLastName(),
+                        student.getFirstName(),
+                        student.getMiddleName(),
+                        student.getNumberGradebook()
                 )).collect(Collectors.toList());
     }
 

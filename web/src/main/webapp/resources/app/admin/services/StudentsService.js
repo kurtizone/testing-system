@@ -24,6 +24,12 @@ angular
                     return result.data;
                 });
             },
+            getSubjectsByStudentId: function (id) {
+                var url = '/admin/students/get/' + id + '/subjects';
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
             editStudent: function (formData, id) {
                 var url = '/admin/students/edit/' + id;
                 return $http.post(url, formData)
