@@ -82,6 +82,22 @@ public class GroupsServiceImpl implements GroupsService {
     }
 
     /**
+     * Delete subject by his id
+     *
+     * @param groupId
+     * @param subjectId
+     */
+    @Override
+    public void removeSubjectOfGroup(Long groupId, Long subjectId) {
+        Groups group = groupsRepository.findOne(groupId);
+        Set<Subject> subjectSet = group.getSubjects();
+        Subject subject= subjectRepository.findOne(subjectId);
+        subjectSet.remove(subject);
+        group.setSubjects(subjectSet);
+        groupsRepository.save(group);
+    }
+
+    /**
      * Find group by id
      *
      * @param id

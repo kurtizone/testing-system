@@ -36,7 +36,8 @@ public class TestSpecificationBuilder extends SpecificationBuilder<Tests> {
     @Override
     protected List<SearchCriterion> initCriteria() {
         List<SearchCriterion> searchCriteria = new ArrayList<>();
-        searchCriteria.add(new SearchCriterion<>("lecturer", "subject", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.LONG, "lecturerses", "id"));
+        searchCriteria.add(new SearchCriterion<>("lecturer", "subject", SearchCriterion.Operator.EQUAL_DISTINCT, SearchCriterion.ValueType.LONG, "lecturerses", "id"));
+        searchCriteria.add(new SearchCriterion<>("group", "subject", SearchCriterion.Operator.EQUAL_DISTINCT, SearchCriterion.ValueType.LONG, "groupses", "id"));
         searchCriteria.add(new SearchCriterion<>("subject", "subject", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "title"));
         searchCriteria.add(new SearchCriterion<>(TITLE, "title", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(TYPE, "type", SearchCriterion.Operator.EQUAL_BY_ENUM, TestType.class));

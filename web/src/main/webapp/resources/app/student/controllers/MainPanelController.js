@@ -4,20 +4,20 @@ angular
         function ($scope, statisticService) {
             $scope.statistics = {
                 subjects: 0,
-                lecturers: 0,
-                groups: 0,
-                students: 0
+                results: 0,
+                groupResults: 0,
+                tests: 0
             };
             statisticService.subjects().then(function (data) {
                 $scope.statistics.subjects = data.count;
             });
-            statisticService.lecturers().then(function (data) {
-                $scope.statistics.lecturers = data.count;
+            statisticService.results().then(function (data) {
+                $scope.statistics.results = data.count;
             });
-            statisticService.groups().then(function (data) {
-                $scope.statistics.groups = data.count;
+            statisticService.groupResults().then(function (data) {
+                $scope.statistics.groupResults = data.count;
             });
-            statisticService.students().then(function (data) {
-                $scope.statistics.students = data.count;
+            statisticService.tests().then(function (data) {
+                $scope.statistics.tests = data.count;
             });
     }]);

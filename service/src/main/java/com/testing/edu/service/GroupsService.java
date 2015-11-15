@@ -36,6 +36,13 @@ public interface GroupsService {
     void removeGroup(Long id);
 
     /**
+     * Delete subject by his id
+     * @param groupId
+     * @param subjectId
+     */
+    void removeSubjectOfGroup(Long groupId, Long subjectId);
+
+    /**
      * Find group by id
      * @param id
      * @return

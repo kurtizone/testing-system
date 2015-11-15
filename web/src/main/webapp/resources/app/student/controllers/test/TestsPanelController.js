@@ -7,64 +7,66 @@ angular
         '$scope',
         '$modal',
         '$http',
-        'GroupsService',
+        'TestsService',
         'ngTableParams',
         '$translate',
         '$timeout',
         '$filter',
         'toaster',
-        function ($rootScope, $scope, $modal, $http, groupsService, ngTableParams, $translate, $timeout, $filter, toaster) {
+        function ($rootScope, $scope, $modal, $http, testsService, ngTableParams, $translate, $timeout, $filter, toaster) {
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
             $scope.pageContent = [];
 
-            //for measurement academicStatus
-            $scope.selectedStudyForm = {
+            //for measurement testType
+            $scope.selectedType = {
+                name: null
+            }
+            $scope.selectedAvaible = {
                 name: null
             }
 
-            //for measurement degree
-            $scope.selectedDegree = {
-                name: null
-            }
-
-            $scope.degreeData = [
+            $scope.typeData = [
                 {
-                    id: 'MASTER',
-                    label: $filter('translate')('MASTER')
+                    id: 'MODUL',
+                    label: $filter('translate')('MODUL')
                 },
                 {
-                    id: 'BACHELOR',
-                    label: $filter('translate')('BACHELOR')
+                    id: 'LABARATORY',
+                    label: $filter('translate')('LABARATORY')
+                },
+                {
+                    id: 'FINAL',
+                    label: $filter('translate')('FINAL')
                 }
             ];
 
-            $scope.studyFormData = [
+            console.log($scope.typeData);
+
+            $scope.avaibleData = [
                 {
-                    id: 'EXTERNAL',
-                    label: $filter('translate')('EXTERNAL')
+                    id: 'true',
+                    label: $filter('translate')('true')
                 },
                 {
-                    id: 'DAILY',
-                    label: $filter('translate')('DAILY')
+                    id: 'false',
+                    label: $filter('translate')('false')
                 },
-                {
-                    id: 'NONRESIDENCE',
-                    label: $filter('translate')('NONRESIDENCE')
-                }
+
             ];
 
-            /**
-             * Localization of multiselect for type of organization
-             */
+
+
+
             $scope.setTypeDataLanguage = function () {
+
             };
             $scope.setTypeDataLanguage();
 
             $scope.clearAll = function () {
-                $scope.selectedStudyForm.name = null;
-                $scope.selectedDegree.name = null;
+                $scope.selectedType.name = null;
+                $scope.selectedAvaible.name = null;
                 $scope.tableParams.filter({});
             };
 
@@ -86,21 +88,23 @@ angular
                     var sortCriteria = Object.keys(params.sorting())[0];
                     var sortOrder = params.sorting()[sortCriteria];
 
-                    if ($scope.selectedStudyForm.name != null) {
-                        params.filter().studyForm = $scope.selectedStudyForm.name.id;
+                    if ($scope.selectedType.name != null) {
+                        console.log($scope.selectedType.name);
+                        params.filter().type = $scope.selectedType.name.id;
                     }
                     else {
-                        params.filter().studyForm = null; //case when the filter is cleared with a button on the select
+                        params.filter().type = null; //case when the filter is cleared with a button on the select
                     }
 
-                    if ($scope.selectedDegree.name != null) {
-                        params.filter().degree = $scope.selectedDegree.name.id;
+                    if ($scope.selectedAvaible.name != null) {
+                        params.filter().avaible = $scope.selectedAvaible.name.id;
                     }
                     else {
-                        params.filter().degree = null; //case when the filter is cleared with a button on the select
+                        params.filter().avaible = null; //case when the filter is cleared with a button on the select
                     }
 
-                    groupsService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
+
+                    testsService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
                         .success(function (result) {
                             $scope.resultsCount = result.totalItems;
                             $defer.resolve(result.content);
@@ -128,101 +132,36 @@ angular
                 }
                 return false;
             };
-            /**
-             * Opens modal window for adding new category of counters.
-             */
-            $scope.openAddGroupModal = function() {
-                var addGroup = $modal.open({
-                    animation : true,
-                    controller : 'GroupAddModalController',
-                    templateUrl : '/resources/app/student/views/modals/groups/group-add-modal.html',
-                    size: 'md'
-                });
-                addGroup.result.then(function () {
-                    toaster.pop('success',$filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_ADDED_GROUP'));
-                });
-            };
+
 
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openEditGroupModal = function(
-                groupId) {
-                $rootScope.groupId = groupId;
-                groupsService.getGroupById(
-                    $rootScope.groupId).then(
+            $scope.openEditTestModal = function(
+                testId) {
+                $rootScope.testId = testId;
+                testsService.getTestById(
+                    $rootScope.testId).then(
                     function(data) {
-                        $rootScope.group = data;
-                        console.log($rootScope.group);
+                        $rootScope.test = data;
+                        console.log($rootScope.test);
 
-                        var groupDTOModal = $modal
+                        var testDTOModal = $modal
                             .open({
                                 animation : true,
-                                controller : 'GroupEditModalController',
-                                templateUrl : '/resources/app/student/views/modals/groups/group-edit-modal.html',
-                                size: 'md'
+                                controller : 'TestEditModalController',
+                                templateUrl : '/resources/app/lecturer/views/modals/tests/test-edit-modal.html',
+                                size: 'md',
+                                resolve: {
+                                    subjects: function () {
+                                        console.log(testsService.findSubjects());
+                                        return testsService.findSubjects();
+                                    }
+                                }
                             });
-                        groupDTOModal.result.then(function () {
-                            toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_GROUP'));
+                        testDTOModal.result.then(function () {
+                            toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_LECTURER'));
                         });
-                    });
-
-            };
-
-            $scope.deleteGroup = function (id) {
-                $rootScope.id = id;
-                console.log($rootScope.id);
-                groupsService.deleteGroup(id).then(function () {
-                    toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_GROUP'));
-                });
-                $timeout(function() {
-                    console.log('delete with timeout');
-                    $rootScope.onTableHandling();
-                }, 700);
-            };
-
-            /**
-             * Opens modal window for editing category of counter.
-             */
-            $scope.openAddSubject = function(
-                groupId) {
-                $rootScope.groupId = groupId;
-                groupsService.getGroupById(
-                    $rootScope.groupId).then(
-                    function(data) {
-                        $rootScope.group = data;
-                        console.log($rootScope.group);
-
-                        var groupDTOModal = $modal
-                            .open({
-                                animation : true,
-                                controller : 'GroupEditModalController',
-                                templateUrl : '/resources/app/student/views/modals/groups/group-edit-modal.html',
-                                size: 'md'
-                            });
-                    });
-
-            };
-
-            /**
-             * Opens modal window for editing category of counter.
-             */
-            $scope.openListOfSubjects = function(
-                groupId) {
-                $rootScope.groupId = groupId;
-                groupsService.getGroupById(
-                    $rootScope.groupId).then(
-                    function(data) {
-                        $rootScope.group = data;
-                        console.log($rootScope.group);
-
-                        var groupDTOModal = $modal
-                            .open({
-                                animation : true,
-                                controller : 'GroupEditModalController',
-                                templateUrl : '/resources/app/student/views/modals/groups/group-edit-modal.html',
-                                size: 'md'
-                            });
                     });
 
             };

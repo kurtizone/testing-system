@@ -18,6 +18,13 @@ public interface StatisticService {
     Long countSubjectsByLecturerId(Long lecturerId);
 
     /**
+     * Count Subjects by Lecturer id
+     * @param groupId
+     * @return amount of subjects
+     */
+    Long countSubjectsByGroupId(Long groupId);
+
+    /**
      * Count Lecturers
      * @return amount of lecturers
      */
@@ -42,10 +49,38 @@ public interface StatisticService {
     Long countTestByLecturerId(Long lecturerId);
 
     /**
+     * Count test witch have lecturer
+     * @param studentId
+     * @return
+     */
+    Long countTestByStudentId(Long studentId);
+
+    /**
+     * Count Results
+     * @return amount of results
+     */
+    Long countResults();
+
+
+    /**
      * Count results witch have lecturer
      * @return
      */
     Long countResultsByLecturerId(Long lecturerId);
+
+    /**
+     * Count results witch have student
+     * @param studentId
+     * @return
+     */
+    Long countResultsByStudentId(Long studentId);
+
+    /**
+     * Count results witch have group
+     * @param groupId
+     * @return
+     */
+    Long countResultsByGroupId(Long groupId);
 
     /**
      * find user with username

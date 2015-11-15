@@ -100,6 +100,22 @@ public class LecturersServiceImpl implements LecturersService {
     }
 
     /**
+     * Delete lecturer by his id
+     *
+     * @param lecturerId
+     * @param subjectId
+     */
+    @Override
+    public void removeSubjectOfLecturer(Long lecturerId, Long subjectId) {
+        Lecturers lecturer = lecturersRepository.findOne(lecturerId);
+        Set<Subject> subjectSet = lecturer.getSubjects();
+        Subject subject = subjectRepository.findOne(subjectId);
+        subjectSet.remove(subject);
+        lecturer.setSubjects(subjectSet);
+        lecturersRepository.save(lecturer);
+    }
+
+    /**
      * Find lecturer by id
      *
      * @param id

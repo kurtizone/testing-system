@@ -12,6 +12,7 @@ angular
             lecturers: function() { return getData('lecturers'); },
             groups: function() { return getData('groups'); },
             students: function() {return getData('students'); },
+            results: function() {return getData('results'); },
             employee: function() { return getData('employee'); }
         }
     });

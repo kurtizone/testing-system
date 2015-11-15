@@ -56,6 +56,13 @@ angular
                     .then(function (result) {
                         return result.status;
                     });
+            },
+            deleteSubjectOfGroup: function (lecturerId, subjectId) {
+                var url = '/admin/groups/delete/subject/' + lecturerId + '/' + subjectId;
+                return $http.delete(url)
+                    .then(function (result) {
+                        return result.status;
+                    });
             }
         };
 

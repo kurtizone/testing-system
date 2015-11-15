@@ -106,23 +106,22 @@ public class TestsServiceImpl implements TestsService {
      * @param searchKeys
      * @param sortCriteria
      * @param sortOrder
-     * @param lecturer
      * @return
      */
     @Override
     @Transactional
-    public ListToPageTransformer<Tests> getTestsBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String, String> searchKeys, String sortCriteria, String sortOrder, Lecturers lecturer) {
-        searchKeys.put("lecturer", lecturer.getId().toString());
+    public ListToPageTransformer<Tests> getTestsBySearchAndPagination(int pageNumber, int itemsPerPage, Map<String, String> searchKeys, String sortCriteria, String sortOrder) {
         TestSpecificationBuilder specificationBuilder = new TestSpecificationBuilder(searchKeys);
         Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
         Specification<Tests> searchSpec = specificationBuilder.buildPredicate();
 
+        int totalSize = testsRepository.findAll(searchSpec).size();
         Page<Tests> testPage = testsRepository.findAll(searchSpec, pageSpec);
         List<Tests> tests = testPage.getContent();
 
         ListToPageTransformer<Tests> result = new ListToPageTransformer<>();
         result.setContent(tests);
-        result.setTotalItems((long) tests.size());
+        result.setTotalItems((long) totalSize);
         return result;
     }
 }

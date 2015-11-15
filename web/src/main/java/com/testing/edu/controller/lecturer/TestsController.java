@@ -160,12 +160,12 @@ public class TestsController {
         Map<String, String> searchDataMap = TypeConverter.ObjectToMap(searchData);
         User userous = statisticService.employeeExist(user.getUsername());
         Lecturers lecturer = lecturersService.findByUser(userous);
+        searchDataMap.put("lecturer", lecturer.getId().toString());
         ListToPageTransformer<Tests> queryResult = testsService.getTestsBySearchAndPagination(
                 pageNumber,
                 itemsPerPage, searchDataMap,
                 sortCriteria,
-                sortOrder,
-                lecturer
+                sortOrder
         );
         List<TestDTO> content = toTestDtoFromList(queryResult.getContent());
         return new PageDTO(queryResult.getTotalItems(), content);

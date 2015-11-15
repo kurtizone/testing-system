@@ -7,7 +7,28 @@ angular
         '$scope',
         '$translate',
         '$modalInstance',
-        function ($rootScope, $scope, $translate, $modalInstance) {
+        'GroupsService',
+        'toaster',
+        '$filter',
+        '$timeout',
+        function ($rootScope, $scope, $translate, $modalInstance, groupsService, toaster, $filter, $timeout) {
+
+
+            $scope.deleteSubjectOfLecturer = function (groupId, subjectId) {
+                console.log(groupId);
+                console.log(subjectId);
+                groupsService.deleteSubjectOfGroup(groupId, subjectId).then(function () {
+                    toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_LECTURER'));
+                });
+                $timeout(function() {
+                    console.log('delete with timeout');
+                    groupsService.getSubjectsByGroupId(groupId).then(
+                        function(data) {
+                            $rootScope.groupSubjects = data;
+                            console.log($rootScope.groupSubjects);
+                        });
+                }, 700);
+            };
 
             /**
              * Localization of multiselect for type of organization

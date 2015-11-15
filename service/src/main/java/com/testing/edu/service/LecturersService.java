@@ -40,6 +40,13 @@ public interface LecturersService {
     void removeLecturer(Long id);
 
     /**
+     * Delete lecturer by his id
+     * @param lecturerId
+     * @param subjectId
+     */
+    void removeSubjectOfLecturer(Long lecturerId, Long subjectId);
+
+    /**
      * Find lecturer by id
      * @param id
      * @return

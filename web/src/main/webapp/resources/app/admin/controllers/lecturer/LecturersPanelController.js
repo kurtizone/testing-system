@@ -209,7 +209,9 @@ angular
                 lecturersService.getListOfSubjects(lecturerId).then(
                     function(data) {
                         $rootScope.lecturerSubjects = data;
+                        $rootScope.lecturerId = lecturerId;
                         console.log($rootScope.lecturerSubjects);
+                        console.log($rootScope.lecturerId);
                         var subjectsDTOModal = $modal
                             .open({
                                 animation : true,

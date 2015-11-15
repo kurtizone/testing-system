@@ -13,6 +13,7 @@
                 <th>{{'HOURS' | translate}}</th>
                 <th>{{'NUMBER_OF_GROUPS' | translate}}</th>
                 <th>{{'NUMBER_OF_TESTS' | translate}}</th>
+                <th>{{'ACTIONS' | translate}}</th>
             </tr>
             </thead>
             <tbody>
@@ -23,6 +24,12 @@
                 <td>{{ subject.hours }}</td>
                 <td>{{ subject.numberOfGroups }}</td>
                 <td>{{ subject.numberOfTests }}</td>
+                <td>
+                    <button type="button" class="btn btn-danger"
+                            ng-click="deleteSubjectOfLecturer($root.groupId, subject.id)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>

@@ -1,10 +1,7 @@
 package com.testing.edu.service.impl;
 
 
-import com.testing.edu.entity.Lecturers;
-import com.testing.edu.entity.Subject;
-import com.testing.edu.entity.Tests;
-import com.testing.edu.entity.User;
+import com.testing.edu.entity.*;
 import com.testing.edu.repository.*;
 import com.testing.edu.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +26,9 @@ public class StatisticServiceImpl implements StatisticService{
     private StudentsRepository studentsRepository;
 
     @Autowired
+    private ResultsRepository resultsRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     /**
@@ -51,6 +51,18 @@ public class StatisticServiceImpl implements StatisticService{
     public Long countSubjectsByLecturerId(Long lecturerId) {
         Lecturers lecturer = lecturersRepository.findOne(lecturerId);
         return (long) lecturer.getSubjects().size();
+    }
+
+    /**
+     * Count Subjects by Lecturer id
+     *
+     * @param groupId
+     * @return amount of subjects
+     */
+    @Override
+    public Long countSubjectsByGroupId(Long groupId) {
+        Groups group = groupsRepository.findOne(groupId);
+        return (long) group.getSubjects().size();
     }
 
     /**
@@ -101,6 +113,33 @@ public class StatisticServiceImpl implements StatisticService{
     }
 
     /**
+     * Count test witch have lecturer
+     *
+     * @param studentId
+     * @return
+     */
+    @Override
+    public Long countTestByStudentId(Long studentId) {
+        Groups groups = studentsRepository.findOne(studentId).getGroups();
+        Long totalSize = 0L;
+        Set<Subject> subjectSet = groups.getSubjects();
+        for (Subject subject : subjectSet){
+            totalSize += subject.getTestses().size();
+        }
+        return totalSize;
+    }
+
+    /**
+     * Count Results
+     *
+     * @return amount of results
+     */
+    @Override
+    public Long countResults() {
+        return resultsRepository.count();
+    }
+
+    /**
      * Count results witch have lecturer
      *
      * @param lecturerId
@@ -116,6 +155,35 @@ public class StatisticServiceImpl implements StatisticService{
             for (Tests tests : testsSet){
                 totalSize += tests.getResults().size();
             }
+        }
+        return totalSize;
+    }
+
+    /**
+     * Count results witch have student
+     *
+     * @param studentId
+     * @return
+     */
+    @Override
+    public Long countResultsByStudentId(Long studentId) {
+        Students student = studentsRepository.findOne(studentId);
+        return (long) student.getResults().size();
+    }
+
+    /**
+     * Count results witch have group
+     *
+     * @param groupId
+     * @return
+     */
+    @Override
+    public Long countResultsByGroupId(Long groupId) {
+        Groups group = groupsRepository.findOne(groupId);
+        Long totalSize = 0l;
+        Set<Students> studentsSet = group.getStudentses();
+        for (Students student : studentsSet){
+            totalSize += student.getResults().size();
         }
         return totalSize;
     }

@@ -158,6 +158,25 @@ public class LecturersController {
     }
 
     /**
+     * Delete subject
+     * @param lecturerId Long id of lecturer
+     * @param subjectId Long id of subject
+     * @return a response body with http status {@literal OK} if lecturer
+     * successfully edited or else http status {@literal CONFLICT}
+     */
+    @RequestMapping(value = "delete/subject/{lecturerId}/{subjectId}", method = RequestMethod.DELETE)
+    public ResponseEntity removeSubjectOfLecturer(@PathVariable Long lecturerId, @PathVariable Long subjectId) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        try {
+            lecturersService.removeSubjectOfLecturer(lecturerId, subjectId);
+        } catch (Exception e) {
+            logger.error("Got exeption while remove lecturer ",e);
+            httpStatus = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity(httpStatus);
+    }
+
+    /**
      * Get subject with id
      * @param id Integer id of subject
      * @return subjectDTO

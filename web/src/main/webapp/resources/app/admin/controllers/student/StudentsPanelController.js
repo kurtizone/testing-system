@@ -24,8 +24,6 @@ angular
             $scope.setTypeDataLanguage();
 
             $scope.clearAll = function () {
-                $scope.selectedAcademicStatus.name = null;
-                $scope.selectedDegree.name = null;
                 $scope.tableParams.filter({});
             };
 
@@ -35,7 +33,7 @@ angular
 
             $scope.tableParams = new ngTableParams({
                 page: 1,
-                count: 5,
+                count: 10,
                 sorting: {
                     id: 'desc'
                 }

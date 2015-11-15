@@ -225,6 +225,7 @@ angular
             $scope.openListOfStudents = function (groupId) {
                 groupsService.getStudentsByGroupId(groupId).then(
                     function (data) {
+                        $rootScope.groupId = groupId;
                         $rootScope.groupStudents = data;
                         console.log($rootScope.groupStudents);
                         var subjectsDTOModal = $modal

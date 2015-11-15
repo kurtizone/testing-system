@@ -59,5 +59,5 @@ public interface TestsService {
      */
     ListToPageTransformer<Tests> getTestsBySearchAndPagination(int pageNumber, int itemsPerPage,
                                                                    Map<String, String> searchKeys,
-                                                                   String sortCriteria, String sortOrder, Lecturers lecturer);
+                                                                   String sortCriteria, String sortOrder);
 }

@@ -171,6 +171,25 @@ public class GroupsController {
                 )).collect(Collectors.toList());
     }
 
+    /**
+     * Delete subject
+     * @param groupId Long id of group
+     * @param subjectId Long id of subject
+     * @return a response body with http status {@literal OK} if group
+     * successfully edited or else http status {@literal CONFLICT}
+     */
+    @RequestMapping(value = "delete/subject/{groupId}/{subjectId}", method = RequestMethod.DELETE)
+    public ResponseEntity removeSubjectOfLecturer(@PathVariable Long groupId, @PathVariable Long subjectId) {
+        HttpStatus httpStatus = HttpStatus.OK;
+        try {
+            groupsService.removeSubjectOfGroup(groupId, subjectId);
+        } catch (Exception e) {
+            logger.error("Got exeption while remove lecturer ",e);
+            httpStatus = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity(httpStatus);
+    }
+
 
 
     /**

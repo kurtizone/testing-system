@@ -6,7 +6,8 @@ angular
                 subjects: 0,
                 lecturers: 0,
                 groups: 0,
-                students: 0
+                students: 0,
+                results: 0
             };
             statisticService.subjects().then(function (data) {
                 $scope.statistics.subjects = data.count;
@@ -19,5 +20,8 @@ angular
             });
             statisticService.students().then(function (data) {
                 $scope.statistics.students = data.count;
+            });
+            statisticService.results().then(function (data) {
+                $scope.statistics.results = data.count;
             });
     }]);
