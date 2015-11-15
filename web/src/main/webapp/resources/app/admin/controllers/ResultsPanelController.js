@@ -39,6 +39,7 @@ angular
             ];
 
             $scope.clearAll = function () {
+                $scope.selectedTestType.name = null;
                 $scope.tableParams.filter({});
             };
 
@@ -59,6 +60,13 @@ angular
 
                     var sortCriteria = Object.keys(params.sorting())[0];
                     var sortOrder = params.sorting()[sortCriteria];
+
+                    if ($scope.selectedTestType.name != null) {
+                        params.filter().testType = $scope.selectedTestType.name.id;
+                    }
+                    else {
+                        params.filter().testType = null; //case when the filter is cleared with a button on the select
+                    }
 
                     resultsService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
                         .success(function (result) {
