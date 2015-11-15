@@ -34,6 +34,16 @@ public class ResultServiceImpl implements ResultService {
     }
 
     /**
+     * Delete result by his id
+     *
+     * @param id
+     */
+    @Override
+    public void removeResult(Long id) {
+        resultsRepository.delete(id);
+    }
+
+    /**
      * Service for building page by SortCriteria, SortOrder and Searching data
      *
      * @param pageNumber

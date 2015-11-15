@@ -17,6 +17,12 @@ public interface ResultService {
     Result findById(Long id);
 
     /**
+     * Delete result by his id
+     * @param id
+     */
+    void removeResult(Long id);
+
+    /**
      * Service for building page by SortCriteria, SortOrder and Searching data
      * @param pageNumber
      * @param itemsPerPage
