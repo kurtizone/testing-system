@@ -1,12 +1,17 @@
 package com.testing.edu.service.impl;
 
 
+import com.testing.edu.entity.Lecturers;
+import com.testing.edu.entity.Subject;
+import com.testing.edu.entity.Tests;
 import com.testing.edu.entity.User;
 import com.testing.edu.repository.*;
 import com.testing.edu.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 @Service
 public class StatisticServiceImpl implements StatisticService{
@@ -37,6 +42,18 @@ public class StatisticServiceImpl implements StatisticService{
     }
 
     /**
+     * Count Subjects by Lecturer id
+     *
+     * @param lecturerId
+     * @return amount of subjects
+     */
+    @Override
+    public Long countSubjectsByLecturerId(Long lecturerId) {
+        Lecturers lecturer = lecturersRepository.findOne(lecturerId);
+        return (long) lecturer.getSubjects().size();
+    }
+
+    /**
      * Count Lecturers
      *
      * @return amount of lecturers
@@ -64,6 +81,43 @@ public class StatisticServiceImpl implements StatisticService{
     @Override
     public Long countStudents() {
         return studentsRepository.count();
+    }
+
+    /**
+     * Count test witch have lecturer
+     *
+     * @param lecturerId
+     * @return
+     */
+    @Override
+    public Long countTestByLecturerId(Long lecturerId) {
+        Lecturers lecturer = lecturersRepository.findOne(lecturerId);
+        Long totalSize = 0l;
+        Set<Subject> subjectSet = lecturer.getSubjects();
+        for (Subject subject : subjectSet){
+            totalSize += subject.getTestses().size();
+        }
+        return totalSize;
+    }
+
+    /**
+     * Count results witch have lecturer
+     *
+     * @param lecturerId
+     * @return
+     */
+    @Override
+    public Long countResultsByLecturerId(Long lecturerId) {
+        Lecturers lecturer = lecturersRepository.findOne(lecturerId);
+        Long totalSize = 0l;
+        Set<Subject> subjectSet = lecturer.getSubjects();
+        for (Subject subject : subjectSet){
+            Set<Tests> testsSet = subject.getTestses();
+            for (Tests tests : testsSet){
+                totalSize += tests.getResults().size();
+            }
+        }
+        return totalSize;
     }
 
     /**

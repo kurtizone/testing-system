@@ -9,9 +9,8 @@ angular
         };
         return {
             subjects: function() { return getData('subjects'); },
-            lecturers: function() { return getData('lecturers'); },
-            groups: function() { return getData('groups'); },
-            students: function() {return getData('students'); },
+            tests: function() { return getData('tests'); },
+            results: function() { return getData('results'); },
             employee: function() { return getData('employee'); }
         }
     });

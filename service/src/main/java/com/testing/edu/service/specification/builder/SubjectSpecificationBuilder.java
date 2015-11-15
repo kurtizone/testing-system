@@ -39,7 +39,7 @@ public class SubjectSpecificationBuilder extends SpecificationBuilder<Subject> {
     @Override
     protected List<SearchCriterion> initCriteria() {
         List<SearchCriterion> searchCriteria = new ArrayList<>();
-        searchCriteria.add(new SearchCriterion<>("lecturer", "lecturerses", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.LONG, "id"));
+        searchCriteria.add(new SearchCriterion<>("lecturer", "lecturerses", SearchCriterion.Operator.EQUAL_DISTINCT, SearchCriterion.ValueType.LONG, "id"));
         searchCriteria.add(new SearchCriterion<>(GROUP, "groupses", SearchCriterion.Operator.EQUAL_DISTINCT, SearchCriterion.ValueType.LONG, "id"));
         searchCriteria.add(new SearchCriterion<>(TITLE, "title", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(MULTIPLIER, "multiplier", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.DOUBLE));
