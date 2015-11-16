@@ -115,7 +115,7 @@ public class Tests implements java.io.Serializable {
 		this.avaible = avaible;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests", orphanRemoval = true)
 	public Set<Result> getResults() {
 		return this.results;
 	}
@@ -124,7 +124,7 @@ public class Tests implements java.io.Serializable {
 		this.results = results;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests", orphanRemoval = true)
 	public Set<Questions> getQuestionses() {
 		return this.questionses;
 	}

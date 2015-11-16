@@ -2,9 +2,7 @@ package com.testing.edu.controller.student;
 
 
 import com.testing.edu.dto.PageDTO;
-import com.testing.edu.dto.admin.ResultDTO;
-import com.testing.edu.dto.admin.SubjectDTO;
-import com.testing.edu.dto.admin.TestDTO;
+import com.testing.edu.dto.admin.*;
 import com.testing.edu.entity.*;
 import com.testing.edu.service.ResultService;
 import com.testing.edu.service.StatisticService;
@@ -59,6 +57,33 @@ public class StudentTestsController {
                 test.getSubject().getId()
         );
         return testDTO;
+    }
+
+    @RequestMapping(value = "get/questions/{id}")
+    public TestDTO getTestWithQuestions(@PathVariable("id") Long id) {
+        Tests test = testsService.findById(id);
+        List<QuestionDTO> listQuestAns = new ArrayList<>();
+        for (Questions questions : test.getQuestionses()){
+            listQuestAns.add(new QuestionDTO(
+                    questions.getId(),
+                    questions.getText(),
+                    questions.getQuestionType().name(),
+                    questions.getAnswerses().stream()
+                            .map(answers -> new AnswerDTO(answers.getId(), answers.getText(), answers.getGrade()))
+                            .collect(Collectors.toList())
+            ));
+        }
+        TestDTO testDTO = new TestDTO(
+                test.getId(),
+                test.getTitle(),
+                test.getType().name(),
+                test.getSubject().getTitle(),
+                test.getMaxGrade(),
+                test.getAvaible(),
+                test.getSubject().getId(),
+                listQuestAns);
+        return testDTO;
+
     }
 
 

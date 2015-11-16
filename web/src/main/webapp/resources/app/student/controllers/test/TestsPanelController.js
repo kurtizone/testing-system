@@ -133,6 +133,16 @@ angular
                 return false;
             };
 
+            $scope.getTestById = function(testId) {
+                $scope.testData = [];
+                testsService.getTestIdWithQuestions(testId)
+                    .then(function(testData) {
+                        $scope.testData = testData;
+                        console.log(testData);
+                        console.log($scope.testData);
+                    });
+            };
+
 
             /**
              * Opens modal window for editing category of counter.

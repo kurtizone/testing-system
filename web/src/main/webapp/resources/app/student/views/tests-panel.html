@@ -1,5 +1,5 @@
 <div id="page-wrapper" ng-controller="TestsPanelController">
-    <div id="table-tests">
+    <div id="table-tests" ng-show="testData.listQuestAns === undefined">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <h1 class="page-header">{{ 'TESTS' | translate }}</h1>
@@ -43,7 +43,7 @@
                             <td data-title="'ACTIONS' | translate" class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary"
-                                            ng-click="openEditTestModal(test.id)">
+                                            ng-click="getTestById(test.id)">
                                         <span class="glyphicon glyphicon-pencil"></span> {{'PASS_TEST' | translate}}
                                     </button>
                                 </div>
@@ -111,6 +111,48 @@
                     </ui-select>
                 </script>
             </div>
+        </div>
+    </div>
+    <div id="pass-tests" ng-hide="testData.listQuestAns === undefined">
+        <div class="row" ng-repeat="question in testData.listQuestAns">
+            <div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"><p></p></div>
+            <div class="panel panel-primary panel-questions col-lg-8 col-md-8 col-sm-10 col-xs-12">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>{{'QUESTION' | translate}} №{{$index+1}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <label class="control-label col-md-12">{{question.text}}</label>
+                    </div>
+                    <p></p>
+
+                    <p></p>
+
+                    <div class="row" ng-show="question.questionType === 'MULTI'">
+                        <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
+                               ng-repeat="answer in question.answerDTOList">
+                            <input type="checkbox" checklist-model="selectedAnswers"
+                                   checklist-value="answer.text">
+                            {{answer.text}}
+                        </label>
+                    </div>
+                    <div class="row" ng-show="question.questionType === 'ONE'">
+                        <div class="input-group">
+                            <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
+                                   ng-repeat="answer in question.answerDTOList">
+                                <input type="radio" ng-model="selectedAnswer" value="{{answer.text}}"
+                                       name="{{question.id}}">
+                                {{answer.text}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"><p></p></div>
         </div>
     </div>
 </div>

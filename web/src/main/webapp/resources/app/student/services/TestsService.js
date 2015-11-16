@@ -11,6 +11,12 @@ angular
                     return result.data;
                 });
             },
+            getTestIdWithQuestions: function (id) {
+                var url = '/student/tests/get/questions/' + id;
+                return $http.get(url).then(function (result) {
+                    return result.data;
+                });
+            },
             editTest: function (formData, id) {
                 var url = '/student/tests/edit/' + id;
                 return $http.post(url, formData)

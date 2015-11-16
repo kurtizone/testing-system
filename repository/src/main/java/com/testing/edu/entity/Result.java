@@ -56,7 +56,7 @@ public class Result implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tests_id", nullable = false)
+	@JoinColumn(name = "tests_id", nullable = true)
 	public Tests getTests() {
 		return this.tests;
 	}
