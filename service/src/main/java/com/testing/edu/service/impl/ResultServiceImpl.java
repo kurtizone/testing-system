@@ -66,7 +66,7 @@ public class ResultServiceImpl implements ResultService {
         ListToPageTransformer<Result> result = new ListToPageTransformer<>();
         result.setContent(results);
         result.setTotalItems(resultsRepository.count(searchSpec));
-        
+
         return result;
     }
 }

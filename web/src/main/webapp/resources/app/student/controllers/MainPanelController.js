@@ -1,7 +1,7 @@
 angular
     .module('studentModule')
-    .controller('MainPanelController', ['$scope', 'StatisticService',
-        function ($scope, statisticService) {
+    .controller('MainPanelController', ['$scope', 'StatisticService', '$timeout',
+        function ($scope, statisticService, $timeout) {
             $scope.statistics = {
                 subjects: 0,
                 results: 0,
@@ -20,4 +20,10 @@ angular
             statisticService.tests().then(function (data) {
                 $scope.statistics.tests = data.count;
             });
-    }]);
+
+            $scope.countdownVal = 60;
+            $scope.$on('timer-stopped', function (event, data){
+                console.log('Timer Stopped - data = ', data);
+            });
+
+        }]);
