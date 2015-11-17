@@ -43,7 +43,7 @@
                             </td>
                             <td data-title="'ACTIONS' | translate" class="text-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary" ng-disabled="test.avaible === false"
+                                    <button type="button" ng-hide="test.hasResult === true" class="btn btn-primary" ng-disabled="test.avaible === false"
                                             ng-click="getTestById(test.id)">
                                         <span class="glyphicon glyphicon-pencil"></span> {{'PASS_TEST' | translate}}
                                     </button>

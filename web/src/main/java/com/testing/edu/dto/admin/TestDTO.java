@@ -19,6 +19,7 @@ public class TestDTO {
     private Boolean avaible;
     private Long subjectId;
     private List<QuestionDTO> listQuestAns;
+    private Boolean hasResult;
 
     public TestDTO() {
 
@@ -31,6 +32,11 @@ public class TestDTO {
         this.subject = subject;
         this.maxGrade = maxGrade;
         this.avaible = avaible;
+    }
+
+    public TestDTO(Long id, String title, String type, String subject, Integer maxGrade, Boolean avaible, Boolean hasResult) {
+        this(id, title, type, subject, maxGrade, avaible);
+        this.hasResult = hasResult;
     }
 
     public TestDTO(Long id, String title, String type, String subject, Integer maxGrade, Boolean avaible, Long subjectId) {

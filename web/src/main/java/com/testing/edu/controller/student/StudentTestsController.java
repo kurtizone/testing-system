@@ -143,7 +143,7 @@ public class StudentTestsController {
                 sortCriteria,
                 sortOrder
         );
-        List<TestDTO> content = toTestDtoFromList(queryResult.getContent());
+        List<TestDTO> content = toTestDtoFromList(queryResult.getContent(), new ArrayList<>(student.getResults()));
         return new PageDTO(queryResult.getTotalItems(), content);
     }
 
@@ -159,16 +159,24 @@ public class StudentTestsController {
         return pageTestByStudentWithSearch(pageNumber, itemsPerPage, null, null, null, user);
     }
 
-    public static List<TestDTO> toTestDtoFromList(List<Tests> list){
+    public static List<TestDTO> toTestDtoFromList(List<Tests> listTests, List<Result> listResults){
+
         List<TestDTO> resultList = new ArrayList<>();
-        for (Tests test : list) {
+        for (Tests test : listTests) {
+            Boolean hasResult = false;
+            for (Result result : listResults){
+                if(result.getTests().equals(test)){
+                    hasResult = true;
+                }
+            }
             resultList.add(new TestDTO(
                     test.getId(),
                     test.getTitle(),
                     test.getType().name(),
                     test.getSubject().getTitle(),
                     test.getMaxGrade(),
-                    test.getAvaible()
+                    test.getAvaible(),
+                    hasResult
             ));
         }
         return resultList;
