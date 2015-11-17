@@ -26,6 +26,8 @@ angular
             $scope.selectedAvaible = {
                 name: null
             }
+            $scope.questions=[{}];
+
 
             $scope.typeData = [
                 {
@@ -55,8 +57,6 @@ angular
                 },
 
             ];
-
-
 
 
             $scope.setTypeDataLanguage = function () {
@@ -133,34 +133,79 @@ angular
                 return false;
             };
 
-            $scope.getTestById = function(testId) {
+            $scope.getTestById = function (testId) {
                 $scope.testData = [];
                 testsService.getTestIdWithQuestions(testId)
-                    .then(function(testData) {
+                    .then(function (testData) {
                         $scope.testData = testData;
                         console.log(testData);
                         console.log($scope.testData);
                     });
+                $timeout(function() {
+                    angular.forEach($scope.testData.listQuestAns, function (question) {
+                        $scope.answers=[{}];
+                        angular.forEach(question.answerDTOList, function (answer) {
+                            $scope.answers.push({id: answer.id,'text': answer.text, 'correct': false});
+                        });
+                        $scope.answers.shift();
+                        $scope.questions.push({questionId: question.id, answerList: $scope.answers});
+
+                    });
+                    $scope.questions.shift();
+                    console.log($scope.questions);
+                }, 2000);
+
+
             };
 
+
+            $scope.setChoiceForQuestion = function (array, choice) {
+                console.log(array);
+                console.log(choice);
+                angular.forEach(array, function (choice) {
+                    choice.correct = false;
+                });
+
+                choice.correct = true;
+            };
+
+            $scope.SubmitTest = function () {
+                    console.log($scope.testData);
+                    saveResult($scope.testData);
+            };
+
+            /**
+             * Saves new organization from the form in database.
+             * If everything is ok then resets the organization
+             * form and updates table with organizations.
+             */
+            function saveResult(data) {
+                console.log(data);
+                testsService.saveResult(data)
+                    .then(function (data) {
+                        if (data == 201) {
+                            $scope.testData = undefined;
+
+                        }
+                    });
+            }
 
             /**
              * Opens modal window for editing category of counter.
              */
-            $scope.openEditTestModal = function(
-                testId) {
+            $scope.openEditTestModal = function (testId) {
                 $rootScope.testId = testId;
                 testsService.getTestById(
                     $rootScope.testId).then(
-                    function(data) {
+                    function (data) {
                         $rootScope.test = data;
                         console.log($rootScope.test);
 
                         var testDTOModal = $modal
                             .open({
-                                animation : true,
-                                controller : 'TestEditModalController',
-                                templateUrl : '/resources/app/lecturer/views/modals/tests/test-edit-modal.html',
+                                animation: true,
+                                controller: 'TestEditModalController',
+                                templateUrl: '/resources/app/lecturer/views/modals/tests/test-edit-modal.html',
                                 size: 'md',
                                 resolve: {
                                     subjects: function () {

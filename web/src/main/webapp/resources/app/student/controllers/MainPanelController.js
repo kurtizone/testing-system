@@ -25,5 +25,12 @@ angular
             $scope.$on('timer-stopped', function (event, data){
                 console.log('Timer Stopped - data = ', data);
             });
+            $timeout(function() {
+                $scope.startTimer();
+                console.log('Timer Started');
+            }, 5000);
+            $scope.startTimer = function (){
+                $scope.$broadcast('timer-start');
+            };
 
         }]);

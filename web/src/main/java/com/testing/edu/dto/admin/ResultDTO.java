@@ -1,5 +1,6 @@
 package com.testing.edu.dto.admin;
 
+import com.testing.edu.entity.Result;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,14 @@ public class ResultDTO {
     private Integer maxGrade;
 
     public ResultDTO(){}
+
+    public ResultDTO(String studentLastname, String studentFirstname, String studentMiddlename, Double mark, Integer maxGrade){
+        this.studentLastname = studentLastname;
+        this.studentFirstname = studentFirstname;
+        this.studentMiddlename = studentMiddlename;
+        this.mark = mark;
+        this.maxGrade = maxGrade;
+    }
 
     public ResultDTO(String studentLastname, String studentFirstname, String studentMiddlename,
                      String groupTitle, String subjectTitle, String testTitle, String testType, Double mark, Integer maxGrade) {

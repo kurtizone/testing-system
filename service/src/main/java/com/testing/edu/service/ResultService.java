@@ -1,13 +1,20 @@
 package com.testing.edu.service;
 
 
-import com.testing.edu.entity.Result;
-import com.testing.edu.entity.Students;
+import com.testing.edu.entity.*;
 import com.testing.edu.service.utils.ListToPageTransformer;
 
 import java.util.Map;
 
 public interface ResultService {
+
+
+    /**
+     * Save result with params
+     * @param result
+     */
+    void saveResult(Result result);
+
 
     /**
      * Find result by id

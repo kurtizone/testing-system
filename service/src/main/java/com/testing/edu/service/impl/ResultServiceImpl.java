@@ -1,7 +1,9 @@
 package com.testing.edu.service.impl;
 
+import com.testing.edu.entity.Groups;
 import com.testing.edu.entity.Result;
 import com.testing.edu.entity.Students;
+import com.testing.edu.entity.Tests;
 import com.testing.edu.repository.ResultsRepository;
 import com.testing.edu.service.ResultService;
 import com.testing.edu.service.specification.builder.ResultSpecificationBuilder;
@@ -23,6 +25,16 @@ public class ResultServiceImpl implements ResultService {
     private ResultsRepository resultsRepository;
 
     /**
+     * Save result with params
+     * @param result
+     */
+    @Override
+    @Transactional
+    public void saveResult(Result result) {
+        resultsRepository.save(result);
+    }
+
+    /**
      * Find result by id
      * @param id
      * @return
@@ -39,6 +51,7 @@ public class ResultServiceImpl implements ResultService {
      * @param id
      */
     @Override
+    @Transactional
     public void removeResult(Long id) {
         resultsRepository.delete(id);
     }

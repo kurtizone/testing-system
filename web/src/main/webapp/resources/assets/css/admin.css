@@ -7,8 +7,12 @@ body {
     min-height: 20px;
 }
 
+#pass-tests button {
+    margin-bottom: 30px;
+}
+
 .banner {
-    margin-left: 10%;
+    margin-left: 4%;
     padding-bottom: 12px;
     padding-right: 12px;
     padding-left: 18px;
@@ -19,8 +23,25 @@ body {
     width: 170px;
     background: url("../images/plain.jpg");
     z-index: 9999;
-    border-radius: 15px;
-    border: 2px solid rgba(88, 110, 171, 0.36);
+    border-radius: 20px;
+    border: 2px solid rgba(51, 122, 183, 0.69);
+}
+
+.jumbotron {
+    margin: 20px;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    border: 3px solid rgba(51, 122, 183, 0.69);
+}
+
+.jumbotron p{
+    font-size: 1.3em;
+    margin-bottom: 2px;
+}
+
+p.name-field {
+    font-weight: bold;
 }
 
 .modal-padding {

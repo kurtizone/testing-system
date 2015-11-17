@@ -5,6 +5,13 @@ angular
             getPage: function (pageNumber, itemsPerPage, search, sortCriteria, sortOrder) {
                 return getDataWithParams('/student/tests/' + pageNumber + '/' + itemsPerPage + '/' + sortCriteria + '/' + sortOrder, search);
             },
+            saveResult: function (formData) {
+                return $http.post("/student/tests/save/result", formData)
+                    .then(function (result) {
+                        return result.status;
+
+                    });
+            },
             getTestById: function (id) {
                 var url = '/student/tests/get/' + id;
                 return $http.get(url).then(function (result) {

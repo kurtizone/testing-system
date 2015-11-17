@@ -29,4 +29,10 @@ public class AnswerDTO {
         this.text = text;
         this.correct = correct;
     }
+
+    public AnswerDTO(Long id, String text, Boolean correct) {
+        this.id = id;
+        this.text = text;
+        this.correct = correct;
+    }
 }

@@ -90,11 +90,6 @@ angular
             $scope.removeChoice = function(id) {
                 var lastItem = $scope.choices.length-1;
                 $scope.choices.splice(lastItem);
-                /*if(id !== null) {
-                    fillTestsService.deleteAnswer(id).then(function () {
-                        toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_ANSWER'));
-                    });
-                }*/
             };
 
             /**
@@ -119,7 +114,7 @@ angular
                 angular.forEach($scope.choices, function (choice) {
                     $scope.answerDTOList.push({id: choice.id,'text': choice.text, 'correct': choice.correct});
                 });
-                $scope.answerDTOList.shift();
+
             }
 
             /**

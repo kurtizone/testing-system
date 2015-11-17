@@ -16,6 +16,7 @@
         </div>
 
         <p></p>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
@@ -24,11 +25,11 @@
                         <tbody>
                         <tr ng-repeat="test in $data">
                             <td data-title="'TITLE' | translate" sortable="'title'"
-                                filter="{ 'title': 'text' }" >
+                                filter="{ 'title': 'text' }">
                                 {{ test.title }}
                             </td>
                             <td data-title="'SUBJECT' | translate" sortable="'subject'"
-                                filter="{ 'subject': 'text' }" >
+                                filter="{ 'subject': 'text' }">
                                 {{ test.subject }}
                             </td>
                             <td data-title="'TEST_TYPE' | translate" sortable="'type'"
@@ -114,6 +115,34 @@
         </div>
     </div>
     <div id="pass-tests" ng-hide="testData.listQuestAns === undefined">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <div class="jumbotron">
+                    <div class="container">
+
+                        <p class="name-field">{{'TITLE_SUBJECT' | translate}}</p>
+
+                        <p>{{testData.subject}}</p>
+
+                        <p class="name-field">{{'TEST_TITLE' | translate}}</p>
+
+                        <p>{{testData.title}}</p>
+
+                        <p class="name-field">{{'TEST_TYPE' | translate}}</p>
+
+                        <p>{{testData.type | translate}}</p>
+
+                        <p class="name-field">{{'MAX_GRADE' | translate}}</p>
+
+                        <p>{{testData.maxGrade}}</p>
+
+                        <p class="name-field">{{'TEST_TIME' | translate}}</p>
+
+                        <p>{{testData.maxGrade}} {{'MINUTES' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row" ng-repeat="question in testData.listQuestAns">
             <div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"><p></p></div>
             <div class="panel panel-primary panel-questions col-lg-8 col-md-8 col-sm-10 col-xs-12">
@@ -135,8 +164,8 @@
                     <div class="row" ng-show="question.questionType === 'MULTI'">
                         <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
                                ng-repeat="answer in question.answerDTOList">
-                            <input type="checkbox" checklist-model="selectedAnswers"
-                                   checklist-value="answer.text">
+                            <input type="checkbox" ng-model="answer.correct" ng-checked="answer.correct"
+                                   value="answer.correct" ng-init="answer.correct = false">
                             {{answer.text}}
                         </label>
                     </div>
@@ -144,8 +173,9 @@
                         <div class="input-group">
                             <label class="col-md-10 col-lg-10 col-sm-10 col-xs-10 pull-left answer-margin"
                                    ng-repeat="answer in question.answerDTOList">
-                                <input type="radio" ng-model="selectedAnswer" value="{{answer.text}}"
-                                       name="{{question.id}}">
+                                <input type="radio" model="answer.correct" value="true"
+                                       ng-click="setChoiceForQuestion(question.answerDTOList, answer)"
+                                       name="{{question.id}}" ng-init="answer.correct = false">
                                 {{answer.text}}
                             </label>
                         </div>
@@ -153,6 +183,11 @@
                 </div>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"><p></p></div>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-success col-lg-4 col-lg-offset-4 col-xs-12 col-sm-12" ng-click="SubmitTest()">
+                {{'END_TEST' | translate}}
+            </button>
         </div>
     </div>
 </div>
