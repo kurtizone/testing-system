@@ -20,7 +20,11 @@ require
 				angularAnimate : "../../assets/bower_components/angular-animate/angular-animate.min",
 				angularJsToaster : "../../assets/bower_components/angularjs-toaster/toaster.min",
 				studentModule : 'studentModule',
-				checklistModel : '../../assets/bower_components/checklist-model/checklist-model'
+				checklistModel : '../../assets/bower_components/checklist-model/checklist-model',
+				'angular-timer' : '../../assets/bower_components/angular-timer/dist/angular-timer.min',
+				'humanize-duration' : '../../assets/bower_components/humanize-duration/humanize-duration',
+				'moment' : '../../assets/bower_components/momentjs/min/moment.min',
+				locales : '../../assets/bower_components/momentjs/min/locales.min'
 			},
 			shim : {
 				angular : {
@@ -89,6 +93,18 @@ require
 					deps:['angular', 'angularAnimate'],
 					exports: 'angularJsToaster'
 				},
+				locales: {
+					deps:['angular']
+				},
+				'moment':{
+					deps:['angular']
+				},
+				'humanize-duration': {
+					deps:['angular']
+				},
+				'angular-timer':{
+					deps: ['angular', 'humanize-duration', 'moment']
+				},
 
 				studentModule : {
 
@@ -98,7 +114,7 @@ require
 							'angularTranslateStorageLocal',
 							'angularTranslateLoaderStaticFiles',
 							'angularUIRouter', 'showErrors', 'ngTable',
-							'chosen','angularLoadingBars', 'angularUISelect', 'ngSanitize', 'checklistModel','angularAnimate','angularJsToaster', 'semanticUI']
+							'chosen','angularLoadingBars', 'angularUISelect', 'ngSanitize', 'checklistModel','angularAnimate','angularJsToaster', 'semanticUI', 'angular-timer']
 				}
 			}
 		});
