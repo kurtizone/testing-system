@@ -60,13 +60,13 @@ public class ResultServiceImpl implements ResultService {
         Pageable pageSpec = specificationBuilder.constructPageSpecification(pageNumber - 1, itemsPerPage, sortCriteria, sortOrder);
         Specification<Result> searchSpec = specificationBuilder.buildPredicate();
 
-        int totalItems = resultsRepository.findAll(searchSpec).size();
         Page<Result> resultsPage = resultsRepository.findAll(searchSpec, pageSpec);
         List<Result> results = resultsPage.getContent();
 
         ListToPageTransformer<Result> result = new ListToPageTransformer<>();
         result.setContent(results);
-        result.setTotalItems((long) totalItems);
+        result.setTotalItems(resultsRepository.count(searchSpec));
+        
         return result;
     }
 }
