@@ -91,6 +91,7 @@ angular
                         subject: $scope.defaultData.subjectTitle.title,
                         type: $scope.defaultData.type.id,
                         maxGrade: $rootScope.test.maxGrade,
+                        time: $rootScope.test.time,
                         avaible: $scope.defaultData.avaible.id
                     };
                     saveTest(testForm);

@@ -19,6 +19,7 @@ angular
             $scope.itemsPerPage = 5;
             $scope.pageContent = [];
 
+            $scope.$broadcast('timer-stop');
             $scope.clearAll = function () {
                 $scope.tableParams.filter({});
             };

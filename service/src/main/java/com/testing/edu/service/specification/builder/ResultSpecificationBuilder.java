@@ -30,9 +30,11 @@ public class ResultSpecificationBuilder extends SpecificationBuilder<Result>{
     public static final String STUDENT_MIDDLENAME = "studentMiddlename";
     public static final String STUDENT_JOIN_GROUP_JOIN_TITLE = "students.groups.title";
     public static final String GROUP_TITLE = "groupTitle";
-    public static final String TEST_JOIN_SUBJECT_JOIN_TITLE = "tests.subject.title";
+    public static final String TEST_JOIN_SUBJECT_JOIN_LECTURER_JOIN_ID = "tests.subject.lecturerses.id";
+    public static final String LECTURER = "lecturer";
     public static final String SUBJECT_TITLE = "subjectTitle";
     public static final String TEST_TITLE = "testTitle";
+    public static final String TEST_JOIN_SUBJECT_JOIN_TITLE = "tests.subject.title";
     public static final String TEST_JOIN_TEST_TYPE = "tests.type";
     public static final String TEST_TYPE = "testType";
     public static final String MARK = "mark";
@@ -51,6 +53,7 @@ public class ResultSpecificationBuilder extends SpecificationBuilder<Result>{
         List<SearchCriterion> searchCriteria = new ArrayList<>();
         searchCriteria.add(new SearchCriterion<>(STUDENT, "students", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.LONG, "id"));
         searchCriteria.add(new SearchCriterion<>(STUDENT_GROUP, "students", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.LONG, "groups", "id"));
+        searchCriteria.add(new SearchCriterion<>(LECTURER, "tests", SearchCriterion.Operator.EQUAL_DISTINCT, SearchCriterion.ValueType.LONG, "subject", "lecturerses", "id"));
         searchCriteria.add(new SearchCriterion<>(STUDENT_FIRSTNAME, "students", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "firstName"));
         searchCriteria.add(new SearchCriterion<>(STUDENT_LASTNAME, "students", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "lastName"));
         searchCriteria.add(new SearchCriterion<>(STUDENT_MIDDLENAME, "students", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "middleName"));

@@ -16,10 +16,11 @@ public interface TestsService {
      * @param title
      * @param type
      * @param maxGrade
+     * @param time
      * @param avaible
      * @param subjectId
      */
-    void addTest(String title, String type, Integer maxGrade, Boolean avaible, Long subjectId);
+    void addTest(String title, String type, Integer maxGrade, Integer time, Boolean avaible, Long subjectId);
 
     /**
      * Edit test with params
@@ -27,10 +28,11 @@ public interface TestsService {
      * @param title
      * @param type
      * @param maxGrade
+     * @param time
      * @param avaible
      * @param subjectId
      */
-    void editTest(Long id, String title, String type, Integer maxGrade,
+    void editTest(Long id, String title, String type, Integer maxGrade, Integer time,
                   Boolean avaible, Long subjectId);
 
     /**

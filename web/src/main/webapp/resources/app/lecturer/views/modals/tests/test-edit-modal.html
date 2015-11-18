@@ -105,6 +105,30 @@
                 </p>
             </div>
         </div>
+        <div class="form-group row row-fields" show-errors>
+            <label class="control-label col-md-4" for="time">
+                {{'TEST_TIME' |translate }}
+            </label>
+
+            <div class="col-md-8">
+                <input id="time" name="time" class="form-control"
+                       type="number" ng-model="$root.test.time"
+                       min="1" max="300" required>
+							<span class="form-control-feedback glyphicon
+						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                <p class="help-block" ng-if="editTestForm.time.$error.required">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'REQUIRED' | translate}}
+                </p>
+
+                <p class="help-block" ng-if="editTestForm.time.$error.min || editTestForm.time.$error.max">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                </p>
+            </div>
+        </div>
+
 
         <div class="form-group row row-fields" show-errors>
             <label for="avaible" class="control-label col-md-4">

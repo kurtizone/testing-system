@@ -35,16 +35,18 @@ public class TestsServiceImpl implements TestsService {
      * @param title
      * @param type
      * @param maxGrade
+     * @param time
      * @param avaible
      * @param subjectId
      */
     @Override
     @Transactional
-    public void addTest(String title, String type, Integer maxGrade, Boolean avaible, Long subjectId) {
+    public void addTest(String title, String type, Integer maxGrade, Integer time, Boolean avaible, Long subjectId) {
         Tests test = new Tests(
                 title,
                 TestType.valueOf(type),
                 maxGrade,
+                time,
                 avaible,
                 subjectRepository.findOne(subjectId)
         );
@@ -58,17 +60,19 @@ public class TestsServiceImpl implements TestsService {
      * @param title
      * @param type
      * @param maxGrade
+     * @param time
      * @param avaible
      * @param subjectId
      */
     @Override
     @Transactional
-    public void editTest(Long id, String title, String type, Integer maxGrade, Boolean avaible, Long subjectId) {
+    public void editTest(Long id, String title, String type, Integer maxGrade, Integer time, Boolean avaible, Long subjectId) {
         Tests test = testsRepository.findOne(id);
 
         test.setTitle(title);
         test.setType(TestType.valueOf(type));
         test.setMaxGrade(maxGrade);
+        test.setTime(time);
         test.setAvaible(avaible);
         test.setSubject(subjectRepository.findOne(subjectId));
 

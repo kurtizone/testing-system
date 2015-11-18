@@ -8,7 +8,7 @@ angular
             saveResult: function (formData) {
                 return $http.post("/student/tests/save/result", formData)
                     .then(function (result) {
-                        return result.status;
+                        return result;
 
                     });
             },

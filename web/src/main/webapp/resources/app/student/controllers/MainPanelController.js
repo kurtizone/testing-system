@@ -21,16 +21,6 @@ angular
                 $scope.statistics.tests = data.count;
             });
 
-            $scope.countdownVal = 60;
-            $scope.$on('timer-stopped', function (event, data){
-                console.log('Timer Stopped - data = ', data);
-            });
-            $timeout(function() {
-                $scope.startTimer();
-                console.log('Timer Started');
-            }, 5000);
-            $scope.startTimer = function (){
-                $scope.$broadcast('timer-start');
-            };
+            $scope.$broadcast('timer-stop');
 
         }]);

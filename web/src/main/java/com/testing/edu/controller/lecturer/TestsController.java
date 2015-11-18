@@ -60,6 +60,7 @@ public class TestsController {
                     testDTO.getTitle(),
                     testDTO.getType(),
                     testDTO.getMaxGrade(),
+                    testDTO.getTime(),
                     testDTO.getAvaible(),
                     testDTO.getSubjectId()
             );
@@ -86,6 +87,7 @@ public class TestsController {
                     testDTO.getTitle(),
                     testDTO.getType(),
                     testDTO.getMaxGrade(),
+                    testDTO.getTime(),
                     testDTO.getAvaible(),
                     testDTO.getSubjectId()
             );
@@ -129,6 +131,7 @@ public class TestsController {
                 test.getType().name(),
                 test.getSubject().getTitle(),
                 test.getMaxGrade(),
+                test.getTime(),
                 test.getAvaible(),
                 test.getSubject().getId()
         );
@@ -192,6 +195,7 @@ public class TestsController {
                     test.getType().name(),
                     test.getSubject().getTitle(),
                     test.getMaxGrade(),
+                    test.getTime(),
                     test.getAvaible()
             ));
         }

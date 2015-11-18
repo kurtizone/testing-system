@@ -66,6 +66,15 @@ public enum TestsSortCriteria implements SortCriteria {
                 return new Sort(Sort.Direction.DESC, TestSpecificationBuilder.AVAIBLE);
             }
         }
-    }
+    },
+    TIME {
+        public Sort getSort(String sortOrder) {
+            if(sortOrder.equalsIgnoreCase("asc")) {
+                return new Sort(Sort.Direction.ASC, TestSpecificationBuilder.TIME);
+            } else {
+                return new Sort(Sort.Direction.DESC, TestSpecificationBuilder.TIME);
+            }
+        }
+    },
 }
 

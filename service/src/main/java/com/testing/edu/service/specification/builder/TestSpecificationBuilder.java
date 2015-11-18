@@ -23,6 +23,7 @@ public class TestSpecificationBuilder extends SpecificationBuilder<Tests> {
     public static final String SUBJECT = "subject";
     public static final String MAXGRADE = "maxGrade";
     public static final String AVAIBLE = "avaible";
+    public static final String TIME = "time";
 
     public TestSpecificationBuilder(Map<String, String> searchValues) {
         super(searchValues);
@@ -43,6 +44,7 @@ public class TestSpecificationBuilder extends SpecificationBuilder<Tests> {
         searchCriteria.add(new SearchCriterion<>(TYPE, "type", SearchCriterion.Operator.EQUAL_BY_ENUM, TestType.class));
         searchCriteria.add(new SearchCriterion<>(MAXGRADE, "maxGrade", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.INTEGER));
         searchCriteria.add(new SearchCriterion<>(AVAIBLE, "avaible", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.BOOLEAN));
+        searchCriteria.add(new SearchCriterion<>(TIME, "time", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.INTEGER));
 
         for (SearchCriterion searchCriterion : searchCriteria) {
             logger.info("-----searchCriteria------ " + searchCriterion);

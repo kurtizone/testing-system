@@ -18,6 +18,8 @@ angular
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
             $scope.pageContent = [];
+            $scope.countdownVal = 0;
+            $scope.showingCounter = undefined;
 
             //for measurement testType
             $scope.selectedType = {
@@ -138,24 +140,11 @@ angular
                 testsService.getTestIdWithQuestions(testId)
                     .then(function (testData) {
                         $scope.testData = testData;
-                        console.log(testData);
-                        console.log($scope.testData);
-                    });
-                $timeout(function() {
-                    angular.forEach($scope.testData.listQuestAns, function (question) {
-                        $scope.answers=[{}];
-                        angular.forEach(question.answerDTOList, function (answer) {
-                            $scope.answers.push({id: answer.id,'text': answer.text, 'correct': false});
-                        });
-                        $scope.answers.shift();
-                        $scope.questions.push({questionId: question.id, answerList: $scope.answers});
-
-                    });
-                    $scope.questions.shift();
-                    console.log($scope.questions);
-                }, 2000);
-
-
+                        $scope.countdownVal = $scope.testData.time * 60;
+                        $scope.$broadcast('timer-set-countdown', $scope.countdownVal);
+                        $scope.$broadcast('timer-start');
+                        $scope.showingCounter = 1;
+                    })
             };
 
 
@@ -170,8 +159,8 @@ angular
             };
 
             $scope.SubmitTest = function () {
-                    console.log($scope.testData);
-                    saveResult($scope.testData);
+                console.log($scope.testData);
+                saveResult($scope.testData);
             };
 
             /**
@@ -183,42 +172,32 @@ angular
                 console.log(data);
                 testsService.saveResult(data)
                     .then(function (data) {
-                        if (data == 201) {
+                        console.log(data);
+                        if (data.status == 201) {
                             $scope.testData = undefined;
-
+                            $scope.showingCounter = undefined;
+                            $rootScope.stopTimer();
+                            $rootScope.onTableHandling();
+                            $timeout(function() {
+                                toaster.pop('success', 'Вітаємо ' + data.data.studentLastname +  ' ' + data.data.studentFirstname +  ' ' + data.data.studentMiddlename +  ', за тест '
+                                    + data.data.testTitle + ',   Ви, отримали ' + data.data.mark + '/' + data.data.maxGrade);
+                            }, 1000);
                         }
                     });
             }
 
-            /**
-             * Opens modal window for editing category of counter.
-             */
-            $scope.openEditTestModal = function (testId) {
-                $rootScope.testId = testId;
-                testsService.getTestById(
-                    $rootScope.testId).then(
-                    function (data) {
-                        $rootScope.test = data;
-                        console.log($rootScope.test);
 
-                        var testDTOModal = $modal
-                            .open({
-                                animation: true,
-                                controller: 'TestEditModalController',
-                                templateUrl: '/resources/app/lecturer/views/modals/tests/test-edit-modal.html',
-                                size: 'md',
-                                resolve: {
-                                    subjects: function () {
-                                        console.log(testsService.findSubjects());
-                                        return testsService.findSubjects();
-                                    }
-                                }
-                            });
-                        testDTOModal.result.then(function () {
-                            toaster.pop('info', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_EDITED_LECTURER'));
-                        });
-                    });
+            $scope.$on('timer-stopped', function (){
+                if($scope.testData !== undefined){
+                    $scope.SubmitTest();
+                }
+            });
 
+            $rootScope.stopTimer = function (){
+                console.log("timer stopped");
+                $scope.$broadcast('timer-stop');
             };
+
+
 
         }]);

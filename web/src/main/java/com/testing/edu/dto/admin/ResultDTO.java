@@ -21,12 +21,13 @@ public class ResultDTO {
 
     public ResultDTO(){}
 
-    public ResultDTO(String studentLastname, String studentFirstname, String studentMiddlename, Double mark, Integer maxGrade){
+    public ResultDTO(String studentLastname, String studentFirstname, String studentMiddlename, Double mark, Integer maxGrade, String testTitle){
         this.studentLastname = studentLastname;
         this.studentFirstname = studentFirstname;
         this.studentMiddlename = studentMiddlename;
         this.mark = mark;
         this.maxGrade = maxGrade;
+        this.testTitle = testTitle;
     }
 
     public ResultDTO(String studentLastname, String studentFirstname, String studentMiddlename,

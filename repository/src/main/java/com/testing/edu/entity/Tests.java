@@ -48,6 +48,11 @@ public class Tests implements java.io.Serializable {
 		this.subject = subject;
 	}
 
+	public Tests(String title, TestType type, Integer maxGrade, Integer time, Boolean avaible, Subject subject) {
+		this(title, type, maxGrade, avaible, subject);
+		this.time = time;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)

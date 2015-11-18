@@ -18,7 +18,7 @@ angular
             $scope.currentPage = 1;
             $scope.itemsPerPage = 5;
             $scope.pageContent = [];
-
+            $scope.$broadcast('timer-stop');
             //for measurement academicStatus
             $scope.selectedTestType= {
                 name: null

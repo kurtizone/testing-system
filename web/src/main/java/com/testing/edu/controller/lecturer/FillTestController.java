@@ -160,6 +160,7 @@ public class FillTestController {
                 test.getType().name(),
                 test.getSubject().getTitle(),
                 test.getMaxGrade(),
+                test.getTime(),
                 test.getAvaible(),
                 test.getSubject().getId(),
                 listQuestAns);

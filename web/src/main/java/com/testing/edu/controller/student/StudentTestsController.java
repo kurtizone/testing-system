@@ -72,10 +72,10 @@ public class StudentTestsController {
             logger.error("Got exeption while add result ", e);
             httpStatus = HttpStatus.CONFLICT;
         }
-        /*return new ResponseEntity(new ResultDTO(result.getStudents().getLastName(), result.getStudents().getFirstName(),
-                result.getStudents().getMiddleName(), result.getMark(), result.getMaxGrade()),
-                httpStatus);*/
-        return new ResponseEntity(httpStatus);
+        return new ResponseEntity(new ResultDTO(result.getStudents().getLastName(), result.getStudents().getFirstName(),
+                result.getStudents().getMiddleName(), result.getMark(), result.getMaxGrade(), test.getTitle()),
+                httpStatus);
+        //return new ResponseEntity(httpStatus);
     }
 
 
@@ -93,6 +93,7 @@ public class StudentTestsController {
                 test.getType().name(),
                 test.getSubject().getTitle(),
                 test.getMaxGrade(),
+                test.getTime(),
                 test.getAvaible(),
                 test.getSubject().getId()
         );
@@ -119,6 +120,7 @@ public class StudentTestsController {
                 test.getType().name(),
                 test.getSubject().getTitle(),
                 test.getMaxGrade(),
+                test.getTime(),
                 test.getAvaible(),
                 test.getSubject().getId(),
                 listQuestAns);
@@ -175,6 +177,7 @@ public class StudentTestsController {
                     test.getType().name(),
                     test.getSubject().getTitle(),
                     test.getMaxGrade(),
+                    test.getTime(),
                     test.getAvaible(),
                     hasResult
             ));
@@ -197,14 +200,22 @@ public class StudentTestsController {
     public static Double countGradeMulti(Questions question, QuestionDTO questionDTO){
         Double mark = 0d;
         Integer countCorrect = 0;
+        Integer countGrade = 0;
         Integer divider = 0;
         for (AnswerDTO answerDTO: questionDTO.getAnswerDTOList()){
             if(answerDTO.getCorrect().equals(true)){
                 countCorrect++;
             } else break;
         }
-        if (countCorrect.equals(question.getAnswerses().size())) {
-            return mark;
+        for (Answers answer : question.getAnswerses()){
+            if(!answer.getGrade().equals(0d)){
+                countGrade++;
+            } else break;
+        }
+        if(countCorrect.equals(question.getAnswerses().size())){
+            if(!countGrade.equals(countCorrect)){
+                return mark;
+            }
         }
         for (Answers answer : question.getAnswerses()){
             for(AnswerDTO answerDTO: questionDTO.getAnswerDTOList()){
