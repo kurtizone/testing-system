@@ -16,6 +16,19 @@ angular.module('welcomeModule')
             },
             getAllGroups: function () {
                 return getData('groups');
+            },
+            saveStudent: function (formData) {
+                return $http.post("/application/users/student/add", formData)
+                    .then(function (result) {
+                        return result.status;
+
+                    });
+            },
+            saveLecturer: function (formData) {
+                return $http.post("/application/users/lecturer/add", formData)
+                    .then(function (result) {
+                        return result.status;
+                    });
             }
         };
 

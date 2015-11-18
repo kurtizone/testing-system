@@ -8,6 +8,17 @@ import com.testing.edu.service.utils.ListToPageTransformer;
 import java.util.Map;
 
 public interface StudentsService {
+
+    /**
+     * Save student with user
+     * @param lastname
+     * @param firstname
+     * @param middleName
+     * @param numberGradebook
+     */
+    void addStudent(String lastname, String firstname, String middleName,
+                    String numberGradebook, Groups groups, String username, String email, String phone);
+
     /**
      * Save student with params
      * @param lastname

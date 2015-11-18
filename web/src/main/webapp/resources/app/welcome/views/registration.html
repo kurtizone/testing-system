@@ -59,7 +59,7 @@
                             {{'REQUIRED' | translate}}
                         </p>
 
-                        <p class="help-block" ng-if="!isStudentUsernameAvailable">
+                        <p class="help-block" ng-if="!isUsernameAvailable">
                             <span class="glyphicon glyphicon-exclamation-sign"></span>
                             {{'LOGIN_ISNT_AVAILABLE' | translate }}
                         </p>
@@ -68,7 +68,9 @@
                             <span class="glyphicon glyphicon-exclamation-sign"></span>
                             {{'LOGIN_HAS_INVALID_LENGTH' | translate }}
                         </p>
+
                     </div>
+
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="studentPassword">
@@ -248,7 +250,7 @@
                     </div>
                     <div class="col-md-2">
                         <button type="reset" class="btn btn-warning text-uppercase"
-                                ng-click="resetStudentForm()">
+                                ng-click="resetForms()">
                             {{'CLEAR_FORM'|translate}}
                         </button>
                     </div>
@@ -457,12 +459,12 @@
                                    class="form-control col-md-8 " ng-model="lecturerFormData.phone"
                                    placeholder="XXXXXXXXXX" ng-pattern="PHONE_REGEX" required>
                         </div>
-                        <p class="help-block col-md-8 col-md-offset-2"
+                        <p class="help-block"
                            ng-if="lecturerForm.phoneNumber.$error.pattern">
                             <span class="glyphicon glyphicon-exclamation-sign"></span>
                             {{'PHONE_NUMBER_ERROR' | translate}}</p>
 
-                        <p class="help-block col-md-8 col-md-offset-2"
+                        <p class="help-block"
                            ng-if="lecturerForm.phoneNumber.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign"></span>
                             {{'REQUIRED' | translate}}
@@ -473,13 +475,13 @@
                 <hr/>
                 <div class="form-group ">
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-success  pull-right text-uppercase">
+                        <button type="submit" class="btn btn-success  pull-right text-uppercase" ng-click="submitLecturer()">
                             {{'SEND_BTN' | translate}}
                         </button>
                     </div>
                     <div class="col-md-2">
                         <button type="reset" class="btn btn-warning text-uppercase"
-                                ng-click="resetApplicationForm()">
+                                ng-click="resetForms()">
                             {{'CLEAR_FORM'|translate}}
                         </button>
                     </div>

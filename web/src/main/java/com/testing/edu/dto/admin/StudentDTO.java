@@ -13,6 +13,9 @@ public class StudentDTO {
     private String numberGradebook;
     private Long groupId;
     private String groupTitle;
+    private String username;
+    private String email;
+    private String phone;
 
     public StudentDTO() {
 

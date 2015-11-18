@@ -5,18 +5,22 @@ import com.testing.edu.entity.Subject;
 import com.testing.edu.entity.User;
 import com.testing.edu.entity.enumeration.AcademicStatus;
 import com.testing.edu.entity.enumeration.Degree;
+import com.testing.edu.entity.enumeration.UserRole;
 import com.testing.edu.repository.LecturersRepository;
 import com.testing.edu.repository.SubjectRepository;
+import com.testing.edu.repository.UserRepository;
 import com.testing.edu.service.LecturersService;
 import com.testing.edu.service.criteria.LecturersQueryConstructor;
 import com.testing.edu.service.specification.builder.LecturersSpecificationBuilder;
 import com.testing.edu.service.specification.builder.SubjectSpecificationBuilder;
 import com.testing.edu.service.utils.ListToPageTransformer;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,8 +43,42 @@ public class LecturersServiceImpl implements LecturersService {
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
+
+    /**
+     * Save lecturer with user
+     *
+     * @param lastname
+     * @param firstname
+     * @param middleName
+     * @param academicStatus
+     * @param degree
+     * @param username
+     * @param email
+     * @param phone
+     */
+    @Override
+    public void addLecturer(String lastname, String firstname, String middleName, String academicStatus, String degree,
+                            String username, String email, String phone) {
+        String password = RandomStringUtils.randomAlphanumeric(6);
+        String passwordEncoded = new BCryptPasswordEncoder().encode(password);
+        User user = new User(username, email, passwordEncoded, phone, true, UserRole.LECTURER);
+        userRepository.save(user);
+
+        Lecturers lecturer = new Lecturers(
+                lastname,
+                firstname,
+                middleName,
+                AcademicStatus.valueOf(academicStatus),
+                Degree.valueOf(degree),
+                user
+        );
+        lecturersRepository.save(lecturer);
+    }
 
     /**
      * Save lecturer with params

@@ -60,6 +60,12 @@ public class Students implements java.io.Serializable {
 		this.groups = groups;
 	}
 
+	public Students(String lastname, String firstname, String middleName,
+					String numberGradebook, Groups groups, User user) {
+		this(lastname, firstname, middleName, numberGradebook, groups);
+		this.user = user;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_student", unique = true, nullable = false)

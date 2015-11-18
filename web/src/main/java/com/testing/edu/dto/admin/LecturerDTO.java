@@ -12,6 +12,9 @@ public class LecturerDTO {
     private String middleName;
     private String academicStatus;
     private String degree;
+    private String username;
+    private String email;
+    private String phone;
 
     public LecturerDTO() {
 

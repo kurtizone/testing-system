@@ -19,6 +19,17 @@ public interface LecturersService {
      * @param degree
      */
     void addLecturer(String lastname, String firstname, String middleName,
+                     String academicStatus, String degree, String username, String email, String phone);
+
+    /**
+     * Save lecturer with params
+     * @param lastname
+     * @param firstname
+     * @param middleName
+     * @param academicStatus
+     * @param degree
+     */
+    void addLecturer(String lastname, String firstname, String middleName,
                      String academicStatus, String degree);
 
     /**

@@ -44,6 +44,11 @@ public class Lecturers implements java.io.Serializable {
 		this.degree = degree;
 	}
 
+	public Lecturers(String lastName, String firstName, String middleName, AcademicStatus academicStatus, Degree degree, User user) {
+		this(lastName, firstName, middleName, academicStatus, degree);
+		this.user = user;
+	}
+
 	public Lecturers(User user, String lastName, String firstName, String middleName, AcademicStatus academicStatus, Degree degree,
 			Set<Subject> subjects) {
 		this(lastName, firstName, middleName, academicStatus, degree);

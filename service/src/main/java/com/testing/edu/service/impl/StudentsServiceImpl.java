@@ -3,16 +3,20 @@ package com.testing.edu.service.impl;
 import com.testing.edu.entity.Groups;
 import com.testing.edu.entity.Students;
 import com.testing.edu.entity.User;
+import com.testing.edu.entity.enumeration.UserRole;
 import com.testing.edu.repository.StudentsRepository;
+import com.testing.edu.repository.UserRepository;
 import com.testing.edu.service.GroupsService;
 import com.testing.edu.service.StudentsService;
 import com.testing.edu.service.specification.builder.StudentsSpecificationBuilder;
 import com.testing.edu.service.utils.ListToPageTransformer;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +33,37 @@ public class StudentsServiceImpl implements StudentsService {
     @Autowired
     private StudentsRepository studentsRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
+
+    /**
+     * Save student with user
+     *
+     * @param lastname
+     * @param firstname
+     * @param middleName
+     * @param numberGradebook
+     * @param groups
+     * @param username
+     * @param email
+     * @param phone
+     */
+    @Override
+    @Transactional
+    public void addStudent(String lastname, String firstname, String middleName, String numberGradebook, Groups groups,
+                           String username, String email, String phone) {
+
+        String password = RandomStringUtils.randomAlphanumeric(6);
+        String passwordEncoded = new BCryptPasswordEncoder().encode(password);
+        User user = new User(username, email, passwordEncoded, phone, true, UserRole.STUDENT);
+        userRepository.save(user);
+
+        Students student = new Students(lastname, firstname, middleName, numberGradebook, groups, user);
+        studentsRepository.save(student);
+    }
 
     /**
      * Save student with params
