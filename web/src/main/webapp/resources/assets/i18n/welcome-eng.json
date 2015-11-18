@@ -43,6 +43,7 @@
   "ADD_GROUP":"Add Group",
   "CLEAR_ALL":"Clear all",
   "NONRESIDENCE":"Non-residence",
+  "PASSWORD_AUTOGENERATE":"Password will be auto generated",
 
   "STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS":"Select status",
   "STATUS_SELECT_PLACEHOLDER_DEGREE":"Select degree",

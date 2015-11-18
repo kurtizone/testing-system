@@ -48,12 +48,6 @@
 
 												})
 										.state(
-												'about',
-												{
-													url : '/about',
-													templateUrl : '/resources/app/welcome/views/about.html'
-												})
-										.state(
 												'login',
 												{
 													url : '/login',
@@ -61,18 +55,11 @@
 													controller : 'LoginController'
 												})
 										.state(
-												'application-sending',
+												'registration',
 												{
-													url : '/application-sending/{verificationId}',
-													templateUrl : '/resources/app/welcome/views/application-sending.html',
-													controller : 'ApplicationSendingController'
-												})
-										.state(
-												'application-status',
-												{
-													url : '/application-status/{clientCode}',
-													templateUrl : '/resources/app/welcome/views/application-status.html',
-													controller : 'ApplicationStatusController'
+													url : '/registration',
+													templateUrl : '/resources/app/welcome/views/registration.html',
+													controller : 'RegistrationController'
 												})
 								/*
 								 Extended ui-select-choices: added watch for ng-translate event called translateChangeEnd
@@ -105,14 +92,12 @@
 							} ]);
 
 	define([ 'controllers/LoginController',
-			'controllers/ApplicationSendingController',
-			'controllers/ApplicationStatusController',
+			'controllers/RegistrationController',
 			'controllers/InternationalizationController',
 			'controllers/NavigationController',
 			'controllers/WelcomePageController',
-			'controllers/DetailsController', 'controllers/FeedbackController',
-			'controllers/ChatController', 'services/DataReceivingService',
-			'services/DataSendingService', 'directives/OnStartupMessage',
+			'services/DataReceivingService',
+			'services/RegistationService', 'directives/OnStartupMessage',
 			'directives/unique','filters/HideSelected'],
 			function() {
 			});

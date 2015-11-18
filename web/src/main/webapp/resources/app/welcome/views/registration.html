@@ -1,0 +1,497 @@
+<section id=applicationSection>
+
+    <div class="col-md-12 text-center" ng-show="isShownForm">
+        <h1>{{ 'APP_SENDING_TITLE' | translate }}</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-12"></div>
+    </div>
+    <div class="col-md-10" id="createByPattern" ng-show="!isShownForm && codes[0]">
+        <button type="button" class="btn btn-info btn-lg" ng-click="createNew(codes[0])">
+            <span class="glyphicon glyphicon-duplicate"></span> {{'CREATE_BY_PATTERN'| translate}}
+        </button>
+    </div>
+    <div class="from-top form-group ">
+        <div id="clientFormBox" class="row col-md-8 centered">
+            <form id="userRoleForm" name="userRoleForm" role="form"
+                  class="form-horizontal form-group"
+                  novalidate>
+                <div class="form-group" show-errors>
+                    <label for="userRole" class="col-md-2 control-label">
+                        {{'USER_ROLE' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <ui-select name="userRole" id="userRole" class="form-control"
+                                   type="text" ng-model="userRoleFormData.userRole" theme="select2"
+                                   search-enabled="false">
+                            <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                                             allow-clear="true">
+                                {{$select.selected.label}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="userRole in userRolesData">
+                                <span ng-bind-html="userRole.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </form>
+            <form id="studentForm" name="studentForm" role="form"
+                  class="form-horizontal form-group" ng-submit="regStudent()"
+                  novalidate  ng-show="userRoleFormData.userRole.id === 'STUDENT'">
+                <div class="form-group" show-errors>
+                    <label for="studentUsername" class="col-md-2 control-label">
+                        {{'LOGIN' | translate }}
+                    </label>
+
+                    <div class="col-md-8">
+                        <input type="text" ng-model="studentFormData.username"
+                               ng-blur="checkIfUsernameIsAvailable()"
+                               ng-pattern="USERNAME_REGEX" id="studentUsername" name="studentUsername"
+                               class="form-control" popover="Введіть логін адміна організації"
+                               popover-trigger="focus" popover-placement="top" required>
+							<span class="form-control-feedback glyphicon
+							 form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="studentForm.studentUsername.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="!isStudentUsernameAvailable">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'LOGIN_ISNT_AVAILABLE' | translate }}
+                        </p>
+
+                        <p class="help-block" ng-if="studentForm.studentUsername.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'LOGIN_HAS_INVALID_LENGTH' | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="studentPassword">
+                        {{'PASSWORD' | translate}}
+                    </label>
+
+                    <div class="col-md-8 text-success" aria-readonly="true" >
+                            <span class="text-success" name="studentPassword" id="studentPassword">
+                                {{'PASSWORD_AUTOGENERATE' | translate}}
+                            </span>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="studentLastName" class="col-md-2 control-label">
+                        {{'LAST_NAME' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <input id="studentLastName" name="studentLastName" class="form-control"
+                               type="text" ng-model="studentFormData.lastName"
+                               popover="{{'ALPHABETIC_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="FIRST_LAST_NAME_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="studentForm.studentLastName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="studentForm.studentLastName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DOUBLE_NAME_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="studentFirstName" class="col-md-2 control-label">
+                        {{'FIRST_NAME' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="studentFirstName" name="studentFirstName" class="form-control"
+                               ng-model="studentFormData.firstName"
+                               popover="{{'ALPHABETIC_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="FIRST_LAST_NAME_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="studentForm.studentFirstName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="studentForm.studentFirstName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DOUBLE_NAME_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="studentMiddleName" class="col-md-2 control-label">
+                        {{'MIDDLE_NAME' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="studentMiddleName" name="studentMiddleName" type="text"
+                               class="form-control" ng-model="studentFormData.middleName"
+                               popover="{{'MIDDLE_NAME_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="MIDDLE_NAME_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="studentForm.studentMiddleName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="studentForm.studentMiddleName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DOUBLE_NAME_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="group" class="col-md-2 control-label">
+                        {{'GROUP' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <ui-select type="text" theme="select2" class="form-control"
+                                   ng-model="chooseData.group"
+                                   name="group" id="group" required>
+                            <ui-select-match placeholder="{{'SELECT_SUBJECT_TITLE' | translate}}" allow-clear="true">
+                                {{$select.selected.title}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="group in groups | filter: $select.search">
+                                <span ng-bind-html="group.title"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <p class="help-block" ng-if="studentForm.group.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="studentEmail" class="col-md-2 control-label">
+                        {{'EMAIL' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="studentEmail" name="studentEmail" type="email" class="form-control"
+                               ng-model="studentFormData.email" placeholder="example@gmail.com"
+                               ng-pattern="EMAIL_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="studentForm.studentEmail.$error.email || studentForm.studentEmail.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'EMAIL_ERROR' | translate}}<i>example@gmail.com</i>
+                        </p>
+                        <p class="help-block" ng-if="studentForm.studentEmail.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="studentPhoneNumber" class="col-md-2 control-label">
+                        {{'PHONE_NUMBER' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <div class="input-group">
+                                <span class="input-group-addon">+38</span>
+                                <input id="studentPhoneNumber" name="studentPhoneNumber" type="tel"
+                                       class="form-control col-md-8 " ng-model="studentFormData.phone"
+                                       placeholder="XXXXXXXXXX" ng-pattern="PHONE_REGEX" required>
+                        </div>
+                        <p class="help-block"
+                           ng-if="studentForm.studentPhoneNumber.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'PHONE_NUMBER_ERROR' | translate}}</p>
+
+                        <p class="help-block"
+                           ng-if="studentForm.studentPhoneNumber.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="numberGradebook" class="col-md-2 control-label">
+                        {{'NUMBER_GRADEBOOK' | translate }}
+                    </label>
+                    <div class="col-md-8">
+                        <input id="numberGradebook" name="numberGradebook" class="form-control"
+                               type="text" ng-model="studentFormData.numberGradebook" required>
+							<span class="form-control-feedback glyphicon
+						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="studentForm.numberGradebook.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="studentForm.numberGradebook.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                        </p>
+                    </div>
+                </div>
+                <hr/>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success  pull-right text-uppercase" ng-click="submitStudent()">
+                            {{'SEND_BTN' | translate}}
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="reset" class="btn btn-warning text-uppercase"
+                                ng-click="resetStudentForm()">
+                            {{'CLEAR_FORM'|translate}}
+                        </button>
+                    </div>
+                    <div class="col-md-offset-4 col-md-2">
+                        <button class="btn btn-danger pull-right text-uppercase" ui-sref="start">
+                            {{'CLOSE'|translate}}
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+            <form id="lecturerForm" name="lecturerForm" role="form"
+                  class="form-horizontal form-group" ng-submit="regLecturer()"
+                  novalidate ng-show="userRoleFormData.userRole.id === 'LECTURER'">
+
+                <div class="form-group" show-errors>
+                    <label for="username" class="col-md-2 control-label">
+                        {{'LOGIN' | translate }}
+                    </label>
+
+                    <div class="col-md-8">
+                        <input type="text" ng-model="lecturerFormData.username"
+                               ng-blur="checkIfUsernameIsAvailable()"
+                               ng-pattern="USERNAME_REGEX" id="username" name="username"
+                               class="form-control" popover="Введіть логін адміна організації"
+                               popover-trigger="focus" popover-placement="top" required>
+							<span class="form-control-feedback glyphicon
+							 form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="lecturerForm.username.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="!isUsernameAvailable">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'LOGIN_ISNT_AVAILABLE' | translate }}
+                        </p>
+
+                        <p class="help-block" ng-if="lecturerForm.username.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'LOGIN_HAS_INVALID_LENGTH' | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="password">
+                        {{'PASSWORD' | translate}}
+                    </label>
+
+                    <div class="col-md-8 text-success" aria-readonly="true" >
+                            <span class="text-success" name="password" id="password">
+                                {{'PASSWORD_AUTOGENERATE' | translate}}
+                            </span>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="lastName" class="col-md-2 control-label">
+                        {{'LAST_NAME' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <input id="lastName" name="lastName" class="form-control"
+                               type="text" ng-model="lecturerFormData.lastName"
+
+                               popover="{{'ALPHABETIC_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="FIRST_LAST_NAME_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="lecturerForm.lastName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="lecturerForm.lastName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DOUBLE_NAME_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="firstName" class="col-md-2 control-label">
+                        {{'FIRST_NAME' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="firstName" name="firstName" class="form-control"
+                               ng-model="lecturerFormData.firstName"
+                               popover="{{'ALPHABETIC_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="FIRST_LAST_NAME_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="lecturerForm.firstName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="lecturerForm.firstName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DOUBLE_NAME_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="middleName" class="col-md-2 control-label">
+                        {{'MIDDLE_NAME' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="middleName" name="middleName" type="text"
+                               class="form-control" ng-model="lecturerFormData.middleName"
+                               popover="{{'MIDDLE_NAME_INFO' | translate}}"
+                               popover-trigger="focus" popover-placement="right"
+                               ng-pattern="MIDDLE_NAME_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="lecturerForm.middleName.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+
+                        <p class="help-block" ng-if="lecturerForm.middleName.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'DOUBLE_NAME_ERROR' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="academicStatus" class="col-md-2 control-label">
+                        {{'ACADEMIC_STATUS' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <ui-select name="academicStatus" id="academicStatus" class="form-control"
+                                   type="text" ng-model="chooseData.academicStatus" theme="select2"
+                                   search-enabled="false"  required>
+                            <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                                             allow-clear="true">
+                                {{$select.selected.label}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="academicStatus in academicStatusData">
+                                <span ng-bind-html="academicStatus.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <p class="help-block" ng-if="lecturerForm.academicStatus.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="degree" class="col-md-2 control-label">
+                        {{'DEGREE' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <ui-select class="form-control" type="text" ng-model="chooseData.degree" theme="select2"
+                                   search-enabled="false" name="degree" id="degree" required>
+                            <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_DEGREE' | translate}}"
+                                             allow-clear="true">
+                                {{$select.selected.label}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="degree in degreeData">
+                                <span ng-bind-html="degree.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <p class="help-block" ng-if="lecturerForm.degree.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="email" class="col-md-2 control-label">
+                        {{'EMAIL' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <input id="email" name="email" type="email" class="form-control"
+                               ng-model="lecturerFormData.email" placeholder="example@gmail.com"
+                               ng-pattern="EMAIL_REGEX" required> <span
+                            class="form-control-feedback glyphicon  form-horizontal glyphicon glyphicon-ok-sign"></span>
+
+                        <p class="help-block" ng-if="lecturerForm.email.$error.email || lecturerForm.email.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'EMAIL_ERROR' | translate}}<i>example@gmail.com</i>
+                        </p>
+                        <p class="help-block" ng-if="lecturerForm.email.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group" show-errors>
+                    <label for="phoneNumber" class="col-md-2 control-label">
+                        {{'PHONE_NUMBER' | translate}} </label>
+
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-addon">+38</span>
+                            <input id="phoneNumber" name="phoneNumber" type="tel"
+                                   class="form-control col-md-8 " ng-model="lecturerFormData.phone"
+                                   placeholder="XXXXXXXXXX" ng-pattern="PHONE_REGEX" required>
+                        </div>
+                        <p class="help-block col-md-8 col-md-offset-2"
+                           ng-if="lecturerForm.phoneNumber.$error.pattern">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'PHONE_NUMBER_ERROR' | translate}}</p>
+
+                        <p class="help-block col-md-8 col-md-offset-2"
+                           ng-if="lecturerForm.phoneNumber.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+
+                <hr/>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success  pull-right text-uppercase">
+                            {{'SEND_BTN' | translate}}
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="reset" class="btn btn-warning text-uppercase"
+                                ng-click="resetApplicationForm()">
+                            {{'CLEAR_FORM'|translate}}
+                        </button>
+                    </div>
+                    <div class="col-md-offset-4 col-md-2">
+                        <button class="btn btn-danger pull-right text-uppercase" ui-sref="start">
+                            {{'CLOSE'|translate}}
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</section>

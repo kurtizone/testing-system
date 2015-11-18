@@ -1,6 +1,6 @@
 angular
     .module('welcomeModule')
-    .factory('DataSendingService', ['$http', function ($http) {
+    .factory('RegistationService', ['$http', function ($http) {
 
         return {
             sendApplication: function (data) {

@@ -23,6 +23,7 @@ public class User implements java.io.Serializable {
 	private Long id;
 	private String username;
 	private String email;
+	private String phone;
 	private String password;
 	private Boolean enable;
 	private UserRole userRole;
@@ -32,11 +33,12 @@ public class User implements java.io.Serializable {
 	public User() {
 	}
 
-	public User(String username, String email, String password, Boolean enable, UserRole userRole,
+	public User(String username, String email, String password, String phone, Boolean enable, UserRole userRole,
 			Set<Lecturers> lecturerses, Set<Students> studentses) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.phone = phone;
 		this.enable = enable;
 		this.userRole = userRole;
 		this.lecturerses = lecturerses;
@@ -70,6 +72,15 @@ public class User implements java.io.Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Column(name = "phone")
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@Column(name = "password")
