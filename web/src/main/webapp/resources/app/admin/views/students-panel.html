@@ -29,7 +29,7 @@
                 <table show-filter="true" ng-table="tableParams" template-pagination="custom/pager"
                        class="table table-bordered table-hover">
                     <tbody>
-                    <tr ng-repeat="student in $data">
+                    <tr ng-repeat="student in $data" ng-class="{incorrect : !student.enable}">
                         <td data-title="'LAST_NAME' | translate" sortable="'lastName'"
                             filter="{ 'lastName': 'text' }" >
                             {{ student.lastName }}
@@ -40,16 +40,29 @@
                         <td data-title="'MIDDLE_NAME' | translate" sortable="'middleName'"
                             filter="{ 'middleName': 'text' }">{{ student.middleName}}
                         </td>
+                        <td data-title="'GROUP_TITLE' | translate" sortable="'group_title'"
+                            filter="{ 'groupTitle': 'text' }">{{ student.groupTitle}}
+                        </td>
                         <td data-title="'NUMBER_GRADEBOOK' | translate" sortable="'numberGradebook'"
                             filter="{ 'numberGradebook': 'text' }">{{ student.numberGradebook}}
                         </td>
-                        <td data-title="'GROUP_TITLE' | translate" sortable="'group_title'"
-                            filter="{ 'groupTitle': 'text' }">{{ student.groupTitle}}
+                        <td data-title="'USERNAME' | translate" sortable="'username'"
+                            filter="{ 'username': 'text' }">{{ student.username}}
+                        </td>
+                        <td data-title="'EMAIL' | translate" sortable="'email'"
+                            filter="{ 'email': 'text' }">{{ student.email}}
+                        </td>
+                        <td data-title="'PHONE' | translate" sortable="'phone'"
+                            filter="{ 'phone': 'text' }">+38{{ student.phone}}
+                        </td>
+                        <td data-title="'ENABLE' | translate" sortable="'enable'"
+                            filter="{ 'enable': 'enable' }">{{ student.enable | translate}}
                         </td>
                         <td data-title="'ACTIONS' | translate" class="text-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-warning"
-                                        ng-click="openEditStudentModal(student.id)">
+                                        ng-click="openEditStudentModal(student.id)" popover="{{'ALPHABETIC_INFO' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
                                 <button type="button" class="btn btn-danger"
@@ -121,6 +134,20 @@
                     <ui-select-choices
                             repeat="degree in degreeData">
                         <span ng-bind-html="degree.label"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </script>
+            <script type="text/ng-template" id="ng-table/filters/enable.html">
+                <ui-select ng-model="selectedEnable.name" theme="select2" on-select='doSearch()'
+                           search-enabled="false"
+                           name="filter-avaible">
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                                     allow-clear="true">
+                        {{$select.selected.label}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="enable in enableData">
+                        <span ng-bind-html="enable.label"></span>
                     </ui-select-choices>
                 </ui-select>
             </script>

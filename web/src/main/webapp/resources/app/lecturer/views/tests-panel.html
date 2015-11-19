@@ -29,7 +29,7 @@
                 <table show-filter="true" ng-table="tableParams" template-pagination="custom/pager"
                        class="table table-bordered table-hover">
                     <tbody>
-                    <tr ng-repeat="test in $data">
+                    <tr ng-repeat="test in $data" ng-class="{incorrect : !test.avaible}">
                         <td data-title="'TITLE' | translate" sortable="'title'"
                             filter="{ 'title': 'text' }" >
                             {{ test.title }}

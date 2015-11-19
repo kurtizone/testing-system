@@ -22,12 +22,27 @@ angular
             //for measurement academicStatus
             $scope.selectedAcademicStatus = {
                 name: null
-            }
+            };
 
             //for measurement degree
             $scope.selectedDegree = {
                 name: null
+            };
+
+            $scope.selectedEnable = {
+                name: null
             }
+            $scope.enableData = [
+                {
+                    id: 'true',
+                    label: $filter('translate')('true')
+                },
+                {
+                    id: 'false',
+                    label: $filter('translate')('false')
+                },
+
+            ];
 
             $scope.academicStatusData = [
                 {
@@ -59,6 +74,8 @@ angular
                 }
             ];
 
+
+
             $scope.setTypeDataLanguage = function () {
 
             };
@@ -67,6 +84,7 @@ angular
             $scope.clearAll = function () {
                 $scope.selectedAcademicStatus.name = null;
                 $scope.selectedDegree.name = null;
+                $scope.selectedEnable.name == null;
                 $scope.tableParams.filter({});
             };
 
@@ -100,6 +118,13 @@ angular
                     }
                     else {
                         params.filter().degree = null; //case when the filter is cleared with a button on the select
+                    }
+
+                    if ($scope.selectedEnable.name != null) {
+                        params.filter().enable = $scope.selectedEnable.name.id;
+                    }
+                    else {
+                        params.filter().enable = null; //case when the filter is cleared with a button on the select
                     }
 
                     lecturersService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)

@@ -102,11 +102,11 @@ public class User implements java.io.Serializable {
 	}
 
 	@Column(name = "enable")
-	public Boolean getIsEnabled() {
+	public Boolean getEnable() {
 		return this.enable;
 	}
 
-	public void setIsEnabled(Boolean enable) {
+	public void setEnable(Boolean enable) {
 		this.enable = enable;
 	}
 

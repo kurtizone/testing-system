@@ -66,5 +66,41 @@ public enum LecturersSortCriteria implements SortCriteria {
                 return new Sort(Sort.Direction.DESC, LecturersSpecificationBuilder.DEGREE);
             }
         }
+    },
+    USERNAME {
+        public Sort getSort(String sortOrder) {
+            if(sortOrder.equalsIgnoreCase("asc")) {
+                return new Sort(Sort.Direction.ASC, LecturersSpecificationBuilder.USER_JOIN_USERNAME);
+            } else {
+                return new Sort(Sort.Direction.DESC, LecturersSpecificationBuilder.USER_JOIN_USERNAME);
+            }
+        }
+    },
+    EMAIL {
+        public Sort getSort(String sortOrder) {
+            if(sortOrder.equalsIgnoreCase("asc")) {
+                return new Sort(Sort.Direction.ASC, LecturersSpecificationBuilder.USER_JOIN_EMAIL);
+            } else {
+                return new Sort(Sort.Direction.DESC, LecturersSpecificationBuilder.USER_JOIN_EMAIL);
+            }
+        }
+    },
+    PHONE {
+        public Sort getSort(String sortOrder) {
+            if(sortOrder.equalsIgnoreCase("asc")) {
+                return new Sort(Sort.Direction.ASC, LecturersSpecificationBuilder.USER_JOIN_PHONE);
+            } else {
+                return new Sort(Sort.Direction.DESC, LecturersSpecificationBuilder.USER_JOIN_PHONE);
+            }
+        }
+    },
+    ENABLE {
+        public Sort getSort(String sortOrder) {
+            if(sortOrder.equalsIgnoreCase("asc")) {
+                return new Sort(Sort.Direction.ASC, LecturersSpecificationBuilder.USER_JOIN_ENABLE);
+            } else {
+                return new Sort(Sort.Direction.DESC, LecturersSpecificationBuilder.USER_JOIN_ENABLE);
+            }
+        }
     }
 }

@@ -683,7 +683,7 @@ th {
 
 #sidebar-wrapper {
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     left: 315px;
     width: 320px;
     height: 900px;

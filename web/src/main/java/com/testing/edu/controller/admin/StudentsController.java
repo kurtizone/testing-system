@@ -55,7 +55,8 @@ public class StudentsController {
                     groupsService.findById(studentDTO.getGroupId()),
                     studentDTO.getUsername(),
                     studentDTO.getEmail(),
-                    studentDTO.getPhone()
+                    studentDTO.getPhone(),
+                    studentDTO.getEnable()
             );
         } catch (Exception e) {
             logger.error("Got exeption while add student ", e);
@@ -86,7 +87,8 @@ public class StudentsController {
                     studentDTO.getUsername(),
                     studentDTO.getEmail(),
                     studentDTO.getPhone(),
-                    studentDTO.getPassword()
+                    studentDTO.getPassword(),
+                    studentDTO.getEnable()
             );
         } catch (Exception e) {
             logger.error("Got exeption while editing student ", e);
@@ -133,7 +135,8 @@ public class StudentsController {
                 students.getGroups().getTitle(),
                 students.getUser().getUsername(),
                 students.getUser().getEmail(),
-                students.getUser().getPhone()
+                students.getUser().getPhone(),
+                students.getUser().getEnable()
         );
         return studentDTO;
     }
@@ -227,7 +230,11 @@ public class StudentsController {
                     student.getFirstName(),
                     student.getMiddleName(),
                     student.getNumberGradebook(),
-                    student.getGroups().getTitle()
+                    student.getGroups().getTitle(),
+                    student.getUser().getUsername(),
+                    student.getUser().getEmail(),
+                    student.getUser().getPhone(),
+                    student.getUser().getEnable()
             ));
         }
         return resultList;

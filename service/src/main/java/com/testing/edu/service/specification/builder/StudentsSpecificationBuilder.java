@@ -25,6 +25,14 @@ public class StudentsSpecificationBuilder extends SpecificationBuilder<Students>
     public static final String NUMBERGRADEBOOK = "numberGradebook";
     public static final String GROUP_TITLE = "groupTitle";
     public static final String GROUP_JOIN_TITLE = "groups.title";
+    public static final String USERNAME = "username";
+    public static final String USER_JOIN_USERNAME = "user.username";
+    public static final String EMAIL = "email";
+    public static final String USER_JOIN_EMAIL = "user.email";
+    public static final String PHONE = "phone";
+    public static final String USER_JOIN_PHONE = "user.phone";
+    public static final String ENABLE = "enable";
+    public static final String USER_JOIN_ENABLE = "user.enable";
 
     public StudentsSpecificationBuilder(Map<String, String> searchValues) {
         super(searchValues);
@@ -37,14 +45,15 @@ public class StudentsSpecificationBuilder extends SpecificationBuilder<Students>
     @Override
     protected List<SearchCriterion> initCriteria(){
         List<SearchCriterion> searchCriteria = new ArrayList<>();
+        searchCriteria.add(new SearchCriterion<>(USERNAME, "user", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "username"));
+        searchCriteria.add(new SearchCriterion<>(EMAIL, "user", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "email"));
+        searchCriteria.add(new SearchCriterion<>(PHONE, "user", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "phone"));
+        searchCriteria.add(new SearchCriterion<>(ENABLE, "user", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.BOOLEAN, "enable"));
         searchCriteria.add(new SearchCriterion<>(GROUP_TITLE, "groups", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "title"));
         searchCriteria.add(new SearchCriterion<>(LASTNAME, "lastName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(FIRSTNAME, "firstName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(MIDDLENAME, "middleName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(NUMBERGRADEBOOK, "numberGradebook", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
-        for (SearchCriterion searchCriterion : searchCriteria) {
-            logger.info("-----searchCriteria------ "  + searchCriterion);
-        }
         return searchCriteria;
     }
 

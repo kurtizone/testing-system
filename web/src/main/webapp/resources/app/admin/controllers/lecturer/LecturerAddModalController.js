@@ -15,6 +15,19 @@ angular
             $scope.addLecturerFormData = {};
             $scope.addLecturerFormData.academicStatus = undefined;
             $scope.addLecturerFormData.degree = undefined;
+            $scope.addLecturerFormData.enable = undefined;
+
+            $scope.enableData = [
+                {
+                    id: 'true',
+                    label: $filter('translate')('true')
+                },
+                {
+                    id: 'false',
+                    label: $filter('translate')('false')
+                }
+
+            ];
 
             $scope.academicStatusData = [
                 {
@@ -105,6 +118,7 @@ angular
                 if ($scope.addLecturerForm.$valid) {
                     $scope.addLecturerFormData.academicStatus = $scope.addLecturerFormData.academicStatus.id;
                     $scope.addLecturerFormData.degree = $scope.addLecturerFormData.degree.id;
+                    $scope.addLecturerFormData.enable = $scope.addLecturerFormData.enable.id;
                     saveLecturer();
                 }
             };

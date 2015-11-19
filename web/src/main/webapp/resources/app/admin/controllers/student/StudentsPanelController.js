@@ -19,11 +19,27 @@ angular
             $scope.itemsPerPage = 5;
             $scope.pageContent = [];
 
+            $scope.selectedEnable = {
+                name: null
+            }
+            $scope.enableData = [
+                {
+                    id: 'true',
+                    label: $filter('translate')('true')
+                },
+                {
+                    id: 'false',
+                    label: $filter('translate')('false')
+                },
+
+            ];
+
             $scope.setTypeDataLanguage = function () {
             };
             $scope.setTypeDataLanguage();
 
             $scope.clearAll = function () {
+                $scope.selectedEnable.name == null;
                 $scope.tableParams.filter({});
             };
 
@@ -44,6 +60,13 @@ angular
 
                     var sortCriteria = Object.keys(params.sorting())[0];
                     var sortOrder = params.sorting()[sortCriteria];
+
+                    if ($scope.selectedEnable.name != null) {
+                        params.filter().enable = $scope.selectedEnable.name.id;
+                    }
+                    else {
+                        params.filter().enable = null; //case when the filter is cleared with a button on the select
+                    }
 
                     studentsService.getPage(params.page(), params.count(), params.filter(), sortCriteria, sortOrder)
                         .success(function (result) {

@@ -25,6 +25,15 @@ public class LecturersSpecificationBuilder extends SpecificationBuilder<Lecturer
     public static final String MIDDLENAME = "middleName";
     public static final String ACADEMICSTATUS = "academicStatus";
     public static final String DEGREE = "degree";
+    public static final String USERNAME = "username";
+    public static final String USER_JOIN_USERNAME = "user.username";
+    public static final String EMAIL = "email";
+    public static final String USER_JOIN_EMAIL = "user.email";
+    public static final String PHONE = "phone";
+    public static final String USER_JOIN_PHONE = "user.phone";
+    public static final String ENABLE = "enable";
+    public static final String USER_JOIN_ENABLE = "user.enable";
+
 
     public LecturersSpecificationBuilder(Map<String, String> searchValues) {
         super(searchValues);
@@ -37,14 +46,16 @@ public class LecturersSpecificationBuilder extends SpecificationBuilder<Lecturer
     @Override
     protected List<SearchCriterion> initCriteria(){
         List<SearchCriterion> searchCriteria = new ArrayList<>();
+        searchCriteria.add(new SearchCriterion<>(USERNAME, "user", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "username"));
+        searchCriteria.add(new SearchCriterion<>(EMAIL, "user", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "email"));
+        searchCriteria.add(new SearchCriterion<>(PHONE, "user", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING, "phone"));
+        searchCriteria.add(new SearchCriterion<>(ENABLE, "user", SearchCriterion.Operator.EQUAL, SearchCriterion.ValueType.BOOLEAN, "enable"));
         searchCriteria.add(new SearchCriterion<>(LASTNAME, "lastName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(FIRSTNAME, "firstName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(MIDDLENAME, "middleName", SearchCriterion.Operator.LIKE, SearchCriterion.ValueType.STRING));
         searchCriteria.add(new SearchCriterion<>(ACADEMICSTATUS, "academicStatus", SearchCriterion.Operator.EQUAL_BY_ENUM, AcademicStatus.class));
         searchCriteria.add(new SearchCriterion<>(DEGREE, "degree", SearchCriterion.Operator.EQUAL_BY_ENUM, Degree.class));
-        for (SearchCriterion searchCriterion : searchCriteria) {
-            logger.info("-----searchCriteria------ "  + searchCriterion);
-        }
+
         return searchCriteria;
     }
 

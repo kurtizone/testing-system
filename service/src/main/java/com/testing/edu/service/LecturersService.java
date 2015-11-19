@@ -22,7 +22,7 @@ public interface LecturersService {
      * @param phone
      */
     void addLecturer(String lastname, String firstname, String middleName,
-                     String academicStatus, String degree, String username, String email, String phone);
+                     String academicStatus, String degree, String username, String email, String phone, Boolean enable);
 
     /**
      * Save lecturer with params
@@ -50,7 +50,7 @@ public interface LecturersService {
      * @param password
      */
     void editLecturer(Long id, String lastname, String firstname, String middleName, String academicStatus, String degree,
-                      String username, String email, String phone, String password);
+                      String username, String email, String phone, String password, Boolean enable);
     /**
      * Edit lecturer with params
      * @param id

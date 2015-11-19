@@ -29,7 +29,7 @@
                 <table show-filter="true" ng-table="tableParams" template-pagination="custom/pager"
                        class="table table-bordered table-hover">
                     <tbody>
-                    <tr ng-repeat="lecturer in $data">
+                    <tr ng-repeat="lecturer in $data" ng-class="{incorrect : !lecturer.enable}">
                         <td data-title="'LAST_NAME' | translate" sortable="'lastName'"
                             filter="{ 'lastName': 'text' }" >
                             {{ lecturer.lastName }}
@@ -46,22 +46,42 @@
                         <td data-title="'DEGREE' | translate" sortable="'degree'"
                             filter="{ 'degree': 'degree' }">{{ lecturer.degree | translate}}
                         </td>
+                        <td data-title="'USERNAME' | translate" sortable="'username'"
+                            filter="{ 'username': 'text' }">{{ lecturer.username}}
+                        </td>
+                        <td data-title="'EMAIL' | translate" sortable="'email'"
+                            filter="{ 'email': 'text' }">{{ lecturer.email}}
+                        </td>
+                        <td data-title="'PHONE' | translate" sortable="'phone'"
+                            filter="{ 'phone': 'text' }">+38{{ lecturer.phone}}
+                        </td>
+                        <td data-title="'ENABLE' | translate" sortable="'enable'"
+                            filter="{ 'enable': 'enable' }">{{ lecturer.enable | translate}}
+                        </td>
                         <td data-title="'ACTIONS' | translate" class="text-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-warning"
-                                        ng-click="openEditLecturerModal(lecturer.id)">
+                                        ng-click="openEditLecturerModal(lecturer.id)"
+                                        popover="{{'EDIT' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
                                 <button type="button" class="btn btn-danger"
-                                        ng-click="deleteLecturer(lecturer.id)">
+                                        ng-click="deleteLecturer(lecturer.id)"
+                                        popover="{{'REMOVE' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
-                                <button type="button" class="btn btn-warning"
-                                        ng-click="openAddSubject(lecturer.id)">
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="openAddSubject(lecturer.id)"
+                                        popover="{{'ADD_SUBJECT' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>
-                                <button type="button" class="btn btn-success"
-                                        ng-click="openListOfSubjects(lecturer.id)">
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="openListOfSubjects(lecturer.id)"
+                                        popover="{{'LIST_OF_SUBJECTS' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
                                     <span class="glyphicon glyphicon-book"></span>
                                 </button>
                             </div>
@@ -125,6 +145,20 @@
                     <ui-select-choices
                             repeat="degree in degreeData">
                         <span ng-bind-html="degree.label"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </script>
+            <script type="text/ng-template" id="ng-table/filters/enable.html">
+                <ui-select ng-model="selectedEnable.name" theme="select2" on-select='doSearch()'
+                           search-enabled="false"
+                           name="filter-avaible">
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_VARIANT' | translate}}"
+                                     allow-clear="true">
+                        {{$select.selected.label}}
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="enable in enableData">
+                        <span ng-bind-html="enable.label"></span>
                     </ui-select-choices>
                 </ui-select>
             </script>

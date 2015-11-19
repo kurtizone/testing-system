@@ -62,7 +62,8 @@ public class ClientApplicationController {
                     groupsService.findById(studentDTO.getGroupId()),
                     studentDTO.getUsername(),
                     studentDTO.getEmail(),
-                    studentDTO.getPhone()
+                    studentDTO.getPhone(),
+                    false
             );
         } catch (Exception e) {
             logger.error("Got exeption while add student ", e);
@@ -91,7 +92,8 @@ public class ClientApplicationController {
                     lecturerDTO.getDegree(),
                     lecturerDTO.getUsername(),
                     lecturerDTO.getEmail(),
-                    lecturerDTO.getPhone()
+                    lecturerDTO.getPhone(),
+                    false
             );
         } catch (Exception e) {
             logger.error("Got exeption while add student ", e);

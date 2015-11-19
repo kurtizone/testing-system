@@ -30,7 +30,6 @@ public class ResultSpecificationBuilder extends SpecificationBuilder<Result>{
     public static final String STUDENT_MIDDLENAME = "studentMiddlename";
     public static final String STUDENT_JOIN_GROUP_JOIN_TITLE = "students.groups.title";
     public static final String GROUP_TITLE = "groupTitle";
-    public static final String TEST_JOIN_SUBJECT_JOIN_LECTURER_JOIN_ID = "tests.subject.lecturerses.id";
     public static final String LECTURER = "lecturer";
     public static final String SUBJECT_TITLE = "subjectTitle";
     public static final String TEST_TITLE = "testTitle";

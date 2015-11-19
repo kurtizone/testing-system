@@ -21,9 +21,7 @@
                     <div class="col-md-8">
                         <input id="lastName" name="lastName" class="form-control"
                                type="text" ng-model="addLecturerFormData.lastName"
-                               ng-pattern="FIRST_LAST_NAME_REGEX"
-                               popover="{{'ALPHABETIC_INFO' | translate}}"
-                               popover-trigger="focus" popover-placement="top" required>
+                               ng-pattern="FIRST_LAST_NAME_REGEX" required>
 							<span class="form-control-feedback glyphicon
 						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
 
@@ -47,9 +45,7 @@
                     <div class="col-md-8">
                         <input id="firstName" name="firstName" class="form-control"
                                type="text" ng-model="addLecturerFormData.firstName"
-                               ng-pattern="FIRST_LAST_NAME_REGEX"
-                               popover="{{'ALPHABETIC_INFO' | translate}}"
-                               popover-trigger="focus" popover-placement="top" required>
+                               ng-pattern="FIRST_LAST_NAME_REGEX" required>
 							<span class="form-control-feedback glyphicon
 						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
 
@@ -60,7 +56,7 @@
 
                         <p class="help-block" ng-if="addLecturerForm.firstName.$error.pattern">
                             <span class="glyphicon glyphicon-exclamation-sign"></span>
-                            {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                            {{'INCORRECT_VALUE_FIRST_NAME_ADD_EMPLOYEE' | translate }}
                         </p>
                     </div>
                 </div>
@@ -73,9 +69,7 @@
                     <div class="col-md-8">
                         <input id="middleName" name="middleName" class="form-control"
                                type="text" ng-model="addLecturerFormData.middleName"
-                               ng-pattern="MIDDLE_NAME_REGEX"
-                               popover="{{'ALPHABETIC_INFO' | translate}}"
-                               popover-trigger="focus" popover-placement="top" required>
+                               ng-pattern="MIDDLE_NAME_REGEX" required>
 							<span class="form-control-feedback glyphicon
 						 	form-horizontal glyphicon glyphicon-ok-sign"></span>
 
@@ -86,7 +80,7 @@
 
                         <p class="help-block" ng-if="addLecturerForm.middleName.$error.pattern">
                             <span class="glyphicon glyphicon-exclamation-sign"></span>
-                            {{'INCORRECT_VALUE_LAST_NAME_ADD_EMPLOYEE' | translate }}
+                            {{'INCORRECT_VALUE_MIDDLE_NAME_ADD_EMPLOYEE' | translate }}
                         </p>
                     </div>
                 </div>
@@ -157,8 +151,7 @@
                         <input type="text" ng-model="addLecturerFormData.username"
                                ng-blur="checkIfUsernameIsAvailable()"
                                ng-pattern="USERNAME_REGEX" id="username" name="username"
-                               class="form-control" popover="Введіть логін адміна організації"
-                               popover-trigger="focus" popover-placement="top" required>
+                               class="form-control" required>
 							<span class="form-control-feedback glyphicon
 							 form-horizontal glyphicon glyphicon-ok-sign"></span>
 
@@ -229,6 +222,30 @@
 
                         <p class="help-block"
                            ng-if="addLecturerForm.phoneNumber.$error.required">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{'REQUIRED' | translate}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group row row-fields" show-errors>
+                    <label for="enable" class="control-label col-md-4">
+                        {{'ENABLE' | translate}}
+                    </label>
+
+                    <div class="col-md-8">
+                        <ui-select class="form-control" type="text" ng-model="addLecturerFormData.enable" theme="select2"
+                                   search-enabled="false" name="enable" id="enable" required>
+                            <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_VARIANT' | translate}}"
+                                             allow-clear="true">
+                                {{$select.selected.label}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="enable in enableData">
+                                <span ng-bind-html="enable.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <p class="help-block" ng-if="addLecturerForm.enable.$error.required">
                             <span class="glyphicon glyphicon-exclamation-sign"></span>
                             {{'REQUIRED' | translate}}
                         </p>

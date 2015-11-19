@@ -1,5 +1,6 @@
 package com.testing.edu.service;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.testing.edu.entity.Groups;
 import com.testing.edu.entity.Students;
 import com.testing.edu.entity.User;
@@ -21,7 +22,7 @@ public interface StudentsService {
      * @param phone
      */
     void addStudent(String lastname, String firstname, String middleName,
-                    String numberGradebook, Groups groups, String username, String email, String phone);
+                    String numberGradebook, Groups groups, String username, String email, String phone, Boolean enable);
 
     /**
      * Save student with params
@@ -47,7 +48,7 @@ public interface StudentsService {
      * @param password
      */
     void editStudent(Long id, String lastname, String firstname, String middleName, String numberGradebook, Groups groups,
-                     String username, String email, String phone, String password);
+                     String username, String email, String phone, String password, Boolean enable);
 
     /**
      * Edit student with params

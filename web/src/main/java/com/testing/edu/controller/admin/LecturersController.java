@@ -50,7 +50,8 @@ public class LecturersController {
                     lecturerDTO.getDegree(),
                     lecturerDTO.getUsername(),
                     lecturerDTO.getEmail(),
-                    lecturerDTO.getPhone()
+                    lecturerDTO.getPhone(),
+                    lecturerDTO.getEnable()
             );
         } catch (Exception e) {
             logger.error("Got exeption while add lecturer ",e);
@@ -80,7 +81,8 @@ public class LecturersController {
                     lecturerDTO.getUsername(),
                     lecturerDTO.getEmail(),
                     lecturerDTO.getPhone(),
-                    lecturerDTO.getPassword()
+                    lecturerDTO.getPassword(),
+                    lecturerDTO.getEnable()
             );
         } catch (Exception e) {
             logger.error("Got exeption while editing lecturer ",e);
@@ -124,7 +126,8 @@ public class LecturersController {
                 lecturers.getDegree().name(),
                 lecturers.getUser().getUsername(),
                 lecturers.getUser().getEmail(),
-                lecturers.getUser().getPhone()
+                lecturers.getUser().getPhone(),
+                lecturers.getUser().getEnable()
         );
         return lecturerDTO;
     }
@@ -256,7 +259,11 @@ public class LecturersController {
                     lecturer.getFirstName(),
                     lecturer.getMiddleName(),
                     lecturer.getAcademicStatus().name(),
-                    lecturer.getDegree().name()
+                    lecturer.getDegree().name(),
+                    lecturer.getUser().getUsername(),
+                    lecturer.getUser().getEmail(),
+                    lecturer.getUser().getPhone(),
+                    lecturer.getUser().getEnable()
             ));
         }
         return resultList;

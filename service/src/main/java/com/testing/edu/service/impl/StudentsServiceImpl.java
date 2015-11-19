@@ -60,11 +60,11 @@ public class StudentsServiceImpl implements StudentsService {
     @Override
     @Transactional
     public void addStudent(String lastname, String firstname, String middleName, String numberGradebook, Groups groups,
-                           String username, String email, String phone) {
+                           String username, String email, String phone, Boolean enable) {
 
         String password = RandomStringUtils.randomAlphanumeric(6);
         String passwordEncoded = new BCryptPasswordEncoder().encode(password);
-        User user = new User(username, email, passwordEncoded, phone, true, UserRole.STUDENT);
+        User user = new User(username, email, passwordEncoded, phone, enable, UserRole.STUDENT);
         userRepository.save(user);
 
         Students student = new Students(lastname, firstname, middleName, numberGradebook, groups, user);
@@ -111,12 +111,14 @@ public class StudentsServiceImpl implements StudentsService {
      */
     @Override
     @Transactional
-    public void editStudent(Long id, String lastname, String firstname, String middleName, String numberGradebook, Groups groups, String username, String email, String phone, String password) {
+    public void editStudent(Long id, String lastname, String firstname, String middleName, String numberGradebook, Groups groups,
+                            String username, String email, String phone, String password, Boolean enable) {
         Students students = studentsRepository.findOne(id);
         User user = students.getUser();
         String newPassword;
         user.setEmail(email);
         user.setPhone(phone);
+        user.setEnable(enable);
         if(password != null && password.equals("generate") && !user.getPassword().isEmpty()){
             newPassword = RandomStringUtils.randomAlphanumeric(6);
             mailService.sendNewPassword(user.getEmail(), students.getFirstName(), user.getUsername(), newPassword);

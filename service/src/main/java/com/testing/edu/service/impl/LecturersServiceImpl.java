@@ -64,13 +64,14 @@ public class LecturersServiceImpl implements LecturersService {
      * @param username
      * @param email
      * @param phone
+     * @param enable
      */
     @Override
     public void addLecturer(String lastname, String firstname, String middleName, String academicStatus, String degree,
-                            String username, String email, String phone) {
+                            String username, String email, String phone, Boolean enable) {
         String password = RandomStringUtils.randomAlphanumeric(6);
         String passwordEncoded = new BCryptPasswordEncoder().encode(password);
-        User user = new User(username, email, passwordEncoded, phone, true, UserRole.LECTURER);
+        User user = new User(username, email, passwordEncoded, phone, enable, UserRole.LECTURER);
         userRepository.save(user);
 
         Lecturers lecturer = new Lecturers(
@@ -122,12 +123,14 @@ public class LecturersServiceImpl implements LecturersService {
      * @param password
      */
     @Override
-    public void editLecturer(Long id, String lastname, String firstname, String middleName, String academicStatus, String degree, String username, String email, String phone, String password) {
+    public void editLecturer(Long id, String lastname, String firstname, String middleName, String academicStatus, String degree,
+                             String username, String email, String phone, String password, Boolean enable) {
         Lecturers lecturer = lecturersRepository.findOne(id);
         User user = lecturer.getUser();
         String newPassword;
         user.setEmail(email);
         user.setPhone(phone);
+        user.setEnable(enable);
         if(password != null && password.equals("generate") && !user.getPassword().isEmpty()){
             newPassword = RandomStringUtils.randomAlphanumeric(6);
             mailService.sendNewPassword(user.getEmail(), lecturer.getFirstName(), user.getUsername(), newPassword);

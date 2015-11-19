@@ -17,7 +17,7 @@ angular
                 console.log(lecturerId);
                 console.log(subjectId);
                 lecturersService.deleteSubjectOfLecturer(lecturerId, subjectId).then(function () {
-                    toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_LECTURER'));
+                    toaster.pop('error', $filter('translate')('INFORMATION'), $filter('translate')('SUCCESSFUL_DELETED_SUBJECT'));
                 });
                 $timeout(function() {
                     console.log('delete with timeout');

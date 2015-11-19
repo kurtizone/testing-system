@@ -43,20 +43,28 @@
                         <td data-title="'ACTIONS' | translate" class="text-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-warning"
-                                        ng-click="openEditSubjectModal(subject.id)">
+                                        ng-click="openEditSubjectModal(subject.id)"
+                                        popover="{{'EDIT' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
                                 <button type="button" class="btn btn-danger"
-                                        ng-click="deleteSubject(subject.id)">
+                                        ng-click="deleteSubject(subject.id)"
+                                        popover="{{'REMOVE' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
-                                <button type="button" class="btn btn-success"
-                                        ng-click="openListOfGroups(subject.id)">
-                                    <span class="glyphicon glyphicon-education"></span>
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="openListOfGroups(subject.id)" popover="{{'LIST_OF_GROUPS' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
+                                    <span class="glyphicon glyphicon-education"
+                                          ></span>
                                 </button>
-                                <button type="button" class="btn btn-success"
-                                        ng-click="openListOfLecturers(subject.id)">
-                                    <span class="glyphicon glyphicon-blackboard"></span>
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="openListOfLecturers(subject.id)" popover="{{'LIST_OF_LECTURERS' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
+                                    <span class="glyphicon glyphicon-briefcase"
+                                          ></span>
                                 </button>
                             </div>
                         </td>
