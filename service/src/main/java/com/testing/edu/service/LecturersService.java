@@ -11,12 +11,15 @@ import java.util.Map;
 public interface LecturersService {
 
     /**
-     * Save lecturer with params
+     * Save lecturer with user
      * @param lastname
      * @param firstname
      * @param middleName
      * @param academicStatus
      * @param degree
+     * @param username
+     * @param email
+     * @param phone
      */
     void addLecturer(String lastname, String firstname, String middleName,
                      String academicStatus, String degree, String username, String email, String phone);
@@ -32,6 +35,22 @@ public interface LecturersService {
     void addLecturer(String lastname, String firstname, String middleName,
                      String academicStatus, String degree);
 
+
+    /**
+     * Edit lecturer with user
+     * @param id
+     * @param lastname
+     * @param firstname
+     * @param middleName
+     * @param academicStatus
+     * @param degree
+     * @param username
+     * @param email
+     * @param phone
+     * @param password
+     */
+    void editLecturer(Long id, String lastname, String firstname, String middleName, String academicStatus, String degree,
+                      String username, String email, String phone, String password);
     /**
      * Edit lecturer with params
      * @param id

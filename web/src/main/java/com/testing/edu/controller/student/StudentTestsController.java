@@ -16,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.CollationKey;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -105,15 +107,18 @@ public class StudentTestsController {
         Tests test = testsService.findById(id);
         List<QuestionDTO> listQuestAns = new ArrayList<>();
         for (Questions questions : test.getQuestionses()){
+            List<AnswerDTO> listAnswers = questions.getAnswerses().stream()
+                    .map(answers -> new AnswerDTO(answers.getId(), answers.getText()))
+                    .collect(Collectors.toList());
+            Collections.shuffle(listAnswers);
             listQuestAns.add(new QuestionDTO(
                     questions.getId(),
                     questions.getText(),
                     questions.getQuestionType().name(),
-                    questions.getAnswerses().stream()
-                            .map(answers -> new AnswerDTO(answers.getId(), answers.getText()))
-                            .collect(Collectors.toList())
+                    listAnswers
             ));
         }
+        Collections.shuffle(listQuestAns);
         TestDTO testDTO = new TestDTO(
                 test.getId(),
                 test.getTitle(),

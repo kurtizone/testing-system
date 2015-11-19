@@ -47,196 +47,89 @@ public class MailServiceImpl implements MailService {
 
     Logger logger = Logger.getLogger(MailServiceImpl.class);
 
-
     @Async
-    public void sendMail(String to, String userName, String clientCode, String providerName, String deviceType) {
-
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                message.setTo(to);
-                message.setFrom(new InternetAddress("metrology.calibrations@gmail.com", "Calibration devices system"));
-                String domain = null;
-                try {
-                    domain = InetAddress.getLocalHost().getHostAddress();
-                } catch (UnknownHostException ue) {
-                    logger.error("Cannot get host address", ue);
-                }
-
-                SimpleDateFormat form = new SimpleDateFormat("dd-MM-yyyy");
-                String date = form.format(new Date());
-                Map<String, Object> templateVariables = new HashMap<>();
-                templateVariables.put("name", userName);
-                templateVariables.put("protocol", protocol);
-                templateVariables.put("domain", domain);
-                templateVariables.put("applicationId", clientCode);
-                templateVariables.put("providerName", providerName);
-                templateVariables.put("deviceType", deviceType);
-                templateVariables.put("date", date);
-                String body = mergeTemplateIntoString(velocityEngine, "/velocity/templates/mailTemplate.vm", "UTF-8", templateVariables);
-                message.setText(body, true);
-                message.setSubject("Important notification");
-            }
-        };
-        mailSender.send(preparator);
-    }
-
-
-    @Async
-    public void sendNewPasswordMail(String employeeEmail, String employeeName, String newPassword) {
-
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws MessagingException, UnsupportedEncodingException {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                message.setTo(employeeEmail);
-                message.setFrom(new InternetAddress("metrology.calibrations@gmail.com", "Calibration devices system"));
-                Map<String, Object> templateVariables = new HashMap<>();
-                templateVariables.put("name", employeeName);
-                templateVariables.put("password", newPassword);
-                String body = mergeTemplateIntoString(velocityEngine, "/velocity/templates" + "/mailNewPasswordEmployee.vm", "UTF-8", templateVariables);
-                message.setText(body, true);
-                message.setSubject("Important notification");
-            }
-        };
-        mailSender.send(preparator);
-    }
-
-    @Async
-    public void sendAdminNewPasswordMail(String employeeEmail, String employeeName, String newPassword) {
-
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws MessagingException, UnsupportedEncodingException {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                message.setTo(employeeEmail);
-                message.setFrom(new InternetAddress("metrology.calibrations@gmail.com", "Calibration devices system"));
-                Map<String, Object> templateVariables = new HashMap<>();
-                templateVariables.put("name", employeeName);
-                templateVariables.put("password", newPassword);
-                String body = mergeTemplateIntoString(velocityEngine, "/velocity/templates" + "/createdAdminPassword", "UTF-8", templateVariables);
-                message.setText(body, true);
-                message.setSubject("Important notification");
-            }
-        };
-        mailSender.send(preparator);
-    }
-
-    @Async
-    public void sendOrganizationPasswordMail(String organizationMail, String organizationName, String username, String password) {
-
+    public void sendRegistrationMail(String to, String firstname, String lastname, String middlename, String username, String password) {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             public void prepare(MimeMessage mimeMessage) throws UnsupportedEncodingException, MessagingException {
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                message.setTo(organizationMail);
-                message.setFrom(new InternetAddress("metrology.calibrations@gmail.com", "Calibration devices system"));
+                message.setTo(to);
+                message.setFrom(new InternetAddress("testingyousystem@gmail.com", "Testing You"));
                 Map<String, Object> templateVariables = new HashMap<>();
-                templateVariables.put("name", organizationName);
+                templateVariables.put("lastname", lastname);
+                templateVariables.put("firstname", firstname);
+                templateVariables.put("middlename", middlename);
                 templateVariables.put("username", username);
                 templateVariables.put("password", password);
-                String body = mergeTemplateIntoString(velocityEngine, "/velocity/templates" + "/organizationAdminMail.vm", "UTF-8", templateVariables);
+                String body = mergeTemplateIntoString(velocityEngine, "/templates" + "/registration.vm", "UTF-8", templateVariables);
                 message.setText(body, true);
-                message.setSubject("Important notification");
+                message.setSubject("Registration notification");
             }
         };
         mailSender.send(preparator);
     }
 
-
     @Async
-    public void sendRejectMail(String to, String userName, String verificationId, String msg, String deviceType) {
-
+    public void sendNewPassword(String to, String firstname, String username, String password) {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
+            public void prepare(MimeMessage mimeMessage) throws UnsupportedEncodingException, MessagingException {
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
                 message.setTo(to);
-                message.setFrom(new InternetAddress("metrology.calibrations@gmail.com", "Calibration devices system"));
+                message.setFrom(new InternetAddress("testingyousystem@gmail.com", "Testing You"));
                 Map<String, Object> templateVariables = new HashMap<>();
-                templateVariables.put("name", userName);
-                templateVariables.put("verificationId", verificationId);
-                templateVariables.put("deviceType", deviceType);
-                templateVariables.put("message", msg);
-                String body = mergeTemplateIntoString(velocityEngine, "/velocity/templates" + "/rejectVerification.vm", "UTF-8", templateVariables);
+                templateVariables.put("firstname", firstname);
+                templateVariables.put("username", username);
+                templateVariables.put("password", password);
+                String body = mergeTemplateIntoString(velocityEngine, "/templates" + "/newPassword.vm", "UTF-8", templateVariables);
                 message.setText(body, true);
-                message.setSubject("Important notification");
-
+                message.setSubject("Password was changed");
             }
         };
         mailSender.send(preparator);
     }
 
-    /** Notifies (sends mail to) customer about assignment of an employee to the verification*/
-    @Async
-    public void sendAcceptMail(String to, String verificationId, String deviceType) {
-
+    @Override
+    public void sendStudentChanges(String to, String firstname, String lastname, String middlename, String group, String number, String phone, String username) {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
+            public void prepare(MimeMessage mimeMessage) throws UnsupportedEncodingException, MessagingException {
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
                 message.setTo(to);
-                message.setFrom(new InternetAddress("metrology.calibrations@gmail.com", "Calibration devices system"));
-                String domain = null;
-                try {
-                    domain = InetAddress.getLocalHost().getHostAddress();
-                } catch (UnknownHostException ue) {
-                    logger.error("Cannot get host address", ue);
-                }
+                message.setFrom(new InternetAddress("testingyousystem@gmail.com", "Testing You"));
                 Map<String, Object> templateVariables = new HashMap<>();
-                templateVariables.put("verificationId", verificationId);
-                templateVariables.put("deviceType", deviceType);
-                String body = mergeTemplateIntoString(velocityEngine, "/velocity/templates" + "/accepted.vm", "UTF-8", templateVariables);
+                templateVariables.put("firstname", firstname);
+                templateVariables.put("lastname", lastname);
+                templateVariables.put("middlename", middlename);
+                templateVariables.put("group", group);
+                templateVariables.put("number", number);
+                templateVariables.put("phone", phone);
+                templateVariables.put("email", to);
+                templateVariables.put("username", username);
+                String body = mergeTemplateIntoString(velocityEngine, "/templates" + "/studentChanges.vm", "UTF-8", templateVariables);
                 message.setText(body, true);
-                message.setSubject("Important notification");
+                message.setSubject("Your account was changed");
             }
         };
         mailSender.send(preparator);
     }
 
-
-    /**
-     * Send email from client (for example to SYS_ADMIN)
-     * @param to
-     * @param from
-     * @param userFirstName
-     * @param userLastName
-     * @param verificationId
-     * @param msg
-     */
-    @Async
-    public void sendClientMail(String to, String from, String userFirstName, String userLastName, String verificationId, String msg) {
-
+    @Override
+    public void sendLecturerChanges(String to, String firstname, String lastname, String middlename, String academic, String degree, String phone, String username) {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
+            public void prepare(MimeMessage mimeMessage) throws UnsupportedEncodingException, MessagingException {
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-
                 message.setTo(to);
-                message.setFrom(new InternetAddress(from));
+                message.setFrom(new InternetAddress("testingyousystem@gmail.com", "Testing You"));
                 Map<String, Object> templateVariables = new HashMap<>();
-                templateVariables.put("firstName", userFirstName);
-                templateVariables.put("lastName", userLastName);
-                templateVariables.put("mailAddress", from);
-                templateVariables.put("message", msg);
-                templateVariables.put("applicationId", verificationId);
-                String body = mergeTemplateIntoString(velocityEngine, "/velocity/templates" + "/clientMail.vm", "UTF-8", templateVariables);
+                templateVariables.put("firstname", firstname);
+                templateVariables.put("lastname", lastname);
+                templateVariables.put("middlename", middlename);
+                templateVariables.put("academic", academic);
+                templateVariables.put("degree", degree);
+                templateVariables.put("phone", phone);
+                templateVariables.put("email", to);
+                templateVariables.put("username", username);
+                String body = mergeTemplateIntoString(velocityEngine, "/templates" + "/lecturerChanges.vm", "UTF-8", templateVariables);
                 message.setText(body, true);
-                message.setSubject("Important notification");
-
-            }
-        };
-        mailSender.send(preparator);
-    }
-
-    @Async
-    public void sendTimeExceededMail(String verificationId, int processTimeExceeding, int maxProcessTime, String mailTo) {
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                message.setTo(mailTo);
-                message.setFrom(new InternetAddress("metrology.calibrations@gmail.com", "Calibration devices system"));
-                Map<String, Object> templateVariables = new HashMap<>();
-                templateVariables.put("processTimeExceeding", processTimeExceeding);
-                templateVariables.put("verificationId", verificationId);
-                templateVariables.put("maxProcessTime", maxProcessTime);
-                String body = mergeTemplateIntoString(velocityEngine, "/velocity/templates" + "/processTimeExceeded.vm", "UTF-8", templateVariables);
-                message.setText(body, true);
-                message.setSubject("Important notification");
+                message.setSubject("Your account was changed");
             }
         };
         mailSender.send(preparator);

@@ -16,6 +16,7 @@ public class StudentDTO {
     private String username;
     private String email;
     private String phone;
+    private String password;
 
     public StudentDTO() {
 
@@ -28,6 +29,15 @@ public class StudentDTO {
         this.middleName = middleName;
         this.numberGradebook = numberGradebook;
     }
+    public StudentDTO(Long id, String lastName, String firstName, String middleName, String numberGradebook, Long groupId,
+                      String groupTitle, String username,
+                      String email, String phone) {
+        this(id, lastName, firstName, middleName, numberGradebook, groupId, groupTitle);
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+    }
+
 
     public StudentDTO(Long id, String lastName, String firstName, String middleName, String numberGradebook, Long groupId) {
         this(id, lastName, firstName, middleName, numberGradebook);

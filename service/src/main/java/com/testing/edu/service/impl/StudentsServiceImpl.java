@@ -3,10 +3,13 @@ package com.testing.edu.service.impl;
 import com.testing.edu.entity.Groups;
 import com.testing.edu.entity.Students;
 import com.testing.edu.entity.User;
+import com.testing.edu.entity.enumeration.AcademicStatus;
+import com.testing.edu.entity.enumeration.Degree;
 import com.testing.edu.entity.enumeration.UserRole;
 import com.testing.edu.repository.StudentsRepository;
 import com.testing.edu.repository.UserRepository;
 import com.testing.edu.service.GroupsService;
+import com.testing.edu.service.MailService;
 import com.testing.edu.service.StudentsService;
 import com.testing.edu.service.specification.builder.StudentsSpecificationBuilder;
 import com.testing.edu.service.utils.ListToPageTransformer;
@@ -39,6 +42,9 @@ public class StudentsServiceImpl implements StudentsService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private MailService mailService;
+
     /**
      * Save student with user
      *
@@ -63,6 +69,7 @@ public class StudentsServiceImpl implements StudentsService {
 
         Students student = new Students(lastname, firstname, middleName, numberGradebook, groups, user);
         studentsRepository.save(student);
+        mailService.sendRegistrationMail(email, firstname, lastname, middleName, username, password);
     }
 
     /**
@@ -86,6 +93,48 @@ public class StudentsServiceImpl implements StudentsService {
         );
 
         studentsRepository.save(students);
+    }
+
+    /**
+     * Edit student with user
+     *
+     * @param id
+     * @param lastname
+     * @param firstname
+     * @param middleName
+     * @param numberGradebook
+     * @param groups
+     * @param username
+     * @param email
+     * @param phone
+     * @param password
+     */
+    @Override
+    @Transactional
+    public void editStudent(Long id, String lastname, String firstname, String middleName, String numberGradebook, Groups groups, String username, String email, String phone, String password) {
+        Students students = studentsRepository.findOne(id);
+        User user = students.getUser();
+        String newPassword;
+        user.setEmail(email);
+        user.setPhone(phone);
+        if(password != null && password.equals("generate") && !user.getPassword().isEmpty()){
+            newPassword = RandomStringUtils.randomAlphanumeric(6);
+            mailService.sendNewPassword(user.getEmail(), students.getFirstName(), user.getUsername(), newPassword);
+            String passwordEncoded = new BCryptPasswordEncoder().encode(newPassword);
+            user.setPassword(passwordEncoded);
+        }
+        userRepository.save(user);
+
+        students.setLastName(lastname);
+        students.setFirstName(firstname);
+        students.setMiddleName(middleName);
+        students.setNumberGradebook(numberGradebook);
+        students.setGroups(groups);
+        students.setUser(user);
+
+        studentsRepository.save(students);
+
+        mailService.sendStudentChanges(email, firstname, lastname, middleName, groups.getTitle(), numberGradebook, phone, username);
     }
 
     /**
@@ -119,7 +168,10 @@ public class StudentsServiceImpl implements StudentsService {
     @Override
     @Transactional
     public void removeStudent(Long id) {
-        studentsRepository.delete(id);
+        Students students = studentsRepository.findOne(id);
+        User user = students.getUser();
+        userRepository.delete(user);
+        studentsRepository.delete(students);
     }
 
     /**
@@ -172,4 +224,5 @@ public class StudentsServiceImpl implements StudentsService {
     public Students findByUser(User user) {
         return studentsRepository.findByUserId(user.getId());
     }
+
 }

@@ -15,6 +15,10 @@ public interface StudentsService {
      * @param firstname
      * @param middleName
      * @param numberGradebook
+     * @param groups
+     * @param username
+     * @param email
+     * @param phone
      */
     void addStudent(String lastname, String firstname, String middleName,
                     String numberGradebook, Groups groups, String username, String email, String phone);
@@ -30,12 +34,28 @@ public interface StudentsService {
                      String numberGradebook, Groups groups);
 
     /**
+     * Edit student with user
+     * @param id
+     * @param lastname
+     * @param firstname
+     * @param middleName
+     * @param numberGradebook
+     * @param groups
+     * @param username
+     * @param email
+     * @param phone
+     * @param password
+     */
+    void editStudent(Long id, String lastname, String firstname, String middleName, String numberGradebook, Groups groups,
+                     String username, String email, String phone, String password);
+
+    /**
      * Edit student with params
      * @param id
      * @param lastname
      * @param firstname
      * @param middleName
-     * @param numberGradebook 
+     * @param numberGradebook
      */
     void editStudent(Long id, String lastname, String firstname, String middleName,
                      String numberGradebook, Groups groups);

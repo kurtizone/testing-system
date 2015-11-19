@@ -1,0 +1,18 @@
+<html>
+<body>
+<span style="font-weight:bold">
+			Доброго дня, $lastname $firstname $middlename! Ваші дані були змінені!
+</span>
+<br>Нові дані:
+<br>Прізвище: $lastname
+<br>Ім'я: $firstname
+<br>Побатькові: $middlename
+<br>Академічний статус: $academic
+<br>Наукова ступінь: $degree
+<br>Email: $email
+<br>Телефоний номер: $phone
+<br>Логін: $username
+<br>
+<br>Дякуємо, що користуєтесь нашим сервісом.
+</body>
+</html>

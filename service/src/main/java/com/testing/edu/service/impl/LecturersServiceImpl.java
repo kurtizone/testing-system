@@ -10,6 +10,7 @@ import com.testing.edu.repository.LecturersRepository;
 import com.testing.edu.repository.SubjectRepository;
 import com.testing.edu.repository.UserRepository;
 import com.testing.edu.service.LecturersService;
+import com.testing.edu.service.MailService;
 import com.testing.edu.service.criteria.LecturersQueryConstructor;
 import com.testing.edu.service.specification.builder.LecturersSpecificationBuilder;
 import com.testing.edu.service.specification.builder.SubjectSpecificationBuilder;
@@ -49,6 +50,9 @@ public class LecturersServiceImpl implements LecturersService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private MailService mailService;
+
     /**
      * Save lecturer with user
      *
@@ -78,6 +82,7 @@ public class LecturersServiceImpl implements LecturersService {
                 user
         );
         lecturersRepository.save(lecturer);
+        mailService.sendRegistrationMail(email, firstname, lastname, middleName, username, password);
     }
 
     /**
@@ -100,6 +105,47 @@ public class LecturersServiceImpl implements LecturersService {
                 Degree.valueOf(degree)
         );
         lecturersRepository.save(lecturer);
+    }
+
+    /**
+     * Edit lecturer with user
+     *
+     * @param id
+     * @param lastname
+     * @param firstname
+     * @param middleName
+     * @param academicStatus
+     * @param degree
+     * @param username
+     * @param email
+     * @param phone
+     * @param password
+     */
+    @Override
+    public void editLecturer(Long id, String lastname, String firstname, String middleName, String academicStatus, String degree, String username, String email, String phone, String password) {
+        Lecturers lecturer = lecturersRepository.findOne(id);
+        User user = lecturer.getUser();
+        String newPassword;
+        user.setEmail(email);
+        user.setPhone(phone);
+        if(password != null && password.equals("generate") && !user.getPassword().isEmpty()){
+            newPassword = RandomStringUtils.randomAlphanumeric(6);
+            mailService.sendNewPassword(user.getEmail(), lecturer.getFirstName(), user.getUsername(), newPassword);
+            String passwordEncoded = new BCryptPasswordEncoder().encode(newPassword);
+            user.setPassword(passwordEncoded);
+        }
+        userRepository.save(user);
+
+        lecturer.setLastName(lastname);
+        lecturer.setFirstName(firstname);
+        lecturer.setMiddleName(middleName);
+        lecturer.setAcademicStatus(AcademicStatus.valueOf(academicStatus));
+        lecturer.setDegree(Degree.valueOf(degree));
+        lecturer.setUser(user);
+
+        lecturersRepository.save(lecturer);
+        mailService.sendLecturerChanges(email, firstname, lastname, middleName, getAcademicStatus(academicStatus),
+                getDegree(degree), phone, username);
     }
 
     /**
@@ -134,7 +180,10 @@ public class LecturersServiceImpl implements LecturersService {
     @Override
     @Transactional
     public void removeLecturer(Long id) {
-        lecturersRepository.delete(id);
+        Lecturers lecturers = lecturersRepository.findOne(id);
+        User user = lecturers.getUser();
+        userRepository.delete(user);
+        lecturersRepository.delete(lecturers);
     }
 
     /**
@@ -230,5 +279,25 @@ public class LecturersServiceImpl implements LecturersService {
         subjectSet.add(subject);
         lecturer.setSubjects(subjectSet);
         lecturersRepository.save(lecturer);
+    }
+
+
+    public static String getAcademicStatus(String academic){
+        switch (AcademicStatus.valueOf(academic)){
+            case PROFESSOR: return "Професор";
+            case DOCENT: return "Доцент";
+            case SENIOR_LECTURER: return "Старший викладач";
+        }
+        return null;
+    }
+
+
+    public static String getDegree(String degree){
+        switch (Degree.valueOf(degree)){
+            case CANDIDATE: return "Кандидат наук";
+            case DOCTOR: return "Доктор наук";
+            case POSTGRADUATE: return "Аспірант";
+        }
+        return null;
     }
 }

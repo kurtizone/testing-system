@@ -52,7 +52,10 @@ public class StudentsController {
                     studentDTO.getFirstName(),
                     studentDTO.getMiddleName(),
                     studentDTO.getNumberGradebook(),
-                    groupsService.findById(studentDTO.getGroupId())
+                    groupsService.findById(studentDTO.getGroupId()),
+                    studentDTO.getUsername(),
+                    studentDTO.getEmail(),
+                    studentDTO.getPhone()
             );
         } catch (Exception e) {
             logger.error("Got exeption while add student ", e);
@@ -79,7 +82,11 @@ public class StudentsController {
                     studentDTO.getFirstName(),
                     studentDTO.getMiddleName(),
                     studentDTO.getNumberGradebook(),
-                    groupsService.findById(studentDTO.getGroupId())
+                    groupsService.findById(studentDTO.getGroupId()),
+                    studentDTO.getUsername(),
+                    studentDTO.getEmail(),
+                    studentDTO.getPhone(),
+                    studentDTO.getPassword()
             );
         } catch (Exception e) {
             logger.error("Got exeption while editing student ", e);
@@ -123,7 +130,10 @@ public class StudentsController {
                 students.getMiddleName(),
                 students.getNumberGradebook(),
                 students.getGroups().getId(),
-                students.getGroups().getTitle()
+                students.getGroups().getTitle(),
+                students.getUser().getUsername(),
+                students.getUser().getEmail(),
+                students.getUser().getPhone()
         );
         return studentDTO;
     }

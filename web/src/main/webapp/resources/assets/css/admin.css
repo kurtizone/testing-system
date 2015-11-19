@@ -11,6 +11,12 @@ body {
     margin-bottom: 30px;
 }
 
+
+.text-success {
+    color: #3c763d;
+    text-align: center;
+}
+
 .banner {
     margin-left: 4%;
     padding-bottom: 12px;

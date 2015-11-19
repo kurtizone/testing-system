@@ -57,6 +57,14 @@ angular
                     .then(function (result) {
                         return result.status;
                     });
+            },
+            isUsernameAvailable: function (username) {
+                var url = '/application/users/available/username/' + username;
+                return $http.get(url)
+                    .then(function(result) {
+                        console.log(result);
+                        return result.data;
+                    });
             }
         };
 
