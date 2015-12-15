@@ -35,9 +35,11 @@
                         <td data-title="'NUMBER_OF_TESTS' | translate">{{ subject.numberOfTests }}
                         </td>
                         <td data-title="'ACTIONS' | translate" class="text-center">
-                            <button type="button" class="btn btn-primary"
-                                    ng-click="openListOfLecturers(subject.id)">
-                                <span class="glyphicon glyphicon-pencil"></span>
+                            <button type="button" class="btn btn-success"
+                                    ng-click="openListOfLecturers(subject.id)"
+                                    popover="{{'LIST_OF_LECTURERS' | translate}}"
+                                    popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true">
+                                <span class="glyphicon glyphicon-education"></span>
                             </button>
                         </td>
                     </tr>

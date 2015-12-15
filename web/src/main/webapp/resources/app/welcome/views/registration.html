@@ -25,7 +25,7 @@
                         <ui-select name="userRole" id="userRole" class="form-control"
                                    type="text" ng-model="userRoleFormData.userRole" theme="select2"
                                    search-enabled="false">
-                            <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                            <ui-select-match placeholder="{{'SELECT_USER_ROLE' | translate}}"
                                              allow-clear="true">
                                 {{$select.selected.label}}
                             </ui-select-match>
@@ -163,7 +163,7 @@
                         <ui-select type="text" theme="select2" class="form-control"
                                    ng-model="chooseData.group"
                                    name="group" id="group" required>
-                            <ui-select-match placeholder="{{'SELECT_SUBJECT_TITLE' | translate}}" allow-clear="true">
+                            <ui-select-match placeholder="{{'SELECT_GROUP_TITLE' | translate}}" allow-clear="true">
                                 {{$select.selected.title}}
                             </ui-select-match>
                             <ui-select-choices repeat="group in groups | filter: $select.search">

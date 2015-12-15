@@ -114,7 +114,7 @@ angular
                 angular.forEach($scope.choices, function (choice) {
                     $scope.answerDTOList.push({id: choice.id,'text': choice.text, 'correct': choice.correct});
                 });
-
+                $scope.answerDTOList.shift();
             }
 
             /**

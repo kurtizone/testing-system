@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{'FILL_IN_INFORMATION_ABOUT_LECTURER'
+    <h3 class="modal-title">{{'FILL_IN_INFORMATION_ABOUT_TEST'
         | translate}}</h3>
 </div>
 
@@ -42,7 +42,7 @@
                            ng-model="addTestFormData.subjectTitle"
                            on-select="setSubjectId(addTestFormData.subjectTitle)"
                            name="subjectTitle" id="subjectTitle" required>
-                    <ui-select-match placeholder="{{'SELECT_NAME_OF_COUNTER' | translate}}" allow-clear="true">
+                    <ui-select-match placeholder="{{'SELECT_SUBJECT_TITLE' | translate}}" allow-clear="true">
                         {{$select.selected.title}}
                     </ui-select-match>
                     <ui-select-choices repeat="subject in subjects | filter: $select.search">
@@ -52,7 +52,7 @@
 
                 <p class="help-block" ng-if="addTestForm.subjectTitle.$error.required || addTestFormData.subjectTitle === null">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{'TYPEAHEAD_ERROR' | translate}}
+                    {{'REQUIRED' | translate}}
                 </p>
             </div>
         </div>
@@ -66,7 +66,7 @@
                 <ui-select name="type" id="type" class="form-control"
                            type="text" ng-model="addTestFormData.type" theme="select2"
                            search-enabled="false" required>
-                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_TEST_TYPE' | translate}}"
                                      allow-clear="true">
                         {{$select.selected.label}}
                     </ui-select-match>

@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{'FILL_IN_INFORMATION_ABOUT_GROUP'
+    <h3 class="modal-title">{{'FILL_IN_INFORMATION_ABOUT_QUESTION'
         | translate}}</h3>
 </div>
 
@@ -30,7 +30,7 @@
                 <ui-select name="questionType" id="questionType" class="form-control"
                            type="text" ng-model="addQuestionFormData.questionType" theme="select2"
                            search-enabled="false" on-select="" required>
-                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_DEGREE' | translate}}"
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_TEST_TYPE' | translate}}"
                                      allow-clear="true">
                         {{$select.selected.label}}
                     </ui-select-match>
@@ -49,7 +49,7 @@
 
         <div class="form-group row row-fields" data-ng-repeat="choice in choices" ng-show="addQuestionFormData.questionType !== undefined">
             <label  class="control-label col-md-3">
-                {{'ANSWER' | translate}}
+                {{'ANSWER' | translate}} №{{$index+1}}
             </label>
             <div class="col-md-9" ng-show="addQuestionFormData.questionType.id === 'MULTI'">
                 <div class="input-group">
@@ -58,7 +58,7 @@
                            value="choice.correct">
                     </span>
                 <textarea class="form-control" rows="3" ng-model="choice.text" maxlength="500"
-                          placeholder="Enter your answer">
+                          placeholder="{{'ENTER_ANSWER' | translate}}">
                 </textarea>
                     <span class="input-group-addon" ng-show="$last">
                         <i class="glyphicon glyphicon-minus" ng-click="removeChoice()"></i>
@@ -71,7 +71,7 @@
                     <input type="radio" name="answer" model="choice.correct" value="true" ng-click="setChoiceForQuestion(choice)">
                     </span>
                 <textarea class="form-control" rows="3" ng-model="choice.text" maxlength="500"
-                          placeholder="Enter your answer">
+                          placeholder="{{'ENTER_ANSWER' | translate}}">
                 </textarea>
                     <span class="input-group-addon" ng-show="$last">
                         <i class="glyphicon glyphicon-minus" ng-click="removeChoice()"></i>
@@ -88,14 +88,6 @@
                 <input type="button" class="btn btn-primary btn-block pull-right"
                        value="{{'ADD_ANSWER' | translate }}" ng-click="addNewChoice()">
             </div>
-        </div>
-
-        <div class="well well-lg modal-padding">
-            {{addQuestionFormData}}
-        </div>
-
-        <div class="well well-lg modal-padding">
-            {{choices}}
         </div>
         <hr>
         <div class="form-group row row-buttons">

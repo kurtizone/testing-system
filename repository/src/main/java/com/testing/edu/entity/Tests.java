@@ -120,7 +120,7 @@ public class Tests implements java.io.Serializable {
 		this.avaible = avaible;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests")
 	public Set<Result> getResults() {
 		return this.results;
 	}
@@ -129,7 +129,7 @@ public class Tests implements java.io.Serializable {
 		this.results = results;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tests")
 	public Set<Questions> getQuestionses() {
 		return this.questionses;
 	}

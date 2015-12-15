@@ -84,7 +84,7 @@ public class Questions implements java.io.Serializable {
 		this.questionType = questionType;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questions", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questions")
 	public Set<Answers> getAnswerses() {
 		return this.answerses;
 	}

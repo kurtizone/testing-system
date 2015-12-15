@@ -47,8 +47,11 @@
                             <td data-title="'ACTIONS' | translate" class="text-center">
                                 <div class="btn-group">
                                     <button type="button" ng-hide="test.hasResult === true" class="btn btn-primary" ng-disabled="test.avaible === false"
-                                            ng-click="getTestById(test.id)">
-                                        <span class="glyphicon glyphicon-pencil"></span> {{'PASS_TEST' | translate}}
+                                            ng-click="getTestById(test.id)"
+                                            popover="{{'PASS_TEST' | translate}}"
+                                            popover-trigger="mouseenter" popover-placement="left"
+                                            popover-append-to-body="true">
+                                        <span class="glyphicon glyphicon-king"></span>
                                     </button>
                                 </div>
                             </td>

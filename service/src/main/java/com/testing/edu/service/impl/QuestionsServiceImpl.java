@@ -88,6 +88,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         }
         question.setQuestionType(QuestionType.valueOf(questionType));
         question.setText(text);
+        question.getAnswerses().clear();
         question.setAnswerses(new HashSet<>(answerses));
         questionsRepository.save(question);
     }

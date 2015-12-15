@@ -29,13 +29,18 @@
                         </td>
                         <td data-title="'ACTIONS' | translate" class="text-center">
                             <div class="btn-group-vertical">
-                                <button type="button" class="btn btn-warning"
-                                        ng-click="openListOfGroups(subject.id)">
-                                    <span class="glyphicon glyphicon-pencil"></span>
+                                <button type="button" class="btn btn-success"
+                                        ng-click="openListOfGroups(subject.id)"
+                                        popover="{{'LIST_OF_GROUPS' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left"
+                                        popover-append-to-body="true">
+                                    <span class="glyphicon glyphicon-modal-window"></span>
                                 </button>
-                                <button type="button" class="btn btn-danger"
+                                <button type="button" class="btn btn-success"
+                                        popover="{{'LIST_OF_TESTS' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true"
                                         ng-click="openListOfTests(subject.id)">
-                                    <span class="glyphicon glyphicon-remove"></span>
+                                    <span class="glyphicon glyphicon-file"></span>
                                 </button>
                             </div>
                         </td>

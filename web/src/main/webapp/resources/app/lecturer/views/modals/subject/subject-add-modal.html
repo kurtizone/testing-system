@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{'FILL_IN_INFORMATION_ABOUT_SUBJECT'
+    <h3 class="modal-title">{{'LIST_OF_TESTS'
         | translate}}</h3>
 </div>
 
@@ -18,9 +18,9 @@
 
             <tr ng-repeat="test in $root.tests">
                 <td>{{ test.title }}</td>
-                <td>{{ test.type }}</td>
+                <td>{{ test.type | translate}}</td>
                 <td>{{ test.maxGrade }}</td>
-                <td>{{ test.avaible }}</td>
+                <td>{{ test.avaible | translate}}</td>
             </tr>
             </tbody>
         </table>

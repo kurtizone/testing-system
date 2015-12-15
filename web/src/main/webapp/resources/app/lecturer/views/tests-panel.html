@@ -53,16 +53,18 @@
                         <td data-title="'ACTIONS' | translate" class="text-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-warning"
-                                        ng-click="openEditTestModal(test.id)">
+                                        ng-click="openEditTestModal(test.id)"
+                                        popover="{{'EDIT' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left"
+                                        popover-append-to-body="true">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button>
                                 <button type="button" class="btn btn-danger"
-                                        ng-click="deleteTest(test.id)">
+                                        ng-click="deleteTest(test.id)"
+                                        popover="{{'REMOVE' | translate}}"
+                                        popover-trigger="mouseenter" popover-placement="left"
+                                        popover-append-to-body="true">
                                     <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                                <button type="button" class="btn btn-warning"
-                                        ng-click="openTest(test.id)">
-                                    <span class="glyphicon glyphicon-plus"></span>
                                 </button>
                             </div>
                         </td>
@@ -104,7 +106,7 @@
                 <ui-select ng-model="selectedType.name" theme="select2" on-select='doSearch()'
                            search-enabled="false"
                            name="filter-type">
-                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_ACADEMIC_STATUS' | translate}}"
+                    <ui-select-match placeholder="{{'STATUS_SELECT_PLACEHOLDER_TEST_TYPE' | translate}}"
                                      allow-clear="true">
                         {{$select.selected.label}}
                     </ui-select-match>

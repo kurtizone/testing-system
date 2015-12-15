@@ -5,3 +5,4 @@ public enum AcademicStatus {
     DOCENT,
     SENIOR_LECTURER
 }
+

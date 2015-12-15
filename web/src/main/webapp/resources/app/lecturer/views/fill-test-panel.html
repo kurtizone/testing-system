@@ -41,8 +41,8 @@
             <div class="row row-test-fill">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <button ng-click="openAddQuestionModal()" ng-show="testData !== undefined"
-                            class="btn btn-danger col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        {{'ADD_QUESTION' | translate }} {{test.id}}
+                            class="btn btn-primary col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        {{'ADD_QUESTION' | translate }}
                     </button>
                 </div>
             </div>
@@ -72,24 +72,24 @@
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-md-4">{{'TEST_TIME' |translate }}</label>
+                    <label class="col-md-4">{{'TEST_TIME' | translate }}</label>
 
                     <div class="col-md-8">
                         <input class="form-control" type="text" ng-model="testData.time" readonly>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-md-4">{{'TEST_TYPE' |translate }}</label>
+                    <label class="col-md-4">{{'TEST_TYPE' | translate }}</label>
 
                     <div class="col-md-8">
-                        <input class="form-control" type="text" ng-model="testData.type" readonly>
+                        <input class="form-control" type="text" ng-model="testData.type | translate" readonly>
                     </div>
                 </div>
                 <div class="row">
                     <label class="col-md-4">{{'AVAIBLE' |translate }}</label>
 
                     <div class="col-md-8">
-                        <input class="form-control" type="text" ng-model="testData.avaible" readonly>
+                        <input class="form-control" type="text" ng-model="testData.avaible | translate" readonly>
                     </div>
                 </div>
             </div>

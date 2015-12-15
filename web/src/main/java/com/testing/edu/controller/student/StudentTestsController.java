@@ -77,7 +77,6 @@ public class StudentTestsController {
         return new ResponseEntity(new ResultDTO(result.getStudents().getLastName(), result.getStudents().getFirstName(),
                 result.getStudents().getMiddleName(), result.getMark(), result.getMaxGrade(), test.getTitle()),
                 httpStatus);
-        //return new ResponseEntity(httpStatus);
     }
 
 

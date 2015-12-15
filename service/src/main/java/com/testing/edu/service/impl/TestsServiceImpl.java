@@ -1,11 +1,8 @@
 package com.testing.edu.service.impl;
 
-import com.testing.edu.entity.Lecturers;
-import com.testing.edu.entity.Subject;
-import com.testing.edu.entity.Tests;
+import com.testing.edu.entity.*;
 import com.testing.edu.entity.enumeration.TestType;
-import com.testing.edu.repository.SubjectRepository;
-import com.testing.edu.repository.TestsRepository;
+import com.testing.edu.repository.*;
 import com.testing.edu.service.TestsService;
 import com.testing.edu.service.specification.builder.TestSpecificationBuilder;
 import com.testing.edu.service.utils.ListToPageTransformer;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.beans.Transient;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +23,15 @@ public class TestsServiceImpl implements TestsService {
 
     @Autowired
     private TestsRepository testsRepository;
+
+    @Autowired
+    private QuestionsRepository questionsRepository;
+
+    @Autowired
+    private AnswerRepository answerRepository;
+
+    @Autowired
+    private ResultsRepository resultsRepository;
 
     @Autowired
     private SubjectRepository subjectRepository;
@@ -87,6 +94,14 @@ public class TestsServiceImpl implements TestsService {
     @Override
     @Transactional
     public void removeTest(Long id) {
+        Tests test = testsRepository.findOne(id);
+        List<Questions> questionsList = new ArrayList<>(test.getQuestionses());
+        for (Questions question : questionsList) {
+            List<Answers> answerses = new ArrayList<>(question.getAnswerses());
+            answerRepository.delete(answerses);
+        }
+        questionsRepository.delete(questionsList);
+        resultsRepository.delete(test.getResults());
         testsRepository.delete(id);
     }
 
