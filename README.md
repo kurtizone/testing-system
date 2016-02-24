@@ -35,6 +35,6 @@ After the server starts, the application is accessible at the following URL:
 
 And then you can login with roles:
 
-Admin - login: admin; password: password(the same password for all users)
-Lecturer - login: lecturer1; (to lecturer4)
-Student - login: student1; (to student14)
+ - Admin - login: admin; password: password(the same password for all users)
+ - Lecturer - login: lecturer1; (to lecturer4)
+ - Student - login: student1; (to student14)
